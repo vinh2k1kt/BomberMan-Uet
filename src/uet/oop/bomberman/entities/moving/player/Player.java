@@ -24,7 +24,7 @@ public class Player extends Character {
     private final CollisionChecker collisionChecker = new CollisionChecker(Level.levelScene, this);
 
     public int bombNum = 1;
-    public int bombRadius = 1;
+    public int bombRadius = 2;
     public boolean alive;
 
     public Player(double x, double y, Image img) {

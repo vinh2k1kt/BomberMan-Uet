@@ -1,11 +1,12 @@
 package uet.oop.bomberman.entities.block;
 
 import javafx.scene.image.Image;
+import uet.oop.bomberman.entities.Entity;
 import uet.oop.bomberman.util.Constants;
 
 import java.io.File;
 
-public class Wall extends Tile {
+public class Wall extends Entity {
 
     public Wall(double xUnit, double yUnit, Image img) {
         super(xUnit, yUnit, img);
@@ -16,6 +17,11 @@ public class Wall extends Tile {
 
 //        kwanUwU
 //        this.img = new Image(new File("res/brick.jpg").toURI().toString());
+    }
+
+    @Override
+    public void update() {
+
     }
 
 }

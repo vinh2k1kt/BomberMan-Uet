@@ -4,8 +4,8 @@ import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.image.Image;
 import uet.oop.bomberman.Level;
 import uet.oop.bomberman.entities.Entity;
-import uet.oop.bomberman.entities.block.Tile;
 import uet.oop.bomberman.entities.block.Wall;
+import uet.oop.bomberman.entities.block.destroyable.Brick;
 import uet.oop.bomberman.entities.moving.player.Player;
 import uet.oop.bomberman.util.Constants;
 
@@ -58,6 +58,11 @@ public class Flame extends Entity {
                     if (Level.entities.get((int) (xUnit + yUnit * Constants.COLUMNS + length * Constants.COLUMNS)) instanceof Wall) {
                         return length;
                     }
+
+                    if (Level.entities.get((int) (xUnit + yUnit * Constants.COLUMNS + length)) instanceof Brick) {
+                        return ++length;
+                    }
+
                     length++;
                 }
             }
@@ -67,6 +72,11 @@ public class Flame extends Entity {
                     if (Level.entities.get((int) (xUnit + yUnit * Constants.COLUMNS - length * Constants.COLUMNS)) instanceof Wall) {
                         return length;
                     }
+
+                    if (Level.entities.get((int) (xUnit + yUnit * Constants.COLUMNS + length)) instanceof Brick) {
+                        return ++length;
+                    }
+
                     length++;
                 }
             }
@@ -76,6 +86,11 @@ public class Flame extends Entity {
                     if (Level.entities.get((int) (xUnit + yUnit * Constants.COLUMNS - length)) instanceof Wall) {
                         return length;
                     }
+
+                    if (Level.entities.get((int) (xUnit + yUnit * Constants.COLUMNS + length)) instanceof Brick) {
+                        return ++length;
+                    }
+
                     length++;
                 }
             }
@@ -85,6 +100,11 @@ public class Flame extends Entity {
                     if (Level.entities.get((int) (xUnit + yUnit * Constants.COLUMNS + length)) instanceof Wall) {
                         return length;
                     }
+
+                    if (Level.entities.get((int) (xUnit + yUnit * Constants.COLUMNS + length)) instanceof Brick) {
+                        return ++length;
+                    }
+
                     length++;
                 }
             }

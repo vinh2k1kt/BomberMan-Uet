@@ -37,6 +37,11 @@ public class Animation {
     public static ArrayList<Sprite> explosion_horizontal_middle = new ArrayList<>();
     public static ArrayList<Sprite> explosion_horizontal_right = new ArrayList<>();
 
+    /*
+    Tile Animation
+     */
+    public static ArrayList<Sprite> brick_explosion = new ArrayList<>();
+
     public static void initAnimation() {
         for (int i = 0; i < Constants.FRAME_NUM; i++) {
 
@@ -63,6 +68,9 @@ public class Animation {
             explosion_horizontal_left.add(SpriteSheet.sprites.get(9 * Constants.SPRITE_COL - i * Constants.SPRITE_COL));
             explosion_horizontal_middle.add(SpriteSheet.sprites.get(9 * Constants.SPRITE_COL - i * Constants.SPRITE_COL + 1));
             explosion_horizontal_right.add(SpriteSheet.sprites.get(9 * Constants.SPRITE_COL - i * Constants.SPRITE_COL + 2));
+
+            //Tile
+            brick_explosion.add(SpriteSheet.sprites.get(7 + (i + 1) * Constants.SPRITE_COL));
         }
     }
 

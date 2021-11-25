@@ -3,6 +3,7 @@ package uet.oop.bomberman.entities.moving;
 import javafx.scene.Scene;
 import uet.oop.bomberman.Level;
 import uet.oop.bomberman.entities.Entity;
+import uet.oop.bomberman.entities.block.item.Item;
 import uet.oop.bomberman.entities.bomb.Bomb;
 import uet.oop.bomberman.entities.moving.player.Player;
 import uet.oop.bomberman.util.Constants;
@@ -29,7 +30,7 @@ public class CollisionChecker {
 
                 //Check collied with tiles
                 for (Entity e : Level.entities) {
-                    if (e != character
+                    if (e != character && !(e instanceof Item)
                             && character.hitBox.getBoundsInParent().intersects(e.hitBox.getBoundsInParent())) {
                         character.setHitBox(character.getX() + Constants.HGAP, character.getY() + Constants.VGAP);
                         return true;
@@ -56,7 +57,7 @@ public class CollisionChecker {
 
                 // if Collided then reset hitbox back to normal mode not predict mode
                 for (Entity e : Level.entities) {
-                    if (e != character
+                    if (e != character && !(e instanceof Item)
                             && character.hitBox.getBoundsInParent().intersects(e.hitBox.getBoundsInParent())) {
                         character.setHitBox(character.getX() + Constants.HGAP, character.getY() + Constants.VGAP);
                         return true;
@@ -82,7 +83,7 @@ public class CollisionChecker {
 
                 // if Collided then reset hitbox back to normal mode not predict mode
                 for (Entity e : Level.entities) {
-                    if (e != character
+                    if (e != character && !(e instanceof Item)
                             && character.hitBox.getBoundsInParent().intersects(e.hitBox.getBoundsInParent())) {
                         character.setHitBox(character.getX() + Constants.HGAP, character.getY() + Constants.VGAP);
                         return true;
@@ -108,7 +109,7 @@ public class CollisionChecker {
 
                 // if Collided then reset hitbox back to normal mode not predict mode
                 for (Entity e : Level.entities) {
-                    if (e != character
+                    if (e != character && !(e instanceof Item)
                             && character.hitBox.getBoundsInParent().intersects(e.hitBox.getBoundsInParent())) {
                         character.setHitBox(character.getX() + Constants.HGAP, character.getY() + Constants.VGAP);
                         return true;

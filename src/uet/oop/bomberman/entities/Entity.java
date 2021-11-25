@@ -11,12 +11,12 @@ public abstract class Entity {
         public Rectangle hitBox = new Rectangle();
 
         //Tọa độ X tính từ góc trái trên trong Canvas
-        protected double x;
+        public double x;
 
         //Tọa độ Y tính từ góc trái trên trong Canvas
-        protected double y;
+        public double y;
 
-        protected Image img;
+        public Image img;
 
         //Khởi tạo đối tượng, chuyển từ tọa độ đơn vị sang tọa độ trong canvas
         public Entity( double xUnit, double yUnit, Image img) {

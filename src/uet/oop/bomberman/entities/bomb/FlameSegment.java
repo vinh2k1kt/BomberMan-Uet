@@ -5,6 +5,7 @@ import javafx.scene.shape.Rectangle;
 import uet.oop.bomberman.Level;
 import uet.oop.bomberman.entities.Animation;
 import uet.oop.bomberman.entities.Entity;
+import uet.oop.bomberman.entities.block.destroyable.Brick;
 import uet.oop.bomberman.graphics.Sprite;
 import uet.oop.bomberman.util.Constants;
 
@@ -87,6 +88,11 @@ public class FlameSegment extends Entity {
     public void collided() {
         if (this.hitBox.getBoundsInParent().intersects(Level.bomber.hitBox.getBoundsInParent())) {
             Level.bomber.isKill();
+        }
+
+        if (Level.entities.get((int) (x / Constants.TILES_SIZE +  (y / Constants.TILES_SIZE) * Constants.COLUMNS))
+                instanceof Brick)  {
+            ((Brick) Level.entities.get((int) (x / Constants.TILES_SIZE +  (y / Constants.TILES_SIZE) * Constants.COLUMNS))).destroy();
         }
     }
     @Override

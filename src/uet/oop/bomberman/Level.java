@@ -1,18 +1,20 @@
 package uet.oop.bomberman;
 
-import uet.oop.bomberman.entities.Animation;
 import uet.oop.bomberman.entities.Entity;
 import javafx.animation.AnimationTimer;
 import javafx.scene.Group;
 import javafx.scene.Scene;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
+import uet.oop.bomberman.entities.block.Layered;
+import uet.oop.bomberman.entities.block.destroyable.Brick;
 import uet.oop.bomberman.entities.block.Grass;
 import uet.oop.bomberman.entities.block.Wall;
+import uet.oop.bomberman.entities.block.item.FlameItem;
+import uet.oop.bomberman.entities.block.item.Item;
 import uet.oop.bomberman.entities.bomb.Bomb;
 import uet.oop.bomberman.entities.moving.enemy.Jelly;
 import uet.oop.bomberman.entities.moving.player.Player;
-import uet.oop.bomberman.graphics.SpriteSheet;
 import uet.oop.bomberman.util.Constants;
 import uet.oop.bomberman.util.SpriteContainer;
 import java.io.FileInputStream;
@@ -118,15 +120,17 @@ public class Level extends Canvas {
                     case '#' -> {
                         entities.add(new Wall(col, row, SpriteContainer.wall.getFxImage()));
                     }
-                    case ' ' -> {
-                        entities.add(new Grass(col, row, SpriteContainer.grass.getFxImage()));
+                    case 's' -> {
+                        entities.add(new Brick(col, row, SpriteContainer.brick.getFxImage()
+                                , new FlameItem(col, row, SpriteContainer.flameItem.getFxImage())));
                     }
                     case 'p' -> {
                         entities.add(new Grass(col, row, SpriteContainer.grass.getFxImage()));
                         bomber = new Player(col, row, SpriteContainer.player_right.getFxImage());
                     }
                     case '*' -> {
-                        entities.add(new Wall(col, row, SpriteContainer.brick.getFxImage()));
+                        entities.add(new Brick(col, row, SpriteContainer.brick.getFxImage()
+                                , new Grass(col, row, SpriteContainer.grass.getFxImage())));
                     }
                     case '1' -> {
                         entities.add(new Grass(col, row, SpriteContainer.grass.getFxImage()));
@@ -166,10 +170,23 @@ public class Level extends Canvas {
     }
 
     private void update() {
-        entities.forEach(Entity::update);
+        int count = 0;
+        for (Entity entity : entities) {
+            entity.update();
+            if (entity instanceof Layered) {
+                if (((Layered) entity).canRemove) {
+                    entities.set(count, ((Layered) entity).getBufferedEntity());
+                    if (!(((Layered) entity).getBufferedEntity() instanceof Grass)) {
+                        ((Layered) entities.get(count)).clearRemove();
+                    }
+                }
+            }
+            count++;
+        }
 
         bombs.removeIf(Bomb::Removeable);
         if (!bombs.isEmpty()) {  bombs.forEach(Bomb::update); }
+
 
         bomber.update();
         jellies.forEach(Jelly::update);
