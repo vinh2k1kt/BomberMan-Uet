@@ -7,8 +7,6 @@ import uet.oop.bomberman.entities.bomb.Bomb;
 import uet.oop.bomberman.entities.Animation;
 import uet.oop.bomberman.entities.moving.Character;
 import uet.oop.bomberman.entities.moving.CollisionChecker;
-import uet.oop.bomberman.graphics.Sprite;
-import uet.oop.bomberman.graphics.SpriteSheet;
 import uet.oop.bomberman.util.Constants;
 import uet.oop.bomberman.util.Direction;
 import uet.oop.bomberman.util.SpriteContainer;
@@ -23,11 +21,10 @@ public class Player extends Character {
     private int index = 0;
     private int dx, dy;
 
-    private int frameNum = 3;
-    private CollisionChecker collisionChecker = new CollisionChecker(Level.levelScene, this);
+    private final CollisionChecker collisionChecker = new CollisionChecker(Level.levelScene, this);
 
     public int bombNum = 1;
-    public int bombRadius = 2;
+    public int bombRadius = 1;
     public boolean alive;
 
     public Player(double x, double y, Image img) {
@@ -205,6 +202,11 @@ public class Player extends Character {
         while (index < Animation.deadAni.size() - 1) {
             chooseSprite();
         }
+
+        //Remove KeyHandler;
+        Level.levelScene.setOnKeyReleased(keyEvent -> {
+
+        });
     }
 
     public void render(GraphicsContext gc) {
