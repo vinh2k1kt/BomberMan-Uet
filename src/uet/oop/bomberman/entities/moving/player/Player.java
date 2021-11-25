@@ -4,11 +4,9 @@ import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.image.Image;
 import uet.oop.bomberman.Level;
 import uet.oop.bomberman.entities.bomb.Bomb;
-import uet.oop.bomberman.entities.moving.Animation;
+import uet.oop.bomberman.entities.Animation;
 import uet.oop.bomberman.entities.moving.Character;
 import uet.oop.bomberman.entities.moving.CollisionChecker;
-import uet.oop.bomberman.graphics.Sprite;
-import uet.oop.bomberman.graphics.SpriteSheet;
 import uet.oop.bomberman.util.Constants;
 import uet.oop.bomberman.util.Direction;
 import uet.oop.bomberman.util.SpriteContainer;
@@ -23,14 +21,15 @@ public class Player extends Character {
     private int index = 0;
     private int dx, dy;
 
-    private int dead_count = 0;
-    private int frame_index = 0;
-    private CollisionChecker collisionChecker = new CollisionChecker(Level.levelScene, this);
+    private final CollisionChecker collisionChecker = new CollisionChecker(Level.levelScene, this);
 
     public int bombNum = 1;
+    public int bombRadius = 1;
+    public boolean alive;
 
     public Player(double x, double y, Image img) {
         super(x, y, img);
+        alive = true;
 
         Level.levelScene.setOnKeyPressed(keyEvent -> {
             resetTracking();
@@ -54,7 +53,7 @@ public class Player extends Character {
                 case SPACE -> {
                     if (Level.bombs.size() < bombNum) {
                         Level.bombs.add(new Bomb(Math.round(this.x / Constants.TILES_SIZE)
-                                ,Math.round( this.y / Constants.TILES_SIZE)
+                                , Math.round(this.y / Constants.TILES_SIZE)
                                 , SpriteContainer.Bomb.getFxImage(), this));
                     }
                     if (currentDirection != Direction.NONE) {
@@ -117,24 +116,22 @@ public class Player extends Character {
         /*
         Update hitBox
          */
-//        hitBox.setX(x + Constants.HGAP);
-//        hitBox.setY(y + Constants.VGAP);
-//        hitBox.setWidth(Constants.SOLID_AREA_WIDTH);
-//        hitBox.setHeight(Constants.SOLID_AREA_HEIGHT);
 
-        hitBox.setX(x + 4);
-        hitBox.setY(y + 4);
-        hitBox.setWidth(Constants.TILES_SIZE - 12);
-        hitBox.setHeight(Constants.TILES_SIZE - 8);
+        if (alive) {
+            hitBox.setX(x + 4);
+            hitBox.setY(y + 4);
+            hitBox.setWidth(Constants.TILES_SIZE - 12);
+            hitBox.setHeight(Constants.TILES_SIZE - 8);
 
-        calculateMove();
+            calculateMove();
 
-        if (dx != 0 || dy != 0) {
-            isMoving = true;
-            move();
-        } else {
-            currentDirection = Direction.NONE;
-            isMoving = false;
+            if (dx != 0 || dy != 0) {
+                isMoving = true;
+                move();
+            } else {
+                currentDirection = Direction.NONE;
+                isMoving = false;
+            }
         }
     }
 
@@ -178,27 +175,38 @@ public class Player extends Character {
             index++;
             count = 0;
         }
+
         if (index == 3) {
             index = 0;
         }
 
-        switch (currentDirection) {
-            case UP -> this.img = Animation.upAni.get(index).getFxImage();
-            case DOWN -> this.img = Animation.downAni.get(index).getFxImage();
-            case LEFT -> this.img = Animation.leftAni.get(index).getFxImage();
-            case RIGHT -> this.img = Animation.rightAni.get(index).getFxImage();
+        if (!alive) {
+            this.img = Animation.deadAni.get(index).getFxImage();
+        } else {
+            switch (currentDirection) {
+                case UP -> this.img = Animation.upAni.get(index).getFxImage();
+                case DOWN -> this.img = Animation.downAni.get(index).getFxImage();
+                case LEFT -> this.img = Animation.leftAni.get(index).getFxImage();
+                case RIGHT -> this.img = Animation.rightAni.get(index).getFxImage();
+            }
         }
     }
 
     public void isKill() {
-        for (Sprite frame : Animation.deadAni) {
-            while (count < 10) {
-                count++;
-            }
-            count = 0;
-            this.img = SpriteSheet.sprites.get(8).getFxImage();
+        index = 0;
+        count = 0;
+
+        currentDirection = Direction.NONE;
+        resetTracking();
+        alive = false;
+        while (index < Animation.deadAni.size() - 1) {
+            chooseSprite();
         }
-//            Level.gameOver();
+
+        //Remove KeyHandler;
+        Level.levelScene.setOnKeyReleased(keyEvent -> {
+
+        });
     }
 
     public void render(GraphicsContext gc) {

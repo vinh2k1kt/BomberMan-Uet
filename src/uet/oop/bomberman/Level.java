@@ -1,5 +1,6 @@
 package uet.oop.bomberman;
 
+import uet.oop.bomberman.entities.Animation;
 import uet.oop.bomberman.entities.Entity;
 import javafx.animation.AnimationTimer;
 import javafx.scene.Group;
@@ -11,6 +12,7 @@ import uet.oop.bomberman.entities.block.Wall;
 import uet.oop.bomberman.entities.bomb.Bomb;
 import uet.oop.bomberman.entities.moving.enemy.Jelly;
 import uet.oop.bomberman.entities.moving.player.Player;
+import uet.oop.bomberman.graphics.SpriteSheet;
 import uet.oop.bomberman.util.Constants;
 import uet.oop.bomberman.util.SpriteContainer;
 import java.io.FileInputStream;
@@ -38,7 +40,7 @@ public class Level extends Canvas {
     public static boolean isRunning = true;
 
     public static Player bomber;
-    private Jelly jelly;
+    private ArrayList<Jelly> jellies = new ArrayList<>();
     private final List<String> mapDataFile = new ArrayList<>();
 
     private AnimationTimer timer = new AnimationTimer() {
@@ -128,7 +130,7 @@ public class Level extends Canvas {
                     }
                     case '1' -> {
                         entities.add(new Grass(col, row, SpriteContainer.grass.getFxImage()));
-                        jelly = new Jelly(col, row, SpriteContainer.Jelly.getFxImage());
+                        jellies.add(new Jelly(col, row, SpriteContainer.Jelly.getFxImage()));
                     }
                     default -> {
                         entities.add(new Grass(col, row, SpriteContainer.grass.getFxImage()));
@@ -160,7 +162,7 @@ public class Level extends Canvas {
         if (!bombs.isEmpty()) { bombs.forEach(b -> b.render(gc)); }
 
         bomber.render(gc);
-        jelly.render(gc);
+        jellies.forEach(j -> j.render(gc));
     }
 
     private void update() {
@@ -170,6 +172,6 @@ public class Level extends Canvas {
         if (!bombs.isEmpty()) {  bombs.forEach(Bomb::update); }
 
         bomber.update();
-        jelly.update();
+        jellies.forEach(Jelly::update);
     }
 }

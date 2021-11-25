@@ -18,9 +18,10 @@ public class Constants {
     public static double SCREEN_WIDTH  = TILES_SIZE * COLUMNS;
     public static double SCREEN_HEIGHT = TILES_SIZE * ROWS;
 
-    public static  final int PLAYER_SPEED = 2;
+    public static int PLAYER_SPEED = 2;
 
     public static final Color hitBoxColor = Color.TRANSPARENT;
+    public static final Color tileHitBoxColor = Color.TRANSPARENT;
 
     /**
      * Sprite and animation

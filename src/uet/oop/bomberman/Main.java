@@ -2,7 +2,7 @@ package uet.oop.bomberman;
 
 import javafx.application.Application;
 import javafx.stage.Stage;
-import uet.oop.bomberman.entities.moving.Animation;
+import uet.oop.bomberman.entities.Animation;
 import uet.oop.bomberman.util.Constants;
 
 public class Main extends Application {
@@ -10,8 +10,8 @@ public class Main extends Application {
     @Override
     public void start(Stage primaryStage) throws Exception{
 
-        Animation.initAnimation();
         Level level = new Level();
+        Animation.initAnimation();
 
         primaryStage.setTitle(Constants.GAME_TILE);
         primaryStage.setScene(Level.levelScene);

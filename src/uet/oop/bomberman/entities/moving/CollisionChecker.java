@@ -1,7 +1,6 @@
 package uet.oop.bomberman.entities.moving;
 
 import javafx.scene.Scene;
-import javafx.scene.paint.Color;
 import uet.oop.bomberman.Level;
 import uet.oop.bomberman.entities.Entity;
 import uet.oop.bomberman.entities.bomb.Bomb;

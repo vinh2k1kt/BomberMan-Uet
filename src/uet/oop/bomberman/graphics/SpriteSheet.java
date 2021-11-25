@@ -6,7 +6,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class SpriteSheet {
-	public static SpriteSheet SPRITESHEET = new SpriteSheet("res/classic1.png",
+	public static SpriteSheet SPRITESHEET = new SpriteSheet("res/textures/Classic.png",
 			16, 16, 0, 16, 16*12);
 
 	public static List<Sprite> sprites;
