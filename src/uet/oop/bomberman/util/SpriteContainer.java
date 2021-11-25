@@ -29,4 +29,10 @@ public class SpriteContainer {
      * Bomb
      */
     public static final Sprite Bomb = SpriteSheet.sprites.get(Constants.SPRITE_COL * 3);
+    /**
+     * Items
+     */
+    public static final Sprite flameItem = SpriteSheet.sprites.get(161);
+    public static final Sprite bombItem = SpriteSheet.sprites.get(160);
+    public static final Sprite speedItem = SpriteSheet.sprites.get(163);
 }

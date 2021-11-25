@@ -3,6 +3,7 @@ package uet.oop.bomberman.entities.moving;
 import javafx.scene.Scene;
 import uet.oop.bomberman.Level;
 import uet.oop.bomberman.entities.Entity;
+import uet.oop.bomberman.entities.Item.Items;
 import uet.oop.bomberman.entities.bomb.Bomb;
 import uet.oop.bomberman.entities.moving.player.Player;
 import uet.oop.bomberman.util.Constants;
@@ -26,7 +27,18 @@ public class CollisionChecker {
                         , character.getY() + Constants.VGAP - Constants.PLAYER_SPEED);
 
                 checkHitbox(character);
-
+                //Player pick up item
+                if(character instanceof Player) {
+                    for(Entity e : Level.entities) {
+                        if(e instanceof Items) {
+                            if(character.hitBox.getBoundsInParent().intersects(e.hitBox.getBoundsInParent())) {
+                                Level.entities.remove(e);
+                                Level.bomber.pickUpItem(e);
+                                break;
+                            }
+                        }
+                    }
+                }
                 //Check collied with tiles
                 for (Entity e : Level.entities) {
                     if (e != character
@@ -53,7 +65,18 @@ public class CollisionChecker {
                         , character.getY() + Constants.VGAP + Constants.PLAYER_SPEED);
 
                 checkHitbox(character);
-
+                //Player pick up item
+                if(character instanceof Player) {
+                    for(Entity e : Level.entities) {
+                        if(e instanceof Items) {
+                            if(character.hitBox.getBoundsInParent().intersects(e.hitBox.getBoundsInParent())) {
+                                Level.entities.remove(e);
+                                Level.bomber.pickUpItem(e);
+                                break;
+                            }
+                        }
+                    }
+                }
                 // if Collided then reset hitbox back to normal mode not predict mode
                 for (Entity e : Level.entities) {
                     if (e != character
@@ -79,7 +102,18 @@ public class CollisionChecker {
                         , character.getY() + Constants.VGAP);
 
                 checkHitbox(character);
-
+                //Player pick up item
+                if(character instanceof Player) {
+                    for(Entity e : Level.entities) {
+                        if(e instanceof Items) {
+                            if(character.hitBox.getBoundsInParent().intersects(e.hitBox.getBoundsInParent())) {
+                                Level.entities.remove(e);
+                                Level.bomber.pickUpItem(e);
+                                break;
+                            }
+                        }
+                    }
+                }
                 // if Collided then reset hitbox back to normal mode not predict mode
                 for (Entity e : Level.entities) {
                     if (e != character
@@ -105,7 +139,18 @@ public class CollisionChecker {
                         , character.getY() + Constants.VGAP);
 
                 checkHitbox(character);
-
+                //Player pick up item
+                if(character instanceof Player) {
+                    for(Entity e : Level.entities) {
+                        if(e instanceof Items) {
+                            if(character.hitBox.getBoundsInParent().intersects(e.hitBox.getBoundsInParent())) {
+                                Level.entities.remove(e);
+                                Level.bomber.pickUpItem(e);
+                                break;
+                            }
+                        }
+                    }
+                }
                 // if Collided then reset hitbox back to normal mode not predict mode
                 for (Entity e : Level.entities) {
                     if (e != character

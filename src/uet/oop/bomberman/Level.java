@@ -1,20 +1,19 @@
 package uet.oop.bomberman;
 
-import uet.oop.bomberman.entities.Animation;
-import uet.oop.bomberman.entities.Entity;
 import javafx.animation.AnimationTimer;
 import javafx.scene.Group;
 import javafx.scene.Scene;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
+import uet.oop.bomberman.entities.Entity;
 import uet.oop.bomberman.entities.block.Grass;
 import uet.oop.bomberman.entities.block.Wall;
 import uet.oop.bomberman.entities.bomb.Bomb;
 import uet.oop.bomberman.entities.moving.enemy.Jelly;
 import uet.oop.bomberman.entities.moving.player.Player;
-import uet.oop.bomberman.graphics.SpriteSheet;
 import uet.oop.bomberman.util.Constants;
 import uet.oop.bomberman.util.SpriteContainer;
+
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.nio.charset.StandardCharsets;
@@ -113,6 +112,7 @@ public class Level extends Canvas {
         int row = 0;
         for (String line : mapDataFile) {
             for (int col = 0; col < Constants.COLUMNS; col++) {
+                entities.add(new Grass(col, row, SpriteContainer.grass.getFxImage()));
                 tileMap[row][col] = String.valueOf(line.charAt(col));
                 switch (line.charAt(col)) {
                     case '#' -> {

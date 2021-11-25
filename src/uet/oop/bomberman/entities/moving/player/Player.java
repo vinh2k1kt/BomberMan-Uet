@@ -3,13 +3,18 @@ package uet.oop.bomberman.entities.moving.player;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.image.Image;
 import uet.oop.bomberman.Level;
-import uet.oop.bomberman.entities.bomb.Bomb;
 import uet.oop.bomberman.entities.Animation;
+import uet.oop.bomberman.entities.Entity;
+import uet.oop.bomberman.entities.Item.bombItem;
+import uet.oop.bomberman.entities.Item.speedItem;
+import uet.oop.bomberman.entities.bomb.Bomb;
 import uet.oop.bomberman.entities.moving.Character;
 import uet.oop.bomberman.entities.moving.CollisionChecker;
 import uet.oop.bomberman.util.Constants;
 import uet.oop.bomberman.util.Direction;
 import uet.oop.bomberman.util.SpriteContainer;
+
+import static uet.oop.bomberman.util.Constants.PLAYER_SPEED;
 
 public class Player extends Character {
 
@@ -138,10 +143,10 @@ public class Player extends Character {
     private void calculateMove() {
         dx = 0;
         dy = 0;
-        if (up) dy = -Constants.PLAYER_SPEED;
-        if (down) dy = Constants.PLAYER_SPEED;
-        if (left) dx = -Constants.PLAYER_SPEED;
-        if (right) dx = Constants.PLAYER_SPEED;
+        if (up) dy = -PLAYER_SPEED;
+        if (down) dy = PLAYER_SPEED;
+        if (left) dx = -PLAYER_SPEED;
+        if (right) dx = PLAYER_SPEED;
     }
 
     private void move() {
@@ -215,5 +220,17 @@ public class Player extends Character {
 //        Hit box check
         gc.setFill(Constants.hitBoxColor);
         gc.fillRect(hitBox.getX(), hitBox.getY(), hitBox.getWidth(), hitBox.getHeight());
+    }
+
+    public void pickUpItem(Entity e) {
+        if(e instanceof bombItem) {
+            bombNum++;
+        }
+        if(e instanceof speedItem) {
+            PLAYER_SPEED = PLAYER_SPEED*2;
+        }
+        //if(e instanceof flameItem) {
+
+        //}
     }
 }
