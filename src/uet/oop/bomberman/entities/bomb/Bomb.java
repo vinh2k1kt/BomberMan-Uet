@@ -1,22 +1,32 @@
 package uet.oop.bomberman.entities.bomb;
 
+import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.image.Image;
 import javafx.scene.shape.Rectangle;
+import uet.oop.bomberman.Level;
 import uet.oop.bomberman.entities.Entity;
-import uet.oop.bomberman.entities.moving.Animation;
+import uet.oop.bomberman.entities.Animation;
 import uet.oop.bomberman.entities.moving.player.Player;
+import uet.oop.bomberman.graphics.Sprite;
 import uet.oop.bomberman.util.Constants;
+
+import java.util.ArrayList;
 
 public class Bomb extends Entity {
 
-    private final Player owner;
     private int count = 0;
     private int index = 0;
+    private ArrayList<Sprite> ani = Animation.bombAni;
 
+    public int explosionTime = 21;// thoi gian de no
+
+    protected final Player owner;
     protected int timeBeforeExploded = 120;
     protected boolean exploded = false;
     protected boolean allowedToPassThru= true;
     protected boolean canRemove = false;
+    protected ArrayList<Flame> flames = new ArrayList<>();
+
 
     public Bomb(double xUnit, double yUnit, Image img, Player owner) {
         super(xUnit, yUnit, img);
@@ -44,8 +54,9 @@ public class Bomb extends Entity {
         if (index == 3) {
             index = 0;
         }
-        this.img = Animation.bombAni.get(index).getFxImage();
+        this.img = ani.get(index).getFxImage();
     }
+
     @Override
     public void update() {
 
@@ -65,14 +76,35 @@ public class Bomb extends Entity {
             } else {
                 updateFlame();
             }
+
+            if(explosionTime > 0)
+                explosionTime--;
+            else
+                this.canRemove = true;
         }
     }
 
+    public void render(GraphicsContext gc) {
+        super.render(gc);
+        flames.forEach(f -> f.render(Level.gc));
+    }
+
     private void updateFlame() {
+        flames.forEach(Flame::update);
     }
 
     private void explode() {
-        this.canRemove = true;
+
+        //Clear Bomb's HitBox
+        this.hitBox.setWidth(0);
+        this.hitBox.setHeight(0);
+
+        exploded = true;
+        this.ani = Animation.explosion_center;
+        for (int i = 0; i < 5; i++) {
+            flames.add(new Flame(this.x / Constants.TILES_SIZE, this.y / Constants.TILES_SIZE
+            , null, i, Level.bomber));
+        }
     }
 
     public boolean Removeable() {

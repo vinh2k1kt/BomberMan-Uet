@@ -3,6 +3,7 @@ package uet.oop.bomberman.entities;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.image.Image;
 import javafx.scene.shape.Rectangle;
+import uet.oop.bomberman.Level;
 import uet.oop.bomberman.util.Constants;
 
 public abstract class Entity {
@@ -26,10 +27,12 @@ public abstract class Entity {
 
         public void render(GraphicsContext gc) {
             gc.drawImage(img, x, y, Constants.TILES_SIZE, Constants.TILES_SIZE);
-
-//            Hit box check
-//            gc.setFill(Color.BLACK);
-//            gc.fillRect(hitBox.getX(), hitBox.getY(), hitBox.getWidth(), hitBox.getHeight());
         }
+
         public abstract void update();
+
+        public void checkHitBox() {
+            Level.gc.setFill(Constants.tileHitBoxColor);
+            Level.gc.fillRect(hitBox.getX(), hitBox.getY(), hitBox.getWidth(), hitBox.getHeight());
+        }
     }

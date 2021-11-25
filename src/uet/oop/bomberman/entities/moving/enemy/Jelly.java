@@ -2,7 +2,7 @@ package uet.oop.bomberman.entities.moving.enemy;
 
 import javafx.scene.image.Image;
 import uet.oop.bomberman.Level;
-import uet.oop.bomberman.entities.moving.Animation;
+import uet.oop.bomberman.entities.Animation;
 import uet.oop.bomberman.entities.moving.Character;
 import uet.oop.bomberman.entities.moving.CollisionChecker;
 import uet.oop.bomberman.util.Constants;
