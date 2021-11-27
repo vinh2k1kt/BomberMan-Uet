@@ -3,7 +3,6 @@ package uet.oop.bomberman.entities;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.image.Image;
 import javafx.scene.shape.Rectangle;
-import uet.oop.bomberman.Level;
 import uet.oop.bomberman.util.Constants;
 
 public abstract class Entity {
@@ -11,12 +10,12 @@ public abstract class Entity {
         public Rectangle hitBox = new Rectangle();
 
         //Tọa độ X tính từ góc trái trên trong Canvas
-        protected double x;
+        public double x;
 
         //Tọa độ Y tính từ góc trái trên trong Canvas
-        protected double y;
+        public double y;
 
-        protected Image img;
+        public Image img;
 
         //Khởi tạo đối tượng, chuyển từ tọa độ đơn vị sang tọa độ trong canvas
         public Entity( double xUnit, double yUnit, Image img) {
@@ -30,9 +29,4 @@ public abstract class Entity {
         }
 
         public abstract void update();
-
-        public void checkHitBox() {
-            Level.gc.setFill(Constants.tileHitBoxColor);
-            Level.gc.fillRect(hitBox.getX(), hitBox.getY(), hitBox.getWidth(), hitBox.getHeight());
-        }
     }

@@ -1,20 +1,25 @@
 package uet.oop.bomberman;
 
-import uet.oop.bomberman.entities.Animation;
-import uet.oop.bomberman.entities.Entity;
 import javafx.animation.AnimationTimer;
 import javafx.scene.Group;
 import javafx.scene.Scene;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
-import uet.oop.bomberman.entities.block.Grass;
-import uet.oop.bomberman.entities.block.Wall;
-import uet.oop.bomberman.entities.bomb.Bomb;
+import uet.oop.bomberman.entities.still.Tile;
+import uet.oop.bomberman.entities.still.block.Layered;
+import uet.oop.bomberman.entities.still.block.destroyable.Brick;
+import uet.oop.bomberman.entities.still.block.item.Portal;
+import uet.oop.bomberman.entities.still.block.undestroyable.Grass;
+import uet.oop.bomberman.entities.still.block.undestroyable.Wall;
+import uet.oop.bomberman.entities.still.block.item.BombItem;
+import uet.oop.bomberman.entities.still.block.item.FlameItem;
+import uet.oop.bomberman.entities.still.block.item.SpeedItem;
+import uet.oop.bomberman.entities.still.bomb.Bomb;
 import uet.oop.bomberman.entities.moving.enemy.Jelly;
 import uet.oop.bomberman.entities.moving.player.Player;
-import uet.oop.bomberman.graphics.SpriteSheet;
 import uet.oop.bomberman.util.Constants;
-import uet.oop.bomberman.util.SpriteContainer;
+import uet.oop.bomberman.graphics.SpriteContainer;
+
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.nio.charset.StandardCharsets;
@@ -27,9 +32,10 @@ public class Level extends Canvas {
     public static Scene levelScene = new Scene(new Group());
     public static Canvas levelCanvas;
     public static GraphicsContext gc;
-    public static ArrayList<Entity> entities = new ArrayList<>();
+    public static ArrayList<Tile> tiles = new ArrayList<>();
     public static String[][] tileMap;
     public static ArrayList<Bomb> bombs = new ArrayList<>();
+    public static int numberOfEnemies;
 
     public static double currentGameTime;
     public static double lastNanoTime;
@@ -39,8 +45,8 @@ public class Level extends Canvas {
 
     public static boolean isRunning = true;
 
-    public static Player bomber;
-    private ArrayList<Jelly> jellies = new ArrayList<>();
+    public static ArrayList<Player> bombers = new ArrayList<>();
+    public static ArrayList<Jelly> jellies = new ArrayList<>();
     private final List<String> mapDataFile = new ArrayList<>();
 
     private AnimationTimer timer = new AnimationTimer() {
@@ -115,63 +121,96 @@ public class Level extends Canvas {
             for (int col = 0; col < Constants.COLUMNS; col++) {
                 tileMap[row][col] = String.valueOf(line.charAt(col));
                 switch (line.charAt(col)) {
-                    case '#' -> {
-                        entities.add(new Wall(col, row, SpriteContainer.wall.getFxImage()));
+                    case 's' -> {
+                        tiles.add(new Brick(col, row, SpriteContainer.brick.getFxImage()
+                                , new SpeedItem(col, row, SpriteContainer.speedItem.getFxImage())));
                     }
-                    case ' ' -> {
-                        entities.add(new Grass(col, row, SpriteContainer.grass.getFxImage()));
+                    case 'b' -> {
+                        tiles.add(new Brick(col, row, SpriteContainer.brick.getFxImage()
+                                , new BombItem(col, row, SpriteContainer.bombItem.getFxImage())));
+                    }
+                    case 'f' -> {
+                        tiles.add(new Brick(col, row, SpriteContainer.brick.getFxImage()
+                                , new FlameItem(col, row, SpriteContainer.flameItem.getFxImage())));
+                    }
+                    case 'x' -> {
+                        tiles.add(new Brick(col, row, SpriteContainer.brick.getFxImage()
+                                , new Portal(col, row, SpriteContainer.portal.getFxImage())));
                     }
                     case 'p' -> {
-                        entities.add(new Grass(col, row, SpriteContainer.grass.getFxImage()));
-                        bomber = new Player(col, row, SpriteContainer.player_right.getFxImage());
+                        tiles.add(new Grass(col, row, SpriteContainer.grass.getFxImage()));
+                        bombers.add(new Player(col, row, SpriteContainer.player_right.getFxImage()));
+                    }
+                    case '#' -> {
+                        tiles.add(new Wall(col, row, SpriteContainer.wall.getFxImage()));
                     }
                     case '*' -> {
-                        entities.add(new Wall(col, row, SpriteContainer.brick.getFxImage()));
+                        tiles.add(new Brick(col, row, SpriteContainer.brick.getFxImage()
+                                , new Grass(col, row, SpriteContainer.grass.getFxImage())));
                     }
                     case '1' -> {
-                        entities.add(new Grass(col, row, SpriteContainer.grass.getFxImage()));
+                        tiles.add(new Grass(col, row, SpriteContainer.grass.getFxImage()));
                         jellies.add(new Jelly(col, row, SpriteContainer.Jelly.getFxImage()));
                     }
                     default -> {
-                        entities.add(new Grass(col, row, SpriteContainer.grass.getFxImage()));
+                        tiles.add(new Grass(col, row, SpriteContainer.grass.getFxImage()));
                     }
                 }
             }
             row++;
         }
+        numberOfEnemies = jellies.size();
     }
 
+    //Game Over
     public static void gameOver() {
-
         isRunning = false;
-
-//        gc.clearRect(0, 0, Constants.SCREEN_WIDTH, Constants.SCREEN_HEIGHT);
-//        gc.setFill(Color.BLACK);
-//        gc.fillRect(0, 0, Constants.SCREEN_WIDTH, Constants.SCREEN_HEIGHT);
-//        gc.setFill(Color.WHITE);
-//
-//        gc.setFont(new Font("Arial", 100));
-//        gc.setTextAlign(TextAlignment.CENTER);
-//        gc.setTextBaseline(VPos.CENTER);
-//        gc.fillText("Game Over", Constants.SCREEN_WIDTH / 2.0, Constants.SCREEN_HEIGHT / 2.0);
     }
 
     private void render() {
-        entities.forEach(e -> e.render(gc));
 
-        if (!bombs.isEmpty()) { bombs.forEach(b -> b.render(gc)); }
+        tiles.forEach(e -> e.render(gc));
 
-        bomber.render(gc);
+        if (!bombs.isEmpty()) {
+            bombs.forEach(b -> b.render(gc));
+        }
+
         jellies.forEach(j -> j.render(gc));
+
+        if (!bombers.isEmpty()) {
+            bombers.forEach(bomber -> bomber.render(gc));
+        }
     }
 
     private void update() {
-        entities.forEach(Entity::update);
+
+        int count = 0;
+        for (Tile tile : tiles) {
+            tile.update();
+            if (tile instanceof Layered) {
+                if (((Layered) tile).canRemove) {
+                    tiles.set(count, ((Layered) tile).getBufferedEntity());
+                    if (!(((Layered) tile).getBufferedEntity() instanceof Grass)) {
+                        ((Layered) tiles.get(count)).clearRemove();
+                    }
+                }
+            }
+            count++;
+        }
 
         bombs.removeIf(Bomb::Removeable);
-        if (!bombs.isEmpty()) {  bombs.forEach(Bomb::update); }
+        if (!bombs.isEmpty()) {
+            bombs.forEach(Bomb::update);
+        }
 
-        bomber.update();
-        jellies.forEach(Jelly::update);
+        jellies.removeIf(Jelly::isDead);
+        if (!jellies.isEmpty()) {
+            jellies.forEach(Jelly::update);
+        }
+
+        bombers.removeIf(Player::isDead);
+        if (!bombers.isEmpty()) {
+            bombers.forEach(Player::update);
+        }
     }
 }
