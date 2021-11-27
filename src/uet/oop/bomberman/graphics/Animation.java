@@ -1,4 +1,4 @@
-package uet.oop.bomberman.entities;
+package uet.oop.bomberman.graphics;
 
 import uet.oop.bomberman.Level;
 import uet.oop.bomberman.graphics.Sprite;
@@ -24,6 +24,7 @@ public class Animation {
      */
     public static ArrayList<Sprite> jellyLeftAni = new ArrayList<>();
     public static ArrayList<Sprite> jellyRightAni = new ArrayList<>();
+    public static ArrayList<Sprite> jellyDeadAni = new ArrayList<>();
 
     /*
     Bomb Animation
@@ -55,6 +56,7 @@ public class Animation {
             //Jelly
             jellyLeftAni.add(SpriteSheet.sprites.get(9 + i * Constants.SPRITE_COL));
             jellyRightAni.add(SpriteSheet.sprites.get(10 + i * Constants.SPRITE_COL));
+            jellyDeadAni.add(SpriteSheet.sprites.get(Constants.SPRITE_COL * (i + 1) - 1));
 
             //Bomb & Flame
             bombAni.add(SpriteSheet.sprites.get(Constants.SPRITE_COL * 3 + i));

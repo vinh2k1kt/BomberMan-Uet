@@ -2,12 +2,9 @@ package uet.oop.bomberman.entities.block.destroyable;
 
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.image.Image;
-import uet.oop.bomberman.entities.Animation;
+import uet.oop.bomberman.graphics.Animation;
 import uet.oop.bomberman.entities.Entity;
 import uet.oop.bomberman.entities.block.Layered;
-import uet.oop.bomberman.util.Constants;
-
-import java.io.File;
 
 public class Brick extends Layered {
 

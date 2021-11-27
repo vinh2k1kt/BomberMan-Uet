@@ -1,4 +1,4 @@
-package uet.oop.bomberman.entities.block;
+package uet.oop.bomberman.entities.block.undestroyable;
 
 import javafx.scene.image.Image;
 import uet.oop.bomberman.entities.Entity;

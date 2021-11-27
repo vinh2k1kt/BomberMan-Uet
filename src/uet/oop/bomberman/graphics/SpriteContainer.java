@@ -1,7 +1,6 @@
-package uet.oop.bomberman.util;
+package uet.oop.bomberman.graphics;
 
-import uet.oop.bomberman.graphics.Sprite;
-import uet.oop.bomberman.graphics.SpriteSheet;
+import uet.oop.bomberman.util.Constants;
 
 public class SpriteContainer {
 
@@ -24,6 +23,7 @@ public class SpriteContainer {
      * Enemies
      */
     public static final Sprite Jelly = SpriteSheet.sprites.get(9);
+    public static final Sprite deadJelly = SpriteSheet.sprites.get(Constants.SPRITE_COL * 3 + 9);
 
     /**
      * Bomb

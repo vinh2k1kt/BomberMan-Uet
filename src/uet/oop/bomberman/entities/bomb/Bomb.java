@@ -5,7 +5,8 @@ import javafx.scene.image.Image;
 import javafx.scene.shape.Rectangle;
 import uet.oop.bomberman.Level;
 import uet.oop.bomberman.entities.Entity;
-import uet.oop.bomberman.entities.Animation;
+import uet.oop.bomberman.entities.moving.enemy.Jelly;
+import uet.oop.bomberman.graphics.Animation;
 import uet.oop.bomberman.entities.moving.player.Player;
 import uet.oop.bomberman.graphics.Sprite;
 import uet.oop.bomberman.util.Constants;
@@ -21,12 +22,12 @@ public class Bomb extends Entity {
     public int explosionTime = 21;// thoi gian de no
 
     protected final Player owner;
-    protected int timeBeforeExploded = 120;
     protected boolean exploded = false;
-    protected boolean allowedToPassThru= true;
+    protected boolean allowedToPassThru = true;
     protected boolean canRemove = false;
     protected ArrayList<Flame> flames = new ArrayList<>();
 
+    public int timeBeforeExploded = 120;
 
     public Bomb(double xUnit, double yUnit, Image img, Player owner) {
         super(xUnit, yUnit, img);
@@ -77,7 +78,7 @@ public class Bomb extends Entity {
                 updateFlame();
             }
 
-            if(explosionTime > 0)
+            if (explosionTime > 0)
                 explosionTime--;
             else
                 this.canRemove = true;
@@ -103,19 +104,27 @@ public class Bomb extends Entity {
         this.ani = Animation.explosion_center;
         for (int i = 0; i < 5; i++) {
             flames.add(new Flame(this.x / Constants.TILES_SIZE, this.y / Constants.TILES_SIZE
-            , null, i, Level.bomber));
+                    , null, i, this.owner));
         }
+    }
+
+    public void explodedImdiately() {
+        this.timeBeforeExploded = 0;
     }
 
     public boolean Removeable() {
         return this.canRemove;
     }
 
-    private void firtTime() {
-        Rectangle rectangle = new Rectangle(x, y, Constants.TILES_SIZE, Constants.TILES_SIZE);
-        if (allowedToPassThru && !this.owner.hitBox.getBoundsInParent().intersects(rectangle.getBoundsInParent())) {
+
+    public boolean canPassThru() {
+        return allowedToPassThru;
+    }
+
+    public void firtTime() {
+        this.hitBox = new Rectangle(x, y, Constants.TILES_SIZE, Constants.TILES_SIZE);
+        if (allowedToPassThru && !this.owner.hitBox.getBoundsInParent().intersects(hitBox.getBoundsInParent())) {
             allowedToPassThru = false;
-            this.hitBox = rectangle;
         }
     }
 }

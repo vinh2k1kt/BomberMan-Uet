@@ -4,28 +4,24 @@ import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.image.Image;
 import uet.oop.bomberman.Level;
 import uet.oop.bomberman.entities.bomb.Bomb;
-import uet.oop.bomberman.entities.Animation;
+import uet.oop.bomberman.graphics.Animation;
 import uet.oop.bomberman.entities.moving.Character;
 import uet.oop.bomberman.entities.moving.CollisionChecker;
 import uet.oop.bomberman.util.Constants;
 import uet.oop.bomberman.util.Direction;
-import uet.oop.bomberman.util.SpriteContainer;
+import uet.oop.bomberman.graphics.SpriteContainer;
 
 public class Player extends Character {
 
     //    private List<Bomb> bombs;
     boolean isMoving;
     boolean up, down, left, right;
-
-    private int count = 0;
-    private int index = 0;
-    private int dx, dy;
+    private double dx, dy;
 
     private final CollisionChecker collisionChecker = new CollisionChecker(Level.levelScene, this);
 
     public int bombNum = 1;
-    public int bombRadius = 2;
-    public boolean alive;
+    public int bombRange = 2;
 
     public Player(double x, double y, Image img) {
         super(x, y, img);
@@ -113,11 +109,12 @@ public class Player extends Character {
     @Override
     public void update() {
 
-        /*
-        Update hitBox
-         */
-
         if (alive) {
+
+            /*
+            Update Hitbox
+             */
+
             hitBox.setX(x + 4);
             hitBox.setY(y + 4);
             hitBox.setWidth(Constants.TILES_SIZE - 12);
@@ -132,16 +129,18 @@ public class Player extends Character {
                 currentDirection = Direction.NONE;
                 isMoving = false;
             }
+        } else {
+            super.afterDead(Animation.deadAni);
         }
     }
 
     private void calculateMove() {
         dx = 0;
         dy = 0;
-        if (up) dy = -Constants.PLAYER_SPEED;
-        if (down) dy = Constants.PLAYER_SPEED;
-        if (left) dx = -Constants.PLAYER_SPEED;
-        if (right) dx = Constants.PLAYER_SPEED;
+        if (up) dy = -speed;
+        if (down) dy = speed;
+        if (left) dx = -speed;
+        if (right) dx = speed;
     }
 
     private void move() {
@@ -163,6 +162,23 @@ public class Player extends Character {
         }
     }
 
+    public void isKill() {
+        if (alive) {
+            this.delay = 10;
+            this.alive = false;
+            index = 0;
+            count = 0;
+
+            currentDirection = Direction.NONE;
+            resetTracking();
+
+            //Remove KeyHandler;
+            Level.levelScene.setOnKeyReleased(keyEvent -> {
+
+            });
+        }
+    }
+
     private void chooseSprite() {
 
         /*
@@ -170,7 +186,6 @@ public class Player extends Character {
          */
         count++;
 
-        int delay = 7;
         if (count == delay) {
             index++;
             count = 0;
@@ -190,23 +205,6 @@ public class Player extends Character {
                 case RIGHT -> this.img = Animation.rightAni.get(index).getFxImage();
             }
         }
-    }
-
-    public void isKill() {
-        index = 0;
-        count = 0;
-
-        currentDirection = Direction.NONE;
-        resetTracking();
-        alive = false;
-        while (index < Animation.deadAni.size() - 1) {
-            chooseSprite();
-        }
-
-        //Remove KeyHandler;
-        Level.levelScene.setOnKeyReleased(keyEvent -> {
-
-        });
     }
 
     public void render(GraphicsContext gc) {

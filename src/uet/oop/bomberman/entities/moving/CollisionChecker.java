@@ -24,7 +24,7 @@ public class CollisionChecker {
         switch (character.currentDirection) {
             case UP -> {
                 character.setHitBox(character.getX() + Constants.HGAP
-                        , character.getY() + Constants.VGAP - Constants.PLAYER_SPEED);
+                        , character.getY() + Constants.VGAP - character.speed);
 
                 checkHitbox(character);
 
@@ -41,7 +41,7 @@ public class CollisionChecker {
                 for (Bomb bomb : Level.bombs) {
                     if (character.hitBox.getBoundsInParent().intersects(bomb.hitBox.getBoundsInParent())) {
                         character.setHitBox(character.getX() + Constants.HGAP, character.getY() + Constants.VGAP);
-                        return true;
+                        return !(character instanceof Player) || !bomb.canPassThru();
                     }
                 }
 
@@ -51,7 +51,7 @@ public class CollisionChecker {
             case DOWN -> {
 
                 character.setHitBox(character.getX() + Constants.HGAP
-                        , character.getY() + Constants.VGAP + Constants.PLAYER_SPEED);
+                        , character.getY() + Constants.VGAP + character.speed);
 
                 checkHitbox(character);
 
@@ -68,7 +68,7 @@ public class CollisionChecker {
                 for (Bomb bomb : Level.bombs) {
                     if (character.hitBox.getBoundsInParent().intersects(bomb.hitBox.getBoundsInParent())) {
                         character.setHitBox(character.getX() + Constants.HGAP, character.getY() + Constants.VGAP);
-                        return true;
+                        return !(character instanceof Player) || !bomb.canPassThru();
                     }
                 }
 
@@ -76,7 +76,7 @@ public class CollisionChecker {
                 return false;
             }
             case LEFT -> {
-                character.setHitBox(character.getX() + Constants.HGAP - Constants.PLAYER_SPEED
+                character.setHitBox(character.getX() + Constants.HGAP - character.speed
                         , character.getY() + Constants.VGAP);
 
                 checkHitbox(character);
@@ -94,7 +94,7 @@ public class CollisionChecker {
                 for (Bomb bomb : Level.bombs) {
                     if (character.hitBox.getBoundsInParent().intersects(bomb.hitBox.getBoundsInParent())) {
                         character.setHitBox(character.getX() + Constants.HGAP, character.getY() + Constants.VGAP);
-                        return true;
+                        return !(character instanceof Player) || !bomb.canPassThru();
                     }
                 }
 
@@ -102,7 +102,7 @@ public class CollisionChecker {
                 return false;
             }
             case RIGHT -> {
-                character.setHitBox(character.getX() + Constants.HGAP + Constants.PLAYER_SPEED
+                character.setHitBox(character.getX() + Constants.HGAP + character.speed
                         , character.getY() + Constants.VGAP);
 
                 checkHitbox(character);
@@ -120,7 +120,7 @@ public class CollisionChecker {
                 for (Bomb bomb : Level.bombs) {
                     if (character.hitBox.getBoundsInParent().intersects(bomb.hitBox.getBoundsInParent())) {
                         character.setHitBox(character.getX() + Constants.HGAP, character.getY() + Constants.VGAP);
-                        return true;
+                        return !(character instanceof Player) || !bomb.canPassThru();
                     }
                 }
 
@@ -139,6 +139,8 @@ public class CollisionChecker {
 
     public void checkHitbox(Character character) {
         Level.gc.setFill(Constants.hitBoxColor);
+
+//        Level.gc.setFill(Color.BLUE);
         Level.gc.fillRect(character.hitBox.getX(), character.hitBox.getY()
                 , character.hitBox.getWidth(), character.hitBox.getHeight());
     }

@@ -4,7 +4,7 @@ import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.image.Image;
 import uet.oop.bomberman.Level;
 import uet.oop.bomberman.entities.Entity;
-import uet.oop.bomberman.entities.block.Wall;
+import uet.oop.bomberman.entities.block.undestroyable.Wall;
 import uet.oop.bomberman.entities.block.destroyable.Brick;
 import uet.oop.bomberman.entities.moving.player.Player;
 import uet.oop.bomberman.util.Constants;
@@ -15,16 +15,17 @@ public class Flame extends Entity {
 
     protected int direction;
     protected ArrayList<FlameSegment> flameSegments = new ArrayList<>();
-    protected Player cause = Level.bomber;
+    protected Player cause;
 
     public Flame(double xUnit, double yUnit, Image img, int direction, Player cause) {
         super(xUnit, yUnit, img);
         this.direction = direction;
+        this.cause = cause;
         createFlameSegment();
     }
 
     private void createFlameSegment() {
-        
+
         int flameLength = calculateFlameLength();
 
         double xUnit = x / Constants.TILES_SIZE;
@@ -54,8 +55,9 @@ public class Flame extends Entity {
         switch (direction) {
             case 0 -> {
                 yUnit++;
-                while (length < cause.bombRadius) {
-                    if (Level.entities.get((int) (xUnit + yUnit * Constants.COLUMNS + length * Constants.COLUMNS)) instanceof Wall) {
+                while (length < cause.bombRange) {
+                    if (Level.entities.get((int) (xUnit + yUnit * Constants.COLUMNS + length * Constants.COLUMNS)) instanceof Wall
+                            || Level.entities.get((int) (xUnit + yUnit * Constants.COLUMNS + length)) instanceof Bomb) {
                         return length;
                     }
 
@@ -68,8 +70,9 @@ public class Flame extends Entity {
             }
             case 1 -> {
                 yUnit--;
-                while (length < cause.bombRadius) {
-                    if (Level.entities.get((int) (xUnit + yUnit * Constants.COLUMNS - length * Constants.COLUMNS)) instanceof Wall) {
+                while (length < cause.bombRange) {
+                    if (Level.entities.get((int) (xUnit + yUnit * Constants.COLUMNS - length * Constants.COLUMNS)) instanceof Wall
+                            || Level.entities.get((int) (xUnit + yUnit * Constants.COLUMNS + length)) instanceof Bomb) {
                         return length;
                     }
 
@@ -82,12 +85,13 @@ public class Flame extends Entity {
             }
             case 2 -> {
                 xUnit--;
-                while (length < cause.bombRadius) {
+                while (length < cause.bombRange) {
                     if (Level.entities.get((int) (xUnit + yUnit * Constants.COLUMNS - length)) instanceof Wall) {
                         return length;
                     }
 
-                    if (Level.entities.get((int) (xUnit + yUnit * Constants.COLUMNS + length)) instanceof Brick) {
+                    if (Level.entities.get((int) (xUnit + yUnit * Constants.COLUMNS + length)) instanceof Brick
+                            || Level.entities.get((int) (xUnit + yUnit * Constants.COLUMNS + length)) instanceof Bomb) {
                         return ++length;
                     }
 
@@ -96,8 +100,9 @@ public class Flame extends Entity {
             }
             case 3 -> {
                 xUnit++;
-                while (length < cause.bombRadius) {
-                    if (Level.entities.get((int) (xUnit + yUnit * Constants.COLUMNS + length)) instanceof Wall) {
+                while (length < cause.bombRange) {
+                    if (Level.entities.get((int) (xUnit + yUnit * Constants.COLUMNS + length)) instanceof Wall
+                            || Level.entities.get((int) (xUnit + yUnit * Constants.COLUMNS + length)) instanceof Bomb) {
                         return length;
                     }
 

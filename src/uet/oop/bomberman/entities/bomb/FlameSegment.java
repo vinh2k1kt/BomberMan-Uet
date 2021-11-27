@@ -3,9 +3,11 @@ package uet.oop.bomberman.entities.bomb;
 import javafx.scene.image.Image;
 import javafx.scene.shape.Rectangle;
 import uet.oop.bomberman.Level;
-import uet.oop.bomberman.entities.Animation;
+import uet.oop.bomberman.entities.moving.player.Player;
+import uet.oop.bomberman.graphics.Animation;
 import uet.oop.bomberman.entities.Entity;
 import uet.oop.bomberman.entities.block.destroyable.Brick;
+import uet.oop.bomberman.entities.moving.enemy.Jelly;
 import uet.oop.bomberman.graphics.Sprite;
 import uet.oop.bomberman.util.Constants;
 
@@ -86,8 +88,23 @@ public class FlameSegment extends Entity {
     }
 
     public void collided() {
-        if (this.hitBox.getBoundsInParent().intersects(Level.bomber.hitBox.getBoundsInParent())) {
-            Level.bomber.isKill();
+
+        for (Bomb bomb : Level.bombs) {
+            if (this.hitBox.getBoundsInParent().intersects(bomb.hitBox.getBoundsInParent())) {
+                bomb.explodedImdiately();
+            }
+        }
+
+        for (Player bomber : Level.bombers) {
+            if (this.hitBox.getBoundsInParent().intersects(bomber.hitBox.getBoundsInParent())) {
+                bomber.isKill();
+            }
+        }
+
+        for (Jelly jelly : Level.jellies) {
+            if (this.hitBox.getBoundsInParent().intersects(jelly.hitBox.getBoundsInParent())) {
+                jelly.isKill();
+            }
         }
 
         if (Level.entities.get((int) (x / Constants.TILES_SIZE +  (y / Constants.TILES_SIZE) * Constants.COLUMNS))
