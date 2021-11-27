@@ -1,36 +1,27 @@
 package uet.oop.bomberman.entities.moving.player;
 
-import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.image.Image;
 import uet.oop.bomberman.Level;
-import uet.oop.bomberman.entities.Animation;
-import uet.oop.bomberman.entities.Entity;
-import uet.oop.bomberman.entities.Item.bombItem;
-import uet.oop.bomberman.entities.Item.speedItem;
-import uet.oop.bomberman.entities.bomb.Bomb;
+import uet.oop.bomberman.entities.still.bomb.Bomb;
+import uet.oop.bomberman.graphics.Animation;
 import uet.oop.bomberman.entities.moving.Character;
 import uet.oop.bomberman.entities.moving.CollisionChecker;
 import uet.oop.bomberman.util.Constants;
 import uet.oop.bomberman.util.Direction;
-import uet.oop.bomberman.util.SpriteContainer;
-
-import static uet.oop.bomberman.util.Constants.PLAYER_SPEED;
+import uet.oop.bomberman.graphics.SpriteContainer;
 
 public class Player extends Character {
 
     //    private List<Bomb> bombs;
     boolean isMoving;
     boolean up, down, left, right;
-
-    private int count = 0;
-    private int index = 0;
-    private int dx, dy;
+    private double dx, dy;
+    private double lastX = -1, lastY = -1;
 
     private final CollisionChecker collisionChecker = new CollisionChecker(Level.levelScene, this);
 
-    public int bombNum = 1;
-    public int bombRadius = 1;
-    public boolean alive;
+    public int bombNum = 2;
+    public int bombRange = 2;
 
     public Player(double x, double y, Image img) {
         super(x, y, img);
@@ -57,10 +48,17 @@ public class Player extends Character {
                 }
                 case SPACE -> {
                     if (Level.bombs.size() < bombNum) {
-                        Level.bombs.add(new Bomb(Math.round(this.x / Constants.TILES_SIZE)
+                        Bomb bomb = new Bomb(Math.round(this.x / Constants.TILES_SIZE)
                                 , Math.round(this.y / Constants.TILES_SIZE)
-                                , SpriteContainer.Bomb.getFxImage(), this));
+                                , SpriteContainer.Bomb.getFxImage(), this);
+                        if (!(Math.round(bomb.x / Constants.TILES_SIZE) == lastX) ||
+                                !(Math.round(bomb.y / Constants.TILES_SIZE) == lastY)) {
+                            Level.bombs.add(bomb);
+                            lastX = Math.round(this.x / Constants.TILES_SIZE);
+                            lastY = Math.round(this.y / Constants.TILES_SIZE);
+                        }
                     }
+
                     if (currentDirection != Direction.NONE) {
                         keepMoving();
                         isMoving = true;
@@ -114,19 +112,28 @@ public class Player extends Character {
         up = false;
     }
 
-
+    private void resetBombTracking() {
+        if ((Math.round(this.x / Constants.TILES_SIZE) != lastX)
+        || (Math.round(this.y / Constants.TILES_SIZE) != lastY)) {
+            lastX = -1;
+            lastY = -1;
+        }
+    }
     @Override
     public void update() {
 
-        /*
-        Update hitBox
-         */
-
         if (alive) {
+
+            /*
+            Update Hitbox
+             */
+
             hitBox.setX(x + 4);
             hitBox.setY(y + 4);
             hitBox.setWidth(Constants.TILES_SIZE - 12);
             hitBox.setHeight(Constants.TILES_SIZE - 8);
+
+            resetBombTracking();
 
             calculateMove();
 
@@ -137,16 +144,18 @@ public class Player extends Character {
                 currentDirection = Direction.NONE;
                 isMoving = false;
             }
+        } else {
+            super.afterDead(Animation.deadAni);
         }
     }
 
     private void calculateMove() {
         dx = 0;
         dy = 0;
-        if (up) dy = -PLAYER_SPEED;
-        if (down) dy = PLAYER_SPEED;
-        if (left) dx = -PLAYER_SPEED;
-        if (right) dx = PLAYER_SPEED;
+        if (up) dy = -speed;
+        if (down) dy = speed;
+        if (left) dx = -speed;
+        if (right) dx = speed;
     }
 
     private void move() {
@@ -168,6 +177,23 @@ public class Player extends Character {
         }
     }
 
+    public void isKill() {
+        if (alive) {
+            this.delay = 10;
+            this.alive = false;
+            index = 0;
+            count = 0;
+
+            currentDirection = Direction.NONE;
+            resetTracking();
+
+            //Remove KeyHandler;
+            Level.levelScene.setOnKeyReleased(keyEvent -> {
+
+            });
+        }
+    }
+
     private void chooseSprite() {
 
         /*
@@ -175,7 +201,6 @@ public class Player extends Character {
          */
         count++;
 
-        int delay = 7;
         if (count == delay) {
             index++;
             count = 0;
@@ -195,42 +220,5 @@ public class Player extends Character {
                 case RIGHT -> this.img = Animation.rightAni.get(index).getFxImage();
             }
         }
-    }
-
-    public void isKill() {
-        index = 0;
-        count = 0;
-
-        currentDirection = Direction.NONE;
-        resetTracking();
-        alive = false;
-        while (index < Animation.deadAni.size() - 1) {
-            chooseSprite();
-        }
-
-        //Remove KeyHandler;
-        Level.levelScene.setOnKeyReleased(keyEvent -> {
-
-        });
-    }
-
-    public void render(GraphicsContext gc) {
-        gc.drawImage(this.img, x, y, Constants.TILES_SIZE, Constants.TILES_SIZE);
-
-//        Hit box check
-        gc.setFill(Constants.hitBoxColor);
-        gc.fillRect(hitBox.getX(), hitBox.getY(), hitBox.getWidth(), hitBox.getHeight());
-    }
-
-    public void pickUpItem(Entity e) {
-        if(e instanceof bombItem) {
-            bombNum++;
-        }
-        if(e instanceof speedItem) {
-            PLAYER_SPEED = PLAYER_SPEED*2;
-        }
-        //if(e instanceof flameItem) {
-
-        //}
     }
 }

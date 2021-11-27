@@ -3,8 +3,9 @@ package uet.oop.bomberman.entities.moving;
 import javafx.scene.Scene;
 import uet.oop.bomberman.Level;
 import uet.oop.bomberman.entities.Entity;
-import uet.oop.bomberman.entities.Item.Items;
-import uet.oop.bomberman.entities.bomb.Bomb;
+import uet.oop.bomberman.entities.still.block.item.Item;
+import uet.oop.bomberman.entities.still.block.item.Portal;
+import uet.oop.bomberman.entities.still.bomb.Bomb;
 import uet.oop.bomberman.entities.moving.player.Player;
 import uet.oop.bomberman.util.Constants;
 
@@ -23,27 +24,16 @@ public class CollisionChecker {
         // if Collided then reset hitbox back to normal mode not predict mode
         switch (character.currentDirection) {
             case UP -> {
-                character.setHitBox(character.getX() + Constants.HGAP
-                        , character.getY() + Constants.VGAP - Constants.PLAYER_SPEED);
+                character.setHitBox(character.x + Constants.HGAP
+                        , character.y + Constants.VGAP - character.speed);
 
                 checkHitbox(character);
-                //Player pick up item
-                if(character instanceof Player) {
-                    for(Entity e : Level.entities) {
-                        if(e instanceof Items) {
-                            if(character.hitBox.getBoundsInParent().intersects(e.hitBox.getBoundsInParent())) {
-                                Level.entities.remove(e);
-                                Level.bomber.pickUpItem(e);
-                                break;
-                            }
-                        }
-                    }
-                }
+
                 //Check collied with tiles
-                for (Entity e : Level.entities) {
-                    if (e != character
+                for (Entity e : Level.tiles) {
+                    if (e != character && !(e instanceof Item)
                             && character.hitBox.getBoundsInParent().intersects(e.hitBox.getBoundsInParent())) {
-                        character.setHitBox(character.getX() + Constants.HGAP, character.getY() + Constants.VGAP);
+                        character.setHitBox(character.x + Constants.HGAP, character.y + Constants.VGAP);
                         return true;
                     }
                 }
@@ -51,37 +41,26 @@ public class CollisionChecker {
                 //Check collied with bombs
                 for (Bomb bomb : Level.bombs) {
                     if (character.hitBox.getBoundsInParent().intersects(bomb.hitBox.getBoundsInParent())) {
-                        character.setHitBox(character.getX() + Constants.HGAP, character.getY() + Constants.VGAP);
-                        return true;
+                        character.setHitBox(character.x + Constants.HGAP, character.y + Constants.VGAP);
+                        return !(character instanceof Player) || !bomb.canPassThru();
                     }
                 }
 
-                character.setHitBox(character.getX() + Constants.HGAP, character.getY() + Constants.VGAP);
+                character.setHitBox(character.x + Constants.HGAP, character.y + Constants.VGAP);
                 return false;
             }
             case DOWN -> {
 
-                character.setHitBox(character.getX() + Constants.HGAP
-                        , character.getY() + Constants.VGAP + Constants.PLAYER_SPEED);
+                character.setHitBox(character.x + Constants.HGAP
+                        , character.y + Constants.VGAP + character.speed);
 
                 checkHitbox(character);
-                //Player pick up item
-                if(character instanceof Player) {
-                    for(Entity e : Level.entities) {
-                        if(e instanceof Items) {
-                            if(character.hitBox.getBoundsInParent().intersects(e.hitBox.getBoundsInParent())) {
-                                Level.entities.remove(e);
-                                Level.bomber.pickUpItem(e);
-                                break;
-                            }
-                        }
-                    }
-                }
+
                 // if Collided then reset hitbox back to normal mode not predict mode
-                for (Entity e : Level.entities) {
-                    if (e != character
+                for (Entity e : Level.tiles) {
+                    if (e != character && !(e instanceof Item)
                             && character.hitBox.getBoundsInParent().intersects(e.hitBox.getBoundsInParent())) {
-                        character.setHitBox(character.getX() + Constants.HGAP, character.getY() + Constants.VGAP);
+                        character.setHitBox(character.x + Constants.HGAP, character.y + Constants.VGAP);
                         return true;
                     }
                 }
@@ -89,36 +68,25 @@ public class CollisionChecker {
                 //Check collied with bombs
                 for (Bomb bomb : Level.bombs) {
                     if (character.hitBox.getBoundsInParent().intersects(bomb.hitBox.getBoundsInParent())) {
-                        character.setHitBox(character.getX() + Constants.HGAP, character.getY() + Constants.VGAP);
-                        return true;
+                        character.setHitBox(character.x + Constants.HGAP, character.y + Constants.VGAP);
+                        return !(character instanceof Player) || !bomb.canPassThru();
                     }
                 }
 
-                character.setHitBox(character.getX() + Constants.HGAP, character.getY() + Constants.VGAP);
+                character.setHitBox(character.x + Constants.HGAP, character.y + Constants.VGAP);
                 return false;
             }
             case LEFT -> {
-                character.setHitBox(character.getX() + Constants.HGAP - Constants.PLAYER_SPEED
-                        , character.getY() + Constants.VGAP);
+                character.setHitBox(character.x + Constants.HGAP - character.speed
+                        , character.y + Constants.VGAP);
 
                 checkHitbox(character);
-                //Player pick up item
-                if(character instanceof Player) {
-                    for(Entity e : Level.entities) {
-                        if(e instanceof Items) {
-                            if(character.hitBox.getBoundsInParent().intersects(e.hitBox.getBoundsInParent())) {
-                                Level.entities.remove(e);
-                                Level.bomber.pickUpItem(e);
-                                break;
-                            }
-                        }
-                    }
-                }
+
                 // if Collided then reset hitbox back to normal mode not predict mode
-                for (Entity e : Level.entities) {
-                    if (e != character
+                for (Entity e : Level.tiles) {
+                    if (e != character && !(e instanceof Item)
                             && character.hitBox.getBoundsInParent().intersects(e.hitBox.getBoundsInParent())) {
-                        character.setHitBox(character.getX() + Constants.HGAP, character.getY() + Constants.VGAP);
+                        character.setHitBox(character.x + Constants.HGAP, character.y + Constants.VGAP);
                         return true;
                     }
                 }
@@ -126,36 +94,25 @@ public class CollisionChecker {
                 //Check collied with bombs
                 for (Bomb bomb : Level.bombs) {
                     if (character.hitBox.getBoundsInParent().intersects(bomb.hitBox.getBoundsInParent())) {
-                        character.setHitBox(character.getX() + Constants.HGAP, character.getY() + Constants.VGAP);
-                        return true;
+                        character.setHitBox(character.x + Constants.HGAP, character.y + Constants.VGAP);
+                        return !(character instanceof Player) || !bomb.canPassThru();
                     }
                 }
 
-                character.setHitBox(character.getX() + Constants.HGAP, character.getY() + Constants.VGAP);
+                character.setHitBox(character.x + Constants.HGAP, character.y + Constants.VGAP);
                 return false;
             }
             case RIGHT -> {
-                character.setHitBox(character.getX() + Constants.HGAP + Constants.PLAYER_SPEED
-                        , character.getY() + Constants.VGAP);
+                character.setHitBox(character.x + Constants.HGAP + character.speed
+                        , character.y + Constants.VGAP);
 
                 checkHitbox(character);
-                //Player pick up item
-                if(character instanceof Player) {
-                    for(Entity e : Level.entities) {
-                        if(e instanceof Items) {
-                            if(character.hitBox.getBoundsInParent().intersects(e.hitBox.getBoundsInParent())) {
-                                Level.entities.remove(e);
-                                Level.bomber.pickUpItem(e);
-                                break;
-                            }
-                        }
-                    }
-                }
+
                 // if Collided then reset hitbox back to normal mode not predict mode
-                for (Entity e : Level.entities) {
-                    if (e != character
+                for (Entity e : Level.tiles) {
+                    if (e != character && !(e instanceof Item)
                             && character.hitBox.getBoundsInParent().intersects(e.hitBox.getBoundsInParent())) {
-                        character.setHitBox(character.getX() + Constants.HGAP, character.getY() + Constants.VGAP);
+                        character.setHitBox(character.x + Constants.HGAP, character.y + Constants.VGAP);
                         return true;
                     }
                 }
@@ -163,12 +120,12 @@ public class CollisionChecker {
                 //Check collied with bombs
                 for (Bomb bomb : Level.bombs) {
                     if (character.hitBox.getBoundsInParent().intersects(bomb.hitBox.getBoundsInParent())) {
-                        character.setHitBox(character.getX() + Constants.HGAP, character.getY() + Constants.VGAP);
-                        return true;
+                        character.setHitBox(character.x + Constants.HGAP, character.y + Constants.VGAP);
+                        return !(character instanceof Player) || !bomb.canPassThru();
                     }
                 }
 
-                character.setHitBox(character.getX() + Constants.HGAP, character.getY() + Constants.VGAP);
+                character.setHitBox(character.x + Constants.HGAP, character.y + Constants.VGAP);
                 return false;
             }
         }
@@ -182,7 +139,8 @@ public class CollisionChecker {
     }
 
     public void checkHitbox(Character character) {
-        Level.gc.setFill(Constants.hitBoxColor);
+        Level.gc.setFill(Constants.PREDICTING_HITBOX_COLOR);
+
         Level.gc.fillRect(character.hitBox.getX(), character.hitBox.getY()
                 , character.hitBox.getWidth(), character.hitBox.getHeight());
     }
