@@ -1,9 +1,8 @@
 package uet.oop.bomberman.entities.moving.player;
 
-import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.image.Image;
 import uet.oop.bomberman.Level;
-import uet.oop.bomberman.entities.bomb.Bomb;
+import uet.oop.bomberman.entities.still.bomb.Bomb;
 import uet.oop.bomberman.graphics.Animation;
 import uet.oop.bomberman.entities.moving.Character;
 import uet.oop.bomberman.entities.moving.CollisionChecker;
@@ -17,10 +16,11 @@ public class Player extends Character {
     boolean isMoving;
     boolean up, down, left, right;
     private double dx, dy;
+    private double lastX = -1, lastY = -1;
 
     private final CollisionChecker collisionChecker = new CollisionChecker(Level.levelScene, this);
 
-    public int bombNum = 1;
+    public int bombNum = 2;
     public int bombRange = 2;
 
     public Player(double x, double y, Image img) {
@@ -48,10 +48,17 @@ public class Player extends Character {
                 }
                 case SPACE -> {
                     if (Level.bombs.size() < bombNum) {
-                        Level.bombs.add(new Bomb(Math.round(this.x / Constants.TILES_SIZE)
+                        Bomb bomb = new Bomb(Math.round(this.x / Constants.TILES_SIZE)
                                 , Math.round(this.y / Constants.TILES_SIZE)
-                                , SpriteContainer.Bomb.getFxImage(), this));
+                                , SpriteContainer.Bomb.getFxImage(), this);
+                        if (!(Math.round(bomb.x / Constants.TILES_SIZE) == lastX) ||
+                                !(Math.round(bomb.y / Constants.TILES_SIZE) == lastY)) {
+                            Level.bombs.add(bomb);
+                            lastX = Math.round(this.x / Constants.TILES_SIZE);
+                            lastY = Math.round(this.y / Constants.TILES_SIZE);
+                        }
                     }
+
                     if (currentDirection != Direction.NONE) {
                         keepMoving();
                         isMoving = true;
@@ -105,7 +112,13 @@ public class Player extends Character {
         up = false;
     }
 
-
+    private void resetBombTracking() {
+        if ((Math.round(this.x / Constants.TILES_SIZE) != lastX)
+        || (Math.round(this.y / Constants.TILES_SIZE) != lastY)) {
+            lastX = -1;
+            lastY = -1;
+        }
+    }
     @Override
     public void update() {
 
@@ -119,6 +132,8 @@ public class Player extends Character {
             hitBox.setY(y + 4);
             hitBox.setWidth(Constants.TILES_SIZE - 12);
             hitBox.setHeight(Constants.TILES_SIZE - 8);
+
+            resetBombTracking();
 
             calculateMove();
 
@@ -205,13 +220,5 @@ public class Player extends Character {
                 case RIGHT -> this.img = Animation.rightAni.get(index).getFxImage();
             }
         }
-    }
-
-    public void render(GraphicsContext gc) {
-        gc.drawImage(this.img, x, y, Constants.TILES_SIZE, Constants.TILES_SIZE);
-
-//        Hit box check
-        gc.setFill(Constants.hitBoxColor);
-        gc.fillRect(hitBox.getX(), hitBox.getY(), hitBox.getWidth(), hitBox.getHeight());
     }
 }

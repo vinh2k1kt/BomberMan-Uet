@@ -1,5 +1,6 @@
 package uet.oop.bomberman.entities.moving;
 
+import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.image.Image;
 import uet.oop.bomberman.Level;
 import uet.oop.bomberman.entities.Entity;
@@ -34,14 +35,6 @@ public abstract class Character extends Entity {
         hitBox.setY(y);
         hitBox.setWidth(Constants.SOLID_AREA_WIDTH);
         hitBox.setHeight(Constants.SOLID_AREA_HEIGHT);
-    }
-
-    public double getX() {
-        return x;
-    }
-
-    public double getY() {
-        return y;
     }
 
     public void isKill() {
@@ -86,6 +79,14 @@ public abstract class Character extends Entity {
         }
 
         this.img = deadAni.get(index).getFxImage();
+    }
+
+    public void render(GraphicsContext gc) {
+        gc.drawImage(this.img, x, y, Constants.TILES_SIZE, Constants.TILES_SIZE);
+
+//        Hit box check
+        gc.setFill(Constants.HITBOX_COLOR);
+        gc.fillRect(hitBox.getX(), hitBox.getY(), hitBox.getWidth(), hitBox.getHeight());
     }
 
     public boolean isDead() {

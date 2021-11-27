@@ -43,7 +43,7 @@ public class Jelly extends Character {
                 collisionChecker.Kill(bomber);
             }
         } else {
-            if (renderDeadImageTime > 0) {
+            if (renderDeadImageTime > 20) {
                 this.img = SpriteContainer.deadJelly.getFxImage();
                 renderDeadImageTime--;
             } else {
@@ -76,6 +76,7 @@ public class Jelly extends Character {
 
     public void isKill() {
         if (alive) {
+            Level.numberOfEnemies--;
             this.delay = 10;
             this.alive = false;
             index = 0;

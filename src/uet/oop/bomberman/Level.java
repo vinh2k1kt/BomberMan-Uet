@@ -1,19 +1,20 @@
 package uet.oop.bomberman;
 
-import uet.oop.bomberman.entities.Entity;
 import javafx.animation.AnimationTimer;
 import javafx.scene.Group;
 import javafx.scene.Scene;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
-import uet.oop.bomberman.entities.block.Layered;
-import uet.oop.bomberman.entities.block.destroyable.Brick;
-import uet.oop.bomberman.entities.block.undestroyable.Grass;
-import uet.oop.bomberman.entities.block.undestroyable.Wall;
-import uet.oop.bomberman.entities.block.item.BombItem;
-import uet.oop.bomberman.entities.block.item.FlameItem;
-import uet.oop.bomberman.entities.block.item.SpeedItem;
-import uet.oop.bomberman.entities.bomb.Bomb;
+import uet.oop.bomberman.entities.still.Tile;
+import uet.oop.bomberman.entities.still.block.Layered;
+import uet.oop.bomberman.entities.still.block.destroyable.Brick;
+import uet.oop.bomberman.entities.still.block.item.Portal;
+import uet.oop.bomberman.entities.still.block.undestroyable.Grass;
+import uet.oop.bomberman.entities.still.block.undestroyable.Wall;
+import uet.oop.bomberman.entities.still.block.item.BombItem;
+import uet.oop.bomberman.entities.still.block.item.FlameItem;
+import uet.oop.bomberman.entities.still.block.item.SpeedItem;
+import uet.oop.bomberman.entities.still.bomb.Bomb;
 import uet.oop.bomberman.entities.moving.enemy.Jelly;
 import uet.oop.bomberman.entities.moving.player.Player;
 import uet.oop.bomberman.util.Constants;
@@ -31,9 +32,10 @@ public class Level extends Canvas {
     public static Scene levelScene = new Scene(new Group());
     public static Canvas levelCanvas;
     public static GraphicsContext gc;
-    public static ArrayList<Entity> entities = new ArrayList<>();
+    public static ArrayList<Tile> tiles = new ArrayList<>();
     public static String[][] tileMap;
     public static ArrayList<Bomb> bombs = new ArrayList<>();
+    public static int numberOfEnemies;
 
     public static double currentGameTime;
     public static double lastNanoTime;
@@ -119,50 +121,55 @@ public class Level extends Canvas {
             for (int col = 0; col < Constants.COLUMNS; col++) {
                 tileMap[row][col] = String.valueOf(line.charAt(col));
                 switch (line.charAt(col)) {
-                    case '#' -> {
-                        entities.add(new Wall(col, row, SpriteContainer.wall.getFxImage()));
-                    }
                     case 's' -> {
-                        entities.add(new Brick(col, row, SpriteContainer.brick.getFxImage()
+                        tiles.add(new Brick(col, row, SpriteContainer.brick.getFxImage()
                                 , new SpeedItem(col, row, SpriteContainer.speedItem.getFxImage())));
                     }
                     case 'b' -> {
-                        entities.add(new Brick(col, row, SpriteContainer.brick.getFxImage()
+                        tiles.add(new Brick(col, row, SpriteContainer.brick.getFxImage()
                                 , new BombItem(col, row, SpriteContainer.bombItem.getFxImage())));
                     }
                     case 'f' -> {
-                        entities.add(new Brick(col, row, SpriteContainer.brick.getFxImage()
+                        tiles.add(new Brick(col, row, SpriteContainer.brick.getFxImage()
                                 , new FlameItem(col, row, SpriteContainer.flameItem.getFxImage())));
                     }
+                    case 'x' -> {
+                        tiles.add(new Brick(col, row, SpriteContainer.brick.getFxImage()
+                                , new Portal(col, row, SpriteContainer.portal.getFxImage())));
+                    }
                     case 'p' -> {
-                        entities.add(new Grass(col, row, SpriteContainer.grass.getFxImage()));
+                        tiles.add(new Grass(col, row, SpriteContainer.grass.getFxImage()));
                         bombers.add(new Player(col, row, SpriteContainer.player_right.getFxImage()));
                     }
+                    case '#' -> {
+                        tiles.add(new Wall(col, row, SpriteContainer.wall.getFxImage()));
+                    }
                     case '*' -> {
-                        entities.add(new Brick(col, row, SpriteContainer.brick.getFxImage()
+                        tiles.add(new Brick(col, row, SpriteContainer.brick.getFxImage()
                                 , new Grass(col, row, SpriteContainer.grass.getFxImage())));
                     }
                     case '1' -> {
-                        entities.add(new Grass(col, row, SpriteContainer.grass.getFxImage()));
+                        tiles.add(new Grass(col, row, SpriteContainer.grass.getFxImage()));
                         jellies.add(new Jelly(col, row, SpriteContainer.Jelly.getFxImage()));
                     }
                     default -> {
-                        entities.add(new Grass(col, row, SpriteContainer.grass.getFxImage()));
+                        tiles.add(new Grass(col, row, SpriteContainer.grass.getFxImage()));
                     }
                 }
             }
             row++;
         }
+        numberOfEnemies = jellies.size();
     }
 
     //Game Over
     public static void gameOver() {
-
+        isRunning = false;
     }
 
     private void render() {
 
-        entities.forEach(e -> e.render(gc));
+        tiles.forEach(e -> e.render(gc));
 
         if (!bombs.isEmpty()) {
             bombs.forEach(b -> b.render(gc));
@@ -178,13 +185,13 @@ public class Level extends Canvas {
     private void update() {
 
         int count = 0;
-        for (Entity entity : entities) {
-            entity.update();
-            if (entity instanceof Layered) {
-                if (((Layered) entity).canRemove) {
-                    entities.set(count, ((Layered) entity).getBufferedEntity());
-                    if (!(((Layered) entity).getBufferedEntity() instanceof Grass)) {
-                        ((Layered) entities.get(count)).clearRemove();
+        for (Tile tile : tiles) {
+            tile.update();
+            if (tile instanceof Layered) {
+                if (((Layered) tile).canRemove) {
+                    tiles.set(count, ((Layered) tile).getBufferedEntity());
+                    if (!(((Layered) tile).getBufferedEntity() instanceof Grass)) {
+                        ((Layered) tiles.get(count)).clearRemove();
                     }
                 }
             }

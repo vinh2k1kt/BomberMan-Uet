@@ -36,4 +36,5 @@ public class SpriteContainer {
     public static final Sprite bombItem = SpriteSheet.sprites.get(Constants.SPRITE_COL * 10);
     public static final Sprite flameItem = SpriteSheet.sprites.get(Constants.SPRITE_COL * 10 + 1);
     public static final Sprite speedItem = SpriteSheet.sprites.get(Constants.SPRITE_COL * 10 + 2);
+    public static final Sprite portal = SpriteSheet.sprites.get(4);
 }
