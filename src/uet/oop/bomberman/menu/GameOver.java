@@ -19,6 +19,7 @@ public class GameOver {
         Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
         stage.setTitle("BomberMan");
         stage.setScene(new Scene(root));
+        root.getStylesheets().add("uet/oop/bomberman/menu/style.css");
         stage.show();
     }
 }

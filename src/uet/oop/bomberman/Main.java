@@ -20,6 +20,7 @@ public class Main extends Application {
         Parent root = FXMLLoader.load(url);
         primaryStage.setTitle("BomberMan");
         primaryStage.setScene(new Scene(root));
+        root.getStylesheets().add("uet/oop/bomberman/menu/style.css");
         primaryStage.show();
     }
 

@@ -8,10 +8,13 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
+import uet.oop.bomberman.Level;
 
 import java.io.File;
 import java.io.IOException;
 import java.net.URL;
+
+import static uet.oop.bomberman.Level.stage;
 
 
 public class Menu {
@@ -24,7 +27,12 @@ public class Menu {
         Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
         stage.setTitle("BomberMan");
         stage.setScene(new Scene(root));
+        root.getStylesheets().add("uet/oop/bomberman/menu/style.css");
         stage.show();
+    }
+
+    public void exitButton(ActionEvent even) throws IOException {
+        stage.close();
     }
 
 }
