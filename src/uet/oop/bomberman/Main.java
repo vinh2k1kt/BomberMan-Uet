@@ -14,8 +14,6 @@ public class Main extends Application {
 
     @Override
     public void start(Stage primaryStage) throws Exception{
-        Animation.initAnimation();
-        Level level = new Level(primaryStage);
         URL url = new File("src/uet/oop/bomberman/menu/menu.fxml").toURI().toURL();
         Parent root = FXMLLoader.load(url);
         primaryStage.setTitle("BomberMan");

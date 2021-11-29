@@ -6,13 +6,13 @@ import uet.oop.bomberman.entities.moving.player.Player;
 
 public class FlameItem extends Item{
 
-    public FlameItem(double xUnit, double yUnit, Image img) {
-        super(xUnit, yUnit, img);
+    public FlameItem(double xUnit, double yUnit, Image img, Level level) {
+        super(xUnit, yUnit, img, level);
     }
 
     @Override
     public void update() {
-        for (Player bomber : Level.bombers)
+        for (Player bomber : level.bombers)
         if (bomber.hitBox.getBoundsInParent().intersects(this.hitBox.getBoundsInParent())) {
             setCanRemove();
             updatePlayerBuff(bomber);

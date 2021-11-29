@@ -12,13 +12,16 @@ import uet.oop.bomberman.util.Direction;
 public class Jelly extends Character {
     private int renderDeadImageTime  = 10;
     private boolean alive = true;
-    private CollisionChecker collisionChecker = new CollisionChecker(Level.levelScene, this);
+    private CollisionChecker collisionChecker;
     private double signedSpeed;
+    private Level level;
 
-    public Jelly(int xUnit, int yUnit, Image img) {
-        super(xUnit, yUnit, img);
+    public Jelly(int xUnit, int yUnit, Image img, Level level) {
+        super(xUnit, yUnit, img, level);
         this.currentDirection = Direction.RIGHT;
         this.signedSpeed = 2;
+        this.level = level;
+        collisionChecker = new CollisionChecker(this, level);
     }
 
     @Override
@@ -39,7 +42,7 @@ public class Jelly extends Character {
                 chooseSprite();
             }
 
-            for (Player bomber : Level.bombers) {
+            for (Player bomber : level.bombers) {
                 collisionChecker.Kill(bomber);
             }
         } else {
@@ -76,7 +79,7 @@ public class Jelly extends Character {
 
     public void isKill() {
         if (alive) {
-            Level.numberOfEnemies--;
+            level.numberOfEnemies--;
             this.delay = 10;
             this.alive = false;
             index = 0;

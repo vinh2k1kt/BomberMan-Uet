@@ -2,6 +2,7 @@ package uet.oop.bomberman.entities.still.block.destroyable;
 
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.image.Image;
+import uet.oop.bomberman.Level;
 import uet.oop.bomberman.entities.still.Tile;
 import uet.oop.bomberman.graphics.Animation;
 import uet.oop.bomberman.entities.Entity;
@@ -16,8 +17,8 @@ public class Brick extends Layered {
     private int count;
     private int index;
 
-    public Brick(double xUnit, double yUnit, Image img, Tile bufferedEntity) {
-        super(xUnit, yUnit, img, bufferedEntity);
+    public Brick(double xUnit, double yUnit, Image img, Tile bufferedEntity, Level level) {
+        super(xUnit, yUnit, img, bufferedEntity, level);
 
 //        kwanUwU
 //        this.img = new Image(new File("res/brick.jpg").toURI().toString());
