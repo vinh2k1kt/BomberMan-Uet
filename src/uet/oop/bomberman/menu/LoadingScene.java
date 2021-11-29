@@ -14,14 +14,12 @@ import java.io.File;
 import java.io.IOException;
 import java.net.URL;
 
-public class LoadingScene extends Thread {
+public class LoadingScene implements Runnable{
 
+    Thread thread = new Thread(this);
     Stage primaryStage;
     Scene loadingScene;
     String levelPath;
-
-    @FXML
-    private Label label;
 
     public LoadingScene(Stage primaryStage, String levelPath) throws IOException {
 
@@ -32,7 +30,7 @@ public class LoadingScene extends Thread {
 
         this.levelPath = levelPath;
         this.primaryStage = primaryStage;
-        this.start();
+        thread.start();
     }
 
     public Scene getScene() {
@@ -42,7 +40,8 @@ public class LoadingScene extends Thread {
     @Override
     public void run() {
         try {
-            Thread.sleep(2000);
+
+            thread.sleep(2000);
             Platform.runLater(() -> {
                 try {
                     Animation.initAnimation();
@@ -50,6 +49,7 @@ public class LoadingScene extends Thread {
 
                     primaryStage.setScene(level.levelScene);
                     primaryStage.show();
+                    thread.stop();
                 } catch (IOException e) {
                     e.printStackTrace();
                 }

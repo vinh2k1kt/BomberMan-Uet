@@ -21,6 +21,8 @@ import uet.oop.bomberman.entities.still.block.undestroyable.Grass;
 import uet.oop.bomberman.entities.still.block.undestroyable.Wall;
 import uet.oop.bomberman.entities.still.bomb.Bomb;
 import uet.oop.bomberman.graphics.SpriteContainer;
+import uet.oop.bomberman.menu.LoadingScene;
+import uet.oop.bomberman.sound.Sound;
 import uet.oop.bomberman.util.Constants;
 
 import java.io.File;
@@ -55,6 +57,8 @@ public class Level extends Canvas {
 
     public ArrayList<Player> bombers = new ArrayList<>();
     public ArrayList<Jelly> jellies = new ArrayList<>();
+    public final Sound soundTrack = new Sound();
+
     private final List<String> mapDataFile = new ArrayList<>();
 
     private AnimationTimer timer = new AnimationTimer() {
@@ -88,8 +92,10 @@ public class Level extends Canvas {
     };
 
     public Level(Stage primaryStage, String levelPath) throws IOException {
-        System.out.println("load");
-        System.out.println("is Running " + isRunning + " goToNextLevel " + goToNextLevel + " gameOver " + gameOver);
+        soundTrack.setFile("Main");
+        soundTrack.play();
+        soundTrack.loop();
+
         this.stage = primaryStage;
         loadMap(levelPath);
 
@@ -259,7 +265,7 @@ public class Level extends Canvas {
      * Load Next Level
      */
     private void loadNextLevel() throws IOException {
-        stage.setScene(new Level(stage, "res/levels/Level2.txt").levelScene);
-
+        Constants.TEST = "Level 2";
+        new LoadingScene(stage, "res/levels/Level2.txt");
     }
 }
