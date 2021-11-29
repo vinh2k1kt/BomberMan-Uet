@@ -1,27 +1,32 @@
 package uet.oop.bomberman;
 
 import javafx.animation.AnimationTimer;
+import javafx.fxml.FXMLLoader;
 import javafx.scene.Group;
+import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
+import javafx.stage.Stage;
+import uet.oop.bomberman.entities.moving.enemy.Jelly;
+import uet.oop.bomberman.entities.moving.player.Player;
 import uet.oop.bomberman.entities.still.Tile;
 import uet.oop.bomberman.entities.still.block.Layered;
 import uet.oop.bomberman.entities.still.block.destroyable.Brick;
-import uet.oop.bomberman.entities.still.block.item.Portal;
-import uet.oop.bomberman.entities.still.block.undestroyable.Grass;
-import uet.oop.bomberman.entities.still.block.undestroyable.Wall;
 import uet.oop.bomberman.entities.still.block.item.BombItem;
 import uet.oop.bomberman.entities.still.block.item.FlameItem;
+import uet.oop.bomberman.entities.still.block.item.Portal;
 import uet.oop.bomberman.entities.still.block.item.SpeedItem;
+import uet.oop.bomberman.entities.still.block.undestroyable.Grass;
+import uet.oop.bomberman.entities.still.block.undestroyable.Wall;
 import uet.oop.bomberman.entities.still.bomb.Bomb;
-import uet.oop.bomberman.entities.moving.enemy.Jelly;
-import uet.oop.bomberman.entities.moving.player.Player;
-import uet.oop.bomberman.util.Constants;
 import uet.oop.bomberman.graphics.SpriteContainer;
+import uet.oop.bomberman.util.Constants;
 
+import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
+import java.net.URL;
 import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.List;
@@ -36,6 +41,7 @@ public class Level extends Canvas {
     public static String[][] tileMap;
     public static ArrayList<Bomb> bombs = new ArrayList<>();
     public static int numberOfEnemies;
+    public static Stage stage;
 
     public static double currentGameTime;
     public static double lastNanoTime;
@@ -62,6 +68,16 @@ public class Level extends Canvas {
                     render();
                     update();
                 } else {
+                    gc.clearRect(0, 0, Constants.SCREEN_WIDTH, Constants.SCREEN_HEIGHT);
+                    try {
+                        URL url = new File("src/uet/oop/bomberman/menu/gameOver.fxml").toURI().toURL();
+                        Parent root = FXMLLoader.load(url);
+                        stage.setScene(new Scene(root));
+                        root.getStylesheets().add("uet/oop/bomberman/menu/style.css");
+
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
                     timer.stop();
                 }
             }
@@ -70,8 +86,8 @@ public class Level extends Canvas {
     };
 
 
-    public Level() throws IOException {
-
+    public Level(Stage primaryStage) throws IOException {
+        this.stage = primaryStage;
         loadMap("res/levels/Level1.txt");
 
         // Init Scene and Canvas
@@ -211,6 +227,8 @@ public class Level extends Canvas {
         bombers.removeIf(Player::isDead);
         if (!bombers.isEmpty()) {
             bombers.forEach(Player::update);
+        } else {
+            gameOver();
         }
     }
 }

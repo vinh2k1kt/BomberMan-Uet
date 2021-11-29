@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane fx:id="anchorPane" prefHeight="468.0" prefWidth="1116.0" styleClass="bodybg" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="uet.oop.bomberman.menu.LoadingController">
+   <children>
+      <Label alignment="CENTER" layoutX="385.0" layoutY="209.0" prefHeight="64.0" prefWidth="284.0" text="Đang khởi tạo tài nguyên...">
+         <font>
+            <Font name="Times New Roman" size="21.0" />
+         </font>
+      </Label>
+   </children>
+</AnchorPane>
