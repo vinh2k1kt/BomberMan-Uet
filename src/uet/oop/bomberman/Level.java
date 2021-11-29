@@ -36,7 +36,7 @@ import java.util.Scanner;
 
 public class Level extends Canvas {
 
-    public Scene levelScene = new Scene(new Group());
+    public Scene levelScene;
     public Canvas levelCanvas;
     public GraphicsContext gc;
     public ArrayList<Tile> tiles = new ArrayList<>();
@@ -191,30 +191,23 @@ public class Level extends Canvas {
 
         tiles.forEach(e -> e.render(gc));
 
-        if (!bombs.isEmpty()) {
-            bombs.forEach(b -> b.render(gc));
-        }
+        bombs.forEach(b -> b.render(gc));
 
         jellies.forEach(j -> j.render(gc));
 
-        if (!bombers.isEmpty()) {
-            bombers.forEach(bomber -> bomber.render(gc));
-        }
+        bombers.forEach(bomber -> bomber.render(gc));
     }
 
     private void update() {
 
         int count = 0;
         for (Tile tile : tiles) {
-            tile.update();
             if (tile instanceof Layered) {
                 if (((Layered) tile).canRemove) {
                     tiles.set(count, ((Layered) tile).getBufferedEntity());
-                    if (!(((Layered) tile).getBufferedEntity() instanceof Grass)) {
-                        ((Layered) tiles.get(count)).clearRemove();
-                    }
                 }
             }
+            tile.update();
             count++;
         }
 
@@ -232,6 +225,7 @@ public class Level extends Canvas {
         if (!bombers.isEmpty()) {
             bombers.forEach(Player::update);
         } else {
+            soundTrack.stop();
             gameOver();
         }
     }

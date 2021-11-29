@@ -40,14 +40,10 @@ public class LoadingScene implements Runnable{
     @Override
     public void run() {
         try {
-
-            thread.sleep(2000);
+            Thread.sleep(2000);
             Platform.runLater(() -> {
                 try {
-                    Animation.initAnimation();
-                    Level level = new Level(primaryStage, levelPath);
-
-                    primaryStage.setScene(level.levelScene);
+                    primaryStage.setScene(new Level(primaryStage, levelPath).levelScene);
                     primaryStage.show();
                     thread.stop();
                 } catch (IOException e) {

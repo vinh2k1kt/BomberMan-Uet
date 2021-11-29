@@ -140,8 +140,6 @@ public class Player extends Character {
 
             if (dx != 0 || dy != 0) {
                 isMoving = true;
-                level.soundTrack.setFile("Walking");
-                level.soundTrack.play();
                 move();
             } else {
                 currentDirection = Direction.NONE;

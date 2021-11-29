@@ -11,6 +11,7 @@ import java.io.File;
 public class Sprite {
 
 	public BufferedImage image;
+	public Image FxImage;
 	public String pictureFile;
 	public int width, height;
 
@@ -39,6 +40,7 @@ public class Sprite {
 		this.image = image;
 		this.width = image.getWidth();
 		this.height = image.getHeight();
+		this.FxImage = SwingFXUtils.toFXImage(image, null);
 	}
 
 	public Sprite(BufferedImage image, int row, int column, int index) {
@@ -49,10 +51,11 @@ public class Sprite {
 		this.column = column;
 		this.index = index;
 		this.isSubSprite = true;
+		this.FxImage = SwingFXUtils.toFXImage(image, null);
 	}
 
 	public Image getFxImage() {
-		return SwingFXUtils.toFXImage(this.image, null);
+		return FxImage;
 	}
 }
 

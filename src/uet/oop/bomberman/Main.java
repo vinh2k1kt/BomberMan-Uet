@@ -16,11 +16,15 @@ public class Main extends Application {
     @Override
     public void start(Stage primaryStage) throws Exception{
         new Sound();
+        Animation.initAnimation();
 
         URL url = new File("src/uet/oop/bomberman/menu/menu.fxml").toURI().toURL();
         Parent root = FXMLLoader.load(url);
         primaryStage.setTitle("BomberMan");
         primaryStage.setScene(new Scene(root));
+
+//        primaryStage.setScene(new Level(primaryStage, "res/levels/Level1.txt").levelScene);
+
         root.getStylesheets().add("uet/oop/bomberman/menu/style.css");
         primaryStage.show();
     }
