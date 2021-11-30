@@ -47,4 +47,6 @@ public class Constants {
      * Enemy
      */
     public static final int ENEMY_SPEED = 2;
+
+    public static String TEST = "Level 1";
 }

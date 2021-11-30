@@ -11,35 +11,35 @@ import uet.oop.bomberman.util.Direction;
 
 public class Jelly extends Character {
     private int renderDeadImageTime  = 10;
-    private boolean alive = true;
-    private CollisionChecker collisionChecker = new CollisionChecker(Level.levelScene, this);
-    private double signedSpeed;
+    private final CollisionChecker collisionChecker;
+    private final double speed = 2;
+    private double dx, dy;
+    private final Level level;
 
-    public Jelly(int xUnit, int yUnit, Image img) {
-        super(xUnit, yUnit, img);
+    public Jelly(int xUnit, int yUnit, Image img, Level level) {
+        super(xUnit, yUnit, img, level);
         this.currentDirection = Direction.RIGHT;
-        this.signedSpeed = 2;
+        this.dx = speed;
+        this.level = level;
+        collisionChecker = new CollisionChecker(this, level);
     }
 
     @Override
     public void update() {
         if (alive) {
             if (!collisionChecker.isBlocked(this)) {
-                x += signedSpeed;
-                chooseSprite();
-            } else if (currentDirection == Direction.LEFT) {
-                this.signedSpeed = -signedSpeed;
-                this.img = Animation.jellyRightAni.get(0).getFxImage();
-                currentDirection = Direction.RIGHT;
-                chooseSprite();
-            } else {
-                this.signedSpeed = -signedSpeed;
-                this.img = Animation.jellyLeftAni.get(0).getFxImage();
-                currentDirection = Direction.LEFT;
+                x += dx;
+                y += dy;
+                if ((int) (Math.random() * 30 + 1) == 1 ) {
+                    randomDirection();
+                }
                 chooseSprite();
             }
+            else {
+                randomDirection();
+            }
 
-            for (Player bomber : Level.bombers) {
+            for (Player bomber : level.bombers) {
                 collisionChecker.Kill(bomber);
             }
         } else {
@@ -48,6 +48,32 @@ public class Jelly extends Character {
                 renderDeadImageTime--;
             } else {
                 super.afterDead(Animation.jellyDeadAni);
+            }
+        }
+    }
+
+    private void randomDirection() {
+        int random = (int) (Math.random() * 4 + 1);
+        switch (random) {
+            case 1 -> {
+                currentDirection = Direction.LEFT;
+                dx = -speed;
+                dy = 0;
+            }
+            case 2 -> {
+                currentDirection = Direction.RIGHT;
+                dx = speed;
+                dy = 0;
+            }
+            case 3 -> {
+                currentDirection = Direction.UP;
+                dy = -speed;
+                dx = 0;
+            }
+            case 4 -> {
+                currentDirection = Direction.DOWN;
+                dy = speed;
+                dx = 0;
             }
         }
     }
@@ -69,14 +95,14 @@ public class Jelly extends Character {
         }
 
         switch (currentDirection) {
-            case LEFT -> this.img = Animation.jellyLeftAni.get(index).getFxImage();
-            case RIGHT -> this.img = Animation.jellyRightAni.get(index).getFxImage();
+            case LEFT, UP -> this.img = Animation.jellyLeftAni.get(index).getFxImage();
+            case RIGHT, DOWN -> this.img = Animation.jellyRightAni.get(index).getFxImage();
         }
     }
 
     public void isKill() {
         if (alive) {
-            Level.numberOfEnemies--;
+            level.numberOfEnemies--;
             this.delay = 10;
             this.alive = false;
             index = 0;
@@ -84,9 +110,5 @@ public class Jelly extends Character {
 
             currentDirection = Direction.NONE;
         }
-    }
-
-    public boolean canRemove() {
-        return alive;
     }
 }

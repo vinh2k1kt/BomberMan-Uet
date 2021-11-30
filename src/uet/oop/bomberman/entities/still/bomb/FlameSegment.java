@@ -20,8 +20,8 @@ public class FlameSegment extends Tile {
     private int count;
     private int index;
     private ArrayList<Sprite> ani = new ArrayList<>();
-    public FlameSegment(double xUnit, double yUnit, Image img, int direction, boolean isLast) {
-        super(xUnit, yUnit, img);
+    public FlameSegment(double xUnit, double yUnit, Image img, int direction, boolean isLast, Level level) {
+        super(xUnit, yUnit, img, level);
         this.isLast = isLast;
         this.hitBox = new Rectangle(x, y, Constants.TILES_SIZE, Constants.TILES_SIZE);
 
@@ -89,27 +89,27 @@ public class FlameSegment extends Tile {
 
     public void collided() {
 
-        for (Bomb bomb : Level.bombs) {
+        for (Bomb bomb : level.bombs) {
             if (this.hitBox.getBoundsInParent().intersects(bomb.hitBox.getBoundsInParent())) {
                 bomb.explodedImdiately();
             }
         }
 
-        for (Player bomber : Level.bombers) {
+        for (Player bomber : level.bombers) {
             if (this.hitBox.getBoundsInParent().intersects(bomber.hitBox.getBoundsInParent())) {
                 bomber.isKill();
             }
         }
 
-        for (Jelly jelly : Level.jellies) {
+        for (Jelly jelly : level.jellies) {
             if (this.hitBox.getBoundsInParent().intersects(jelly.hitBox.getBoundsInParent())) {
                 jelly.isKill();
             }
         }
 
-        if (Level.tiles.get((int) (x / Constants.TILES_SIZE +  (y / Constants.TILES_SIZE) * Constants.COLUMNS))
+        if (level.tiles.get((int) (x / Constants.TILES_SIZE +  (y / Constants.TILES_SIZE) * Constants.COLUMNS))
                 instanceof Brick)  {
-            ((Brick) Level.tiles.get((int) (x / Constants.TILES_SIZE +  (y / Constants.TILES_SIZE) * Constants.COLUMNS))).destroy();
+            ((Brick) level.tiles.get((int) (x / Constants.TILES_SIZE +  (y / Constants.TILES_SIZE) * Constants.COLUMNS))).destroy();
         }
     }
     @Override
