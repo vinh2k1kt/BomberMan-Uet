@@ -14,7 +14,7 @@ import java.io.File;
 import java.io.IOException;
 import java.net.URL;
 
-public class LoadingScene implements Runnable{
+public class LoadingScene extends Thread{
 
     Thread thread = new Thread(this);
     Stage primaryStage;
@@ -45,7 +45,6 @@ public class LoadingScene implements Runnable{
                 try {
                     primaryStage.setScene(new Level(primaryStage, levelPath).levelScene);
                     primaryStage.show();
-                    thread.stop();
                 } catch (IOException e) {
                     e.printStackTrace();
                 }

@@ -25,7 +25,9 @@ public class Brick extends Layered {
     }
 
     public void destroy() {
-        destroyed = true;
+        if (!destroyed) {
+            destroyed = true;
+        }
     }
 
     private void chooseSprite() {

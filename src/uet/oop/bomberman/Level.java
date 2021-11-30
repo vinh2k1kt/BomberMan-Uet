@@ -61,7 +61,7 @@ public class Level extends Canvas {
 
     private final List<String> mapDataFile = new ArrayList<>();
 
-    private AnimationTimer timer = new AnimationTimer() {
+    private final AnimationTimer timer = new AnimationTimer() {
         @Override
         public void handle(long currentNanoTime) {
             deltaTime += (currentNanoTime - lastNanoTime) / drawInterval;
@@ -92,6 +92,8 @@ public class Level extends Canvas {
     };
 
     public Level(Stage primaryStage, String levelPath) throws IOException {
+
+        // Play Theme Song
         soundTrack.setFile("Main");
         soundTrack.play();
         soundTrack.loop();
@@ -147,14 +149,17 @@ public class Level extends Canvas {
                 tileMap[row][col] = String.valueOf(line.charAt(col));
                 switch (line.charAt(col)) {
                     case 's' -> {
+                        tileMap[row][col] = "i";
                         tiles.add(new Brick(col, row, SpriteContainer.brick.getFxImage()
                                 , new SpeedItem(col, row, SpriteContainer.speedItem.getFxImage(), this), this));
                     }
                     case 'b' -> {
+                        tileMap[row][col] = "i";
                         tiles.add(new Brick(col, row, SpriteContainer.brick.getFxImage()
                                 , new BombItem(col, row, SpriteContainer.bombItem.getFxImage(), this), this));
                     }
                     case 'f' -> {
+                        tileMap[row][col] = "i";
                         tiles.add(new Brick(col, row, SpriteContainer.brick.getFxImage()
                                 , new FlameItem(col, row, SpriteContainer.flameItem.getFxImage(), this), this));
                     }
@@ -204,6 +209,9 @@ public class Level extends Canvas {
         for (Tile tile : tiles) {
             if (tile instanceof Layered) {
                 if (((Layered) tile).canRemove) {
+
+                    tileMap[tile.getYUnit()][tile.getYUnit()] = " ";
+
                     tiles.set(count, ((Layered) tile).getBufferedEntity());
                 }
             }
@@ -236,7 +244,6 @@ public class Level extends Canvas {
     public void gameOver() {
         isRunning = false;
         goToNextLevel = true;
-
     }
 
     /**

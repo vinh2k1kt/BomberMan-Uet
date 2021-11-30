@@ -12,7 +12,7 @@ import uet.oop.bomberman.util.Direction;
 public class Jelly extends Character {
     private int renderDeadImageTime  = 10;
     private final CollisionChecker collisionChecker;
-    private double speed = 2;
+    private final double speed = 2;
     private double dx, dy;
     private final Level level;
 
@@ -30,19 +30,11 @@ public class Jelly extends Character {
             if (!collisionChecker.isBlocked(this)) {
                 x += dx;
                 y += dy;
+                if ((int) (Math.random() * 30 + 1) == 1 ) {
+                    randomDirection();
+                }
                 chooseSprite();
             }
-//            else if (currentDirection == Direction.LEFT) {
-//                this.signedSpeed = -signedSpeed;
-//                this.img = Animation.jellyRightAni.get(0).getFxImage();
-//                currentDirection = Direction.RIGHT;
-//                chooseSprite();
-//            } else {
-//                this.signedSpeed = -signedSpeed;
-//                this.img = Animation.jellyLeftAni.get(0).getFxImage();
-//                currentDirection = Direction.LEFT;
-//                chooseSprite();
-//            }
             else {
                 randomDirection();
             }
@@ -103,8 +95,8 @@ public class Jelly extends Character {
         }
 
         switch (currentDirection) {
-            case LEFT -> this.img = Animation.jellyLeftAni.get(index).getFxImage();
-            case RIGHT -> this.img = Animation.jellyRightAni.get(index).getFxImage();
+            case LEFT, UP -> this.img = Animation.jellyLeftAni.get(index).getFxImage();
+            case RIGHT, DOWN -> this.img = Animation.jellyRightAni.get(index).getFxImage();
         }
     }
 

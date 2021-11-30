@@ -8,29 +8,37 @@ import uet.oop.bomberman.util.Constants;
 
 public abstract class Entity {
 
-        public Rectangle hitBox = new Rectangle();
+    public Rectangle hitBox = new Rectangle();
 
-        public Level level;
+    public Level level;
 
-        //Tọa độ X tính từ góc trái trên trong Canvas
-        public double x;
+    //Tọa độ X tính từ góc trái trên trong Canvas
+    public double x;
 
-        //Tọa độ Y tính từ góc trái trên trong Canvas
-        public double y;
+    //Tọa độ Y tính từ góc trái trên trong Canvas
+    public double y;
 
-        public Image img;
+    public Image img;
 
-        //Khởi tạo đối tượng, chuyển từ tọa độ đơn vị sang tọa độ trong canvas
-        public Entity(double xUnit, double yUnit, Image img, Level level) {
-            this.x = xUnit * Constants.TILES_SIZE;
-            this.y = yUnit * Constants.TILES_SIZE;
-            this.img = img;
-            this.level = level;
-        }
-
-        public void render(GraphicsContext gc) {
-            gc.drawImage(img, x, y, Constants.TILES_SIZE, Constants.TILES_SIZE);
-        }
-
-        public abstract void update();
+    //Khởi tạo đối tượng, chuyển từ tọa độ đơn vị sang tọa độ trong canvas
+    public Entity(double xUnit, double yUnit, Image img, Level level) {
+        this.x = xUnit * Constants.TILES_SIZE;
+        this.y = yUnit * Constants.TILES_SIZE;
+        this.img = img;
+        this.level = level;
     }
+
+    public int getXUnit() {
+        return (int) Math.round(this.x / Constants.TILES_SIZE);
+    }
+
+    public int getYUnit() {
+        return (int) Math.round(this.y / Constants.TILES_SIZE);
+    }
+
+    public void render(GraphicsContext gc) {
+        gc.drawImage(img, x, y, Constants.TILES_SIZE, Constants.TILES_SIZE);
+    }
+
+    public abstract void update();
+}
