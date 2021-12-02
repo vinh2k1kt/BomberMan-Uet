@@ -1,5 +1,6 @@
 package uet.oop.bomberman.graphics;
 
+import javafx.scene.canvas.GraphicsContext;
 import uet.oop.bomberman.Level;
 import uet.oop.bomberman.graphics.Sprite;
 import uet.oop.bomberman.graphics.SpriteSheet;
@@ -76,10 +77,10 @@ public class Animation {
         }
     }
 
-    public static void testAni(ArrayList<Sprite> ani) {
+    public static void testAni(ArrayList<Sprite> ani, GraphicsContext gc) {
         int count = 0;
         for (Sprite sprite : ani) {
-            Level.gc.drawImage(sprite.getFxImage(), count * Constants.TILES_SIZE, 0
+            gc.drawImage(sprite.getFxImage(), count * Constants.TILES_SIZE, 0
             , Constants.TILES_SIZE, Constants.TILES_SIZE);
             count++;
         }

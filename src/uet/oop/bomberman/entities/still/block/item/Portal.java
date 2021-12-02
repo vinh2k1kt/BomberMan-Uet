@@ -15,23 +15,23 @@ public class Portal extends Layered {
     public boolean completeable = false;
     private Rectangle innerHitBox;
 
-    public Portal(double xUnit, double yUnit, Image img) {
-        super(xUnit, yUnit, img);
-        setBufferedEntity(new Grass(xUnit, yUnit, SpriteContainer.grass.getFxImage()));
+    public Portal(double xUnit, double yUnit, Image img, Level level) {
+        super(xUnit, yUnit, img, level);
+        setBufferedEntity(new Grass(xUnit, yUnit, SpriteContainer.grass.getFxImage(), level));
 
         innerHitBox = new Rectangle(x, y, Constants.TILES_SIZE, Constants.TILES_SIZE);
     }
 
     @Override
     public void update() {
-        if (Level.numberOfEnemies == 0) {
+        if (level.numberOfEnemies == 0) {
             passAble();
         }
 
         if (completeable) {
-            for (Player bomber : Level.bombers) {
+            for (Player bomber : level.bombers) {
                 if (bomber.hitBox.getBoundsInParent().intersects(innerHitBox.getBoundsInParent())) {
-                    Level.isRunning = false;
+                    level.isRunning = false;
                 }
             }
         }

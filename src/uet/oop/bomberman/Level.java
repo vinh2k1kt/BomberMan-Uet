@@ -21,6 +21,8 @@ import uet.oop.bomberman.entities.still.block.undestroyable.Grass;
 import uet.oop.bomberman.entities.still.block.undestroyable.Wall;
 import uet.oop.bomberman.entities.still.bomb.Bomb;
 import uet.oop.bomberman.graphics.SpriteContainer;
+import uet.oop.bomberman.menu.LoadingScene;
+import uet.oop.bomberman.sound.Sound;
 import uet.oop.bomberman.util.Constants;
 
 import java.io.File;
@@ -34,28 +36,32 @@ import java.util.Scanner;
 
 public class Level extends Canvas {
 
-    public static Scene levelScene = new Scene(new Group());
-    public static Canvas levelCanvas;
-    public static GraphicsContext gc;
-    public static ArrayList<Tile> tiles = new ArrayList<>();
-    public static String[][] tileMap;
-    public static ArrayList<Bomb> bombs = new ArrayList<>();
-    public static int numberOfEnemies;
-    public static Stage stage;
+    public Scene levelScene;
+    public Canvas levelCanvas;
+    public GraphicsContext gc;
+    public ArrayList<Tile> tiles = new ArrayList<>();
+    public String[][] tileMap;
+    public ArrayList<Bomb> bombs = new ArrayList<>();
+    public int numberOfEnemies;
+    public Stage stage;
 
-    public static double currentGameTime;
-    public static double lastNanoTime;
-    public static double deltaTime;
-    public static double drawInterval = 1000000000 / 120.0;
+    public double currentGameTime;
+    public double lastNanoTime;
+    public double deltaTime;
+    public double drawInterval = 1000000000 / 120.0;
     public final static long startNanoTime = System.nanoTime();
 
-    public static boolean isRunning = true;
+    public boolean isRunning = true;
+    public boolean gameOver = false;
+    public boolean goToNextLevel = false;
 
-    public static ArrayList<Player> bombers = new ArrayList<>();
-    public static ArrayList<Jelly> jellies = new ArrayList<>();
+    public ArrayList<Player> bombers = new ArrayList<>();
+    public ArrayList<Jelly> jellies = new ArrayList<>();
+    public final Sound soundTrack = new Sound();
+
     private final List<String> mapDataFile = new ArrayList<>();
 
-    private AnimationTimer timer = new AnimationTimer() {
+    private final AnimationTimer timer = new AnimationTimer() {
         @Override
         public void handle(long currentNanoTime) {
             deltaTime += (currentNanoTime - lastNanoTime) / drawInterval;
@@ -68,15 +74,15 @@ public class Level extends Canvas {
                     render();
                     update();
                 } else {
-                    gc.clearRect(0, 0, Constants.SCREEN_WIDTH, Constants.SCREEN_HEIGHT);
-                    try {
-                        URL url = new File("src/uet/oop/bomberman/menu/gameOver.fxml").toURI().toURL();
-                        Parent root = FXMLLoader.load(url);
-                        stage.setScene(new Scene(root));
-                        root.getStylesheets().add("uet/oop/bomberman/menu/style.css");
-
-                    } catch (IOException e) {
-                        e.printStackTrace();
+                    if (gameOver) {
+                        renderGameOverSccene();
+                    }
+                    if (goToNextLevel) {
+                        try {
+                            loadNextLevel();
+                        } catch (IOException e) {
+                            e.printStackTrace();
+                        }
                     }
                     timer.stop();
                 }
@@ -85,10 +91,15 @@ public class Level extends Canvas {
         }
     };
 
+    public Level(Stage primaryStage, String levelPath) throws IOException {
 
-    public Level(Stage primaryStage) throws IOException {
+        // Play Theme Song
+        soundTrack.setFile("Main");
+        soundTrack.play();
+        soundTrack.loop();
+
         this.stage = primaryStage;
-        loadMap("res/levels/Level1.txt");
+        loadMap(levelPath);
 
         // Init Scene and Canvas
         levelCanvas = new Canvas(Constants.SCREEN_WIDTH, Constants.SCREEN_HEIGHT);
@@ -138,38 +149,41 @@ public class Level extends Canvas {
                 tileMap[row][col] = String.valueOf(line.charAt(col));
                 switch (line.charAt(col)) {
                     case 's' -> {
+                        tileMap[row][col] = "i";
                         tiles.add(new Brick(col, row, SpriteContainer.brick.getFxImage()
-                                , new SpeedItem(col, row, SpriteContainer.speedItem.getFxImage())));
+                                , new SpeedItem(col, row, SpriteContainer.speedItem.getFxImage(), this), this));
                     }
                     case 'b' -> {
+                        tileMap[row][col] = "i";
                         tiles.add(new Brick(col, row, SpriteContainer.brick.getFxImage()
-                                , new BombItem(col, row, SpriteContainer.bombItem.getFxImage())));
+                                , new BombItem(col, row, SpriteContainer.bombItem.getFxImage(), this), this));
                     }
                     case 'f' -> {
+                        tileMap[row][col] = "i";
                         tiles.add(new Brick(col, row, SpriteContainer.brick.getFxImage()
-                                , new FlameItem(col, row, SpriteContainer.flameItem.getFxImage())));
+                                , new FlameItem(col, row, SpriteContainer.flameItem.getFxImage(), this), this));
                     }
                     case 'x' -> {
                         tiles.add(new Brick(col, row, SpriteContainer.brick.getFxImage()
-                                , new Portal(col, row, SpriteContainer.portal.getFxImage())));
+                                , new Portal(col, row, SpriteContainer.portal.getFxImage(), this), this));
                     }
                     case 'p' -> {
-                        tiles.add(new Grass(col, row, SpriteContainer.grass.getFxImage()));
-                        bombers.add(new Player(col, row, SpriteContainer.player_right.getFxImage()));
+                        tiles.add(new Grass(col, row, SpriteContainer.grass.getFxImage(), this));
+                        bombers.add(new Player(col, row, SpriteContainer.player_right.getFxImage(), this));
                     }
                     case '#' -> {
-                        tiles.add(new Wall(col, row, SpriteContainer.wall.getFxImage()));
+                        tiles.add(new Wall(col, row, SpriteContainer.wall.getFxImage(), this));
                     }
                     case '*' -> {
                         tiles.add(new Brick(col, row, SpriteContainer.brick.getFxImage()
-                                , new Grass(col, row, SpriteContainer.grass.getFxImage())));
+                                , new Grass(col, row, SpriteContainer.grass.getFxImage(), this), this));
                     }
                     case '1' -> {
-                        tiles.add(new Grass(col, row, SpriteContainer.grass.getFxImage()));
-                        jellies.add(new Jelly(col, row, SpriteContainer.Jelly.getFxImage()));
+                        tiles.add(new Grass(col, row, SpriteContainer.grass.getFxImage(), this));
+                        jellies.add(new Jelly(col, row, SpriteContainer.Jelly.getFxImage(), this));
                     }
                     default -> {
-                        tiles.add(new Grass(col, row, SpriteContainer.grass.getFxImage()));
+                        tiles.add(new Grass(col, row, SpriteContainer.grass.getFxImage(), this));
                     }
                 }
             }
@@ -178,39 +192,30 @@ public class Level extends Canvas {
         numberOfEnemies = jellies.size();
     }
 
-    //Game Over
-    public static void gameOver() {
-        isRunning = false;
-    }
-
     private void render() {
 
         tiles.forEach(e -> e.render(gc));
 
-        if (!bombs.isEmpty()) {
-            bombs.forEach(b -> b.render(gc));
-        }
+        bombs.forEach(b -> b.render(gc));
 
         jellies.forEach(j -> j.render(gc));
 
-        if (!bombers.isEmpty()) {
-            bombers.forEach(bomber -> bomber.render(gc));
-        }
+        bombers.forEach(bomber -> bomber.render(gc));
     }
 
     private void update() {
 
         int count = 0;
         for (Tile tile : tiles) {
-            tile.update();
             if (tile instanceof Layered) {
                 if (((Layered) tile).canRemove) {
+
+                    tileMap[tile.getYUnit()][tile.getYUnit()] = " ";
+
                     tiles.set(count, ((Layered) tile).getBufferedEntity());
-                    if (!(((Layered) tile).getBufferedEntity() instanceof Grass)) {
-                        ((Layered) tiles.get(count)).clearRemove();
-                    }
                 }
             }
+            tile.update();
             count++;
         }
 
@@ -228,7 +233,40 @@ public class Level extends Canvas {
         if (!bombers.isEmpty()) {
             bombers.forEach(Player::update);
         } else {
+            soundTrack.stop();
             gameOver();
         }
+    }
+
+    /**
+     * Game Over
+     */
+    public void gameOver() {
+        isRunning = false;
+        goToNextLevel = true;
+    }
+
+    /**
+     * Render Game OverScene
+     */
+    public void renderGameOverSccene() {
+        gc.clearRect(0, 0, Constants.SCREEN_WIDTH, Constants.SCREEN_HEIGHT);
+        try {
+            URL url = new File("src/uet/oop/bomberman/menu/gameOver.fxml").toURI().toURL();
+            Parent root = FXMLLoader.load(url);
+            stage.setScene(new Scene(root));
+            root.getStylesheets().add("uet/oop/bomberman/menu/style.css");
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    /**
+     * Load Next Level
+     */
+    private void loadNextLevel() throws IOException {
+        Constants.TEST = "Level 2";
+        new LoadingScene(stage, "res/levels/Level2.txt");
     }
 }

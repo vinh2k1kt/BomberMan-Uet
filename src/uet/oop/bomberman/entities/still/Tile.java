@@ -2,13 +2,14 @@ package uet.oop.bomberman.entities.still;
 
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.image.Image;
+import uet.oop.bomberman.Level;
 import uet.oop.bomberman.entities.Entity;
 import uet.oop.bomberman.util.Constants;
 
 public abstract class Tile extends Entity {
 
-    public Tile(double xUnit, double yUnit, Image img) {
-        super(xUnit, yUnit, img);
+    public Tile(double xUnit, double yUnit, Image img, Level level) {
+        super(xUnit, yUnit, img, level);
     }
 
     public abstract void update();

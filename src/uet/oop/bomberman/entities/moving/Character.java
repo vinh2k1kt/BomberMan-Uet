@@ -22,8 +22,8 @@ public abstract class Character extends Entity {
     public int delay = 7;
     private int renderDeadAniTime = 30;
 
-    public Character(double xUnit, double yUnit, Image img) {
-        super(xUnit, yUnit, img);
+    public Character(double xUnit, double yUnit, Image img, Level level) {
+        super(xUnit, yUnit, img, level);
         hitBox.setX(xUnit * Constants.TILES_SIZE + Constants.HGAP);
         hitBox.setY(yUnit * Constants.TILES_SIZE + Constants.VGAP);
         hitBox.setWidth(Constants.SOLID_AREA_WIDTH);
@@ -47,7 +47,7 @@ public abstract class Character extends Entity {
             currentDirection = Direction.NONE;
 
             //Remove KeyHandler;
-            Level.levelScene.setOnKeyReleased(keyEvent -> {
+            level.levelScene.setOnKeyReleased(keyEvent -> {
 
             });
         }
