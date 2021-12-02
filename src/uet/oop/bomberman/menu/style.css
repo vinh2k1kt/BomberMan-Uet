@@ -1,7 +1,18 @@
-.bodybg {
-    -fx-background-image: url("bombermanR.png");
+@font-face {
+    font-family: 'PressStart2P-Regular';
+    src: url('PressStart2P-Regular.ttf');
 }
-.button2:hover{
-    -fx-background-color: #04c7b3;
-    -fx-text-fill: white;
+
+.text {
+    -fx-font-family: "Press Start 2P";
+    -fx-font-size: 18;
+}
+
+.bodybg {
+    -fx-background-image: url("menu_bgLS.jpg");
+}
+
+.button2:focused {
+    -fx-effect:  dropshadow(gaussian, #67676D, 12, 0.8, 0.0, 3);
+    -fx-background-image: url("temp2.png");
 }
