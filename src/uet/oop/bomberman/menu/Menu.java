@@ -21,11 +21,11 @@ public class Menu {
     AnchorPane anchorPane = new AnchorPane();
     public void playButton(ActionEvent event) throws IOException {
 
-        primaryStage = (Stage) ((Node) event.getSource()).getScene().getWindow();
-        LoadingScene loadingScene = new LoadingScene(primaryStage, "res/levels/Level1.txt");
-
-        primaryStage.setScene(loadingScene.getScene());
-        primaryStage.show();
+//        primaryStage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+//        LoadingScene loadingScene = new LoadingScene(primaryStage, "res/levels/Level1.txt");
+//
+//        primaryStage.setScene(loadingScene.getScene());
+        System.out.println("Clicked");
     }
 
     public void exitButton(ActionEvent event) throws IOException {

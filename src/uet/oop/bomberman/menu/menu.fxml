@@ -2,20 +2,22 @@
 
 <?import com.jfoenix.controls.JFXButton?>
 <?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.shape.Rectangle?>
 <?import javafx.scene.text.Font?>
 
 <AnchorPane fx:id="anchorPane" prefHeight="468.0" prefWidth="1116.0" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="uet.oop.bomberman.menu.Menu">
    <children>
       <AnchorPane layoutX="6.0" prefHeight="468.0" prefWidth="1116.0" styleClass="bodybg" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
          <children>
+            <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#f3ff6d" height="200.0" layoutX="473.0" layoutY="181.0" stroke="BLACK" strokeType="INSIDE" width="200.0" />
             <JFXButton buttonType="RAISED" focusTraversable="false" layoutX="509.0" layoutY="203.0" onAction="#playButton" prefHeight="62.0" prefWidth="128.0" ripplerFill="#0de0d6" style="-fx-border-color: grey; -fx-border-radius: 12px; -fx-background-radius: 12px;" styleClass="button2" text="Play">
                <font>
-                  <Font name="Times New Roman" size="26.0" />
+                  <Font name="Times New Roman Bold" size="26.0" />
                </font>
             </JFXButton>
             <JFXButton buttonType="RAISED" focusTraversable="false" layoutX="509.0" layoutY="295.0" onAction="#exitButton" prefHeight="62.0" prefWidth="128.0" ripplerFill="#0de0d6" style="-fx-border-color: grey; -fx-border-radius: 12px; -fx-background-radius: 12px;" styleClass="button2" text="Exit">
                <font>
-                  <Font size="26.0" />
+                  <Font name="Times New Roman Bold" size="26.0" />
                </font>
             </JFXButton>
          </children>
