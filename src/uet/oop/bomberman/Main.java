@@ -18,14 +18,15 @@ public class Main extends Application {
         new Sound();
         Animation.initAnimation();
 
-        URL url = new File("src/uet/oop/bomberman/menu/menu.fxml").toURI().toURL();
-        Parent root = FXMLLoader.load(url);
-        primaryStage.setTitle("BomberMan");
-        primaryStage.setScene(new Scene(root));
+        primaryStage.setResizable(false);
 
- //       primaryStage.setScene(new Level(primaryStage, "res/levels/Level1.txt").levelScene);
+//        URL url = new File("src/uet/oop/bomberman/menu/menu.fxml").toURI().toURL();
+//        Parent root = FXMLLoader.load(url);
+//        primaryStage.setTitle("BomberMan");
+//        primaryStage.setScene(new Scene(root));
+//        root.getStylesheets().add("uet/oop/bomberman/menu/style.css");
 
-        root.getStylesheets().add("uet/oop/bomberman/menu/style.css");
+        primaryStage.setScene(new ScreenController(primaryStage,"res/levels/Level1.txt").getCurrentScene());
         primaryStage.show();
     }
 

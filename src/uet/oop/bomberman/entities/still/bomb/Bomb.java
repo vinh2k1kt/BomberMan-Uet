@@ -33,13 +33,6 @@ public class Bomb extends Tile {
         this.owner = owner;
     }
 
-    public void setHitBox(double x, double y) {
-        hitBox.setX(x);
-        hitBox.setY(y);
-        hitBox.setWidth(Constants.SOLID_AREA_WIDTH);
-        hitBox.setHeight(Constants.SOLID_AREA_HEIGHT);
-    }
-
     public void chooseSprite() {
         /*
         Calculated which frame gonna be displayed
@@ -94,6 +87,9 @@ public class Bomb extends Tile {
     }
 
     private void explode() {
+
+        level.soundTrack.setFile("BombExplode");
+        level.soundTrack.play();
 
         //Clear Bomb's HitBox
         this.hitBox.setWidth(0);

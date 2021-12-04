@@ -26,6 +26,7 @@ public class Portal extends Layered {
     public void update() {
         if (level.numberOfEnemies == 0) {
             passAble();
+            level.complete();
         }
 
         if (completeable) {

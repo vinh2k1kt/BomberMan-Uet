@@ -20,8 +20,8 @@ public class Player extends Character {
 
     private final CollisionChecker collisionChecker;
 
-    public int bombNum = 2;
-    public int bombRange = 2;
+    public int bombNum = 1;
+    public int bombRange = 1;
 
     public Player(double x, double y, Image img, Level level) {
         super(x, y, img, level);
@@ -54,6 +54,10 @@ public class Player extends Character {
                                 , SpriteContainer.Bomb.getFxImage(), this, this.level);
                         if (!(Math.round(bomb.x / Constants.TILES_SIZE) == lastX) ||
                                 !(Math.round(bomb.y / Constants.TILES_SIZE) == lastY)) {
+
+                            level.soundTrack.setFile("Placing");
+                            level.soundTrack.play();
+
                             level.bombs.add(bomb);
                             lastX = Math.round(this.x / Constants.TILES_SIZE);
                             lastY = Math.round(this.y / Constants.TILES_SIZE);
@@ -64,6 +68,9 @@ public class Player extends Character {
                         keepMoving();
                         isMoving = true;
                     }
+                }
+                case P -> {
+                    level.pause();
                 }
                 default -> {
                     isMoving = false;
@@ -203,6 +210,10 @@ public class Player extends Character {
         count++;
 
         if (count == delay) {
+
+//            level.soundTrack.setFile("Walking");
+//            level.soundTrack.play();
+
             index++;
             count = 0;
         }
