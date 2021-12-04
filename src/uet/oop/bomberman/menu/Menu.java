@@ -19,7 +19,7 @@ import java.net.URL;
 
 public class Menu {
 
-    Stage primaryStage;
+    public Stage primaryStage;
 
     @FXML
     Button buttonPlay = new Button();
@@ -40,4 +40,12 @@ public class Menu {
         primaryStage.close();
     }
 
+    public void howtoplayButton(ActionEvent event) throws IOException {
+        URL url = new File("src/uet/oop/bomberman/menu/howtoplay.fxml").toURI().toURL();
+        Parent root = FXMLLoader.load(url);
+        root.getStylesheets().add("uet/oop/bomberman/menu/image/style.css");
+        primaryStage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+        primaryStage.setTitle("BomberMan");
+        primaryStage.setScene(new Scene(root));
+    }
 }

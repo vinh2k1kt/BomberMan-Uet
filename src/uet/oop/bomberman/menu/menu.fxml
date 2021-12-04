@@ -21,7 +21,7 @@
                         <String fx:value="text" />
                      </styleClass>
                   </Button>
-                  <Button alignment="CENTER" cache="true" contentDisplay="CENTER" mnemonicParsing="false" prefHeight="73.0" prefWidth="337.0" style="-fx-background-color: transparent;" text=" How to Play" textFill="WHITE">
+                  <Button alignment="CENTER" cache="true" contentDisplay="CENTER" mnemonicParsing="false" onAction="#howtoplayButton" prefHeight="73.0" prefWidth="337.0" style="-fx-background-color: transparent;" text=" How to Play" textFill="WHITE">
                      <font>
                         <Font size="34.0" />
                      </font>
