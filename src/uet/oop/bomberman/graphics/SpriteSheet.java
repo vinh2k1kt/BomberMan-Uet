@@ -1,15 +1,17 @@
 package uet.oop.bomberman.graphics;
 
 import uet.oop.bomberman.dataStructure.AssetPool;
+import uet.oop.bomberman.util.Constants;
 
 import java.util.ArrayList;
 import java.util.List;
 
 public class SpriteSheet {
-	public static SpriteSheet SPRITESHEET = new SpriteSheet("res/textures/Classic.png",
-			16, 16, 0, 16, 16*12);
 
-	public static List<Sprite> sprites;
+	public static SpriteSheet spriteSheet = new SpriteSheet("res/SpriteSheet_Final.png",
+			16, 16, 0, Constants.SPRITE_COL, Constants.SPRITE_COL * Constants.SPRITE_ROW);
+
+	public List<Sprite> sprites;
 	public int tileWidth;
 	public int tileHeight;
 	public int spacing;

@@ -1,13 +1,16 @@
 package uet.oop.bomberman;
 
-
-import javafx.animation.AnimationTimer;
+import javafx.application.Platform;
+import javafx.concurrent.Task;
+import javafx.concurrent.WorkerStateEvent;
+import javafx.event.EventHandler;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.control.Menu;
 import javafx.stage.Stage;
+import uet.oop.bomberman.menu.Menu;
+import uet.oop.bomberman.util.Constants;
 
 import java.io.File;
 import java.io.IOException;
@@ -19,11 +22,12 @@ public class ScreenController {
     public ArrayList<Node> nodes = new ArrayList<>();
     Stage stage;
     Level level;
-    LoadingScreen loadingScreen;
+    public LoadingScreen loadingScreen;
     public Scene currentScene;
     public static int x = 0;
+    public int levelIndex = 0;
 
-    public ScreenController(Stage primaryStage, String levelPath) throws IOException {
+    public ScreenController(Stage primaryStage) throws IOException {
 
         URL url = new File("src/uet/oop/bomberman/menu/menu.fxml").toURI().toURL();
         Parent root = FXMLLoader.load(url);
@@ -34,9 +38,11 @@ public class ScreenController {
         }
 
         stage = primaryStage;
-        level = new Level(primaryStage, levelPath, this);
+        level = new Level(primaryStage, Constants.levelPath.get(levelIndex), this);
+        Menu.level = level;
         loadingScreen = new LoadingScreen();
         currentScene = level.levelScene;
+//        currentScene = loadingScreen.scene;
         setCurrentScene(currentScene);
     }
 
@@ -44,17 +50,33 @@ public class ScreenController {
         return currentScene;
     }
 
-    public void setCurrentScene(Scene currentScene) {
-        this.currentScene = currentScene;
+    public void setCurrentScene(Scene scene) {
+        this.currentScene = scene;
         stage.setScene(currentScene);
     }
 
-    public void renderLoadingScene() throws IOException {
-        level.timer.stop();
-        setCurrentScene(loadingScreen.scene);
-        loadingScreen.render();
+    public void renderLoadingScene() throws IOException, InterruptedException {
+        setCurrentScene(this.loadingScreen.scene);
 
+        if (levelIndex < Constants.levelPath.size()) {
+            levelIndex++;
+        }
 
-        level = new Level(stage, "res/levels/Level2.txt", this);
+        level.loadMap(Constants.levelPath.get(levelIndex));
+        level.createMap();
+
+        Task<Void> sleeper = new Task<>() {
+            @Override
+            protected Void call() {
+                try {
+                    Thread.sleep(2000);
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+                return null;
+            }
+        };
+        sleeper.setOnSucceeded(event -> setCurrentScene(level.levelScene));
+        new Thread(sleeper).start();
     }
 }

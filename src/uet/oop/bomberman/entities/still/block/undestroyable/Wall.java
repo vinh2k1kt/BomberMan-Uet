@@ -1,8 +1,10 @@
 package uet.oop.bomberman.entities.still.block.undestroyable;
 
+import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.image.Image;
 import uet.oop.bomberman.Level;
 import uet.oop.bomberman.entities.still.Tile;
+import uet.oop.bomberman.graphics.SpriteContainer;
 import uet.oop.bomberman.util.Constants;
 
 public class Wall extends Tile {
@@ -24,4 +26,8 @@ public class Wall extends Tile {
 
     }
 
+    public void render(GraphicsContext gc) {
+        gc.drawImage(SpriteContainer.grass.getFxImage(), this.x, this.y, Constants.TILES_SIZE, Constants.TILES_SIZE);
+        super.render(gc);
+    }
 }

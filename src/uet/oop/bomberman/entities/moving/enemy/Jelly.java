@@ -44,10 +44,10 @@ public class Jelly extends Character {
             }
         } else {
             if (renderDeadImageTime > 20) {
-                this.img = SpriteContainer.deadJelly.getFxImage();
+                this.img = SpriteContainer.deadEnemy.getFxImage();
                 renderDeadImageTime--;
             } else {
-                super.afterDead(Animation.jellyDeadAni);
+                super.afterDead(Animation.mobDeadAni);
             }
         }
     }
@@ -95,8 +95,8 @@ public class Jelly extends Character {
         }
 
         switch (currentDirection) {
-            case LEFT, UP -> this.img = Animation.jellyLeftAni.get(index).getFxImage();
-            case RIGHT, DOWN -> this.img = Animation.jellyRightAni.get(index).getFxImage();
+            case LEFT, UP -> this.img = Animation.skellyLeftAni.get(index).getFxImage();
+            case RIGHT, DOWN -> this.img = Animation.skellyRightAni.get(index).getFxImage();
         }
     }
 

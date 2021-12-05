@@ -8,6 +8,7 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
+import uet.oop.bomberman.Level;
 
 import java.io.File;
 import java.io.IOException;
@@ -17,20 +18,16 @@ public class Menu {
 
     Stage primaryStage;
 
+    public static Level level;
+
     @FXML
     AnchorPane anchorPane = new AnchorPane();
     public void playButton(ActionEvent event) throws IOException {
-
-//        primaryStage = (Stage) ((Node) event.getSource()).getScene().getWindow();
-//        LoadingScene loadingScene = new LoadingScene(primaryStage, "res/levels/Level1.txt");
-//
-//        primaryStage.setScene(loadingScene.getScene());
-        System.out.println("Clicked");
+        level.pause();
     }
 
     public void exitButton(ActionEvent event) throws IOException {
         primaryStage = (Stage) ((Node) event.getSource()).getScene().getWindow();
         primaryStage.close();
     }
-
 }

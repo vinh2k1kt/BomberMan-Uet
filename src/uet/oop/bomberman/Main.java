@@ -26,7 +26,7 @@ public class Main extends Application {
 //        primaryStage.setScene(new Scene(root));
 //        root.getStylesheets().add("uet/oop/bomberman/menu/style.css");
 
-        primaryStage.setScene(new ScreenController(primaryStage,"res/levels/Level1.txt").getCurrentScene());
+        primaryStage.setScene(new ScreenController(primaryStage).getCurrentScene());
         primaryStage.show();
     }
 
