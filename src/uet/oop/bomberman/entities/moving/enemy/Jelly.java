@@ -1,20 +1,25 @@
 package uet.oop.bomberman.entities.moving.enemy;
 
 import javafx.scene.image.Image;
+import javafx.scene.paint.Color;
 import uet.oop.bomberman.Level;
 import uet.oop.bomberman.entities.moving.player.Player;
 import uet.oop.bomberman.graphics.Animation;
 import uet.oop.bomberman.entities.moving.Character;
 import uet.oop.bomberman.entities.moving.CollisionChecker;
 import uet.oop.bomberman.graphics.SpriteContainer;
+import uet.oop.bomberman.util.Constants;
 import uet.oop.bomberman.util.Direction;
+
+import java.util.List;
 
 public class Jelly extends Character {
     private int renderDeadImageTime  = 10;
     private final CollisionChecker collisionChecker;
-    private final double speed = 2;
+    private final double speed = 0;
     private double dx, dy;
     private final Level level;
+    private PathFinding AI;
 
     public Jelly(int xUnit, int yUnit, Image img, Level level) {
         super(xUnit, yUnit, img, level);
@@ -26,6 +31,12 @@ public class Jelly extends Character {
 
     @Override
     public void update() {
+        if (AI == null) {
+            AI = new PathFinding(Constants.COLUMNS * Constants.ROWS, this.level);
+            for (int node = 0; node < Constants.ROWS * Constants.COLUMNS; node++) {
+                AI.checkNode(node, AI.graph);
+            }
+        }
         if (alive) {
             if (!collisionChecker.isBlocked(this)) {
                 x += dx;
@@ -49,6 +60,37 @@ public class Jelly extends Character {
             } else {
                 super.afterDead(Animation.mobDeadAni);
             }
+        }
+    }
+
+    public void showPath(int start, int end) {
+        List<Integer> path = AI.reconstructPath(start, end);
+        if (path.isEmpty()) {
+            System.out.println("wrong " + end);
+        } else {
+            for (Integer i : path) {
+                if (i == start) {
+                    level.gc.setFill(Color.YELLOW);
+                } else if (i == end) {
+                    level.gc.setFill(Color.BLUE);
+                } else {
+                    level.gc.setFill(Color.BLACK);
+                }
+                int col, row;
+                if (i % Constants.COLUMNS == 0) {
+                    i--;
+                }
+                row = i / Constants.COLUMNS;
+                col = i - row * Constants.COLUMNS;
+                level.gc.fillRect( col * Constants.TILES_SIZE, row * Constants.TILES_SIZE,
+                        Constants.TILES_SIZE - 5, Constants.TILES_SIZE - 5);
+            }
+//            for (Edge edge : AI.graph.get(64)) {
+//                System.out.println(edge.from + " " + edge.to);
+//            }
+            System.out.printf("The shortest path from %d to %d is: [%s]\n", start, end, AI.formatPath(path));
+//            level.timer.stop();
+            // The shortest path from 43 to 95 is: [43 -> 42 -> 41 -> 40 -> 39 -> 38 -> 37 -> 36 -> 35 -> 34 -> 33 -> 64 -> 95]
         }
     }
 

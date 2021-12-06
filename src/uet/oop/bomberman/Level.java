@@ -38,6 +38,7 @@ import java.util.Scanner;
 
 public class Level extends Canvas {
 
+    boolean first = true;
     public Scene levelScene;
     public Canvas levelCanvas;
     public GraphicsContext gc;
@@ -76,8 +77,8 @@ public class Level extends Canvas {
             if (deltaTime >= 1) {
                 if (isRunning) {
                     gc.clearRect(0, 0, Constants.SCREEN_WIDTH, Constants.SCREEN_HEIGHT);
-                    render();
                     update();
+                    render();
 
 //                    gc.clearRect(0, 0, Constants.SCREEN_WIDTH, Constants.SCREEN_HEIGHT);
 //                    Animation.testAni(gc, Animation.skellyLeftAni, 0);
@@ -170,41 +171,50 @@ public class Level extends Canvas {
         int row = 0;
         for (String line : mapDataFile) {
             for (int col = 0; col < Constants.COLUMNS; col++) {
-                tileMap[row][col] = String.valueOf(line.charAt(col));
                 switch (line.charAt(col)) {
                     case 's' -> {
                         tiles.add(new Brick(col, row, SpriteContainer.brick.getFxImage()
                                 , new SpeedItem(col, row, SpriteContainer.speedItem.getFxImage(), this), this));
+                        tileMap[row][col] = "b";
                     }
                     case 'b' -> {
                         tiles.add(new Brick(col, row, SpriteContainer.brick.getFxImage()
                                 , new BombItem(col, row, SpriteContainer.bombItem.getFxImage(), this), this));
+                        tileMap[row][col] = "b";
                     }
                     case 'f' -> {
                         tiles.add(new Brick(col, row, SpriteContainer.brick.getFxImage()
                                 , new FlameItem(col, row, SpriteContainer.flameItem.getFxImage(), this), this));
+                        tileMap[row][col] = "b";
                     }
                     case 'x' -> {
                         tiles.add(new Brick(col, row, SpriteContainer.brick.getFxImage()
                                 , new Portal(col, row, SpriteContainer.portal.getFxImage(), this), this));
+                        tileMap[row][col] = "b";
                     }
                     case 'p' -> {
                         tiles.add(new Grass(col, row, SpriteContainer.grass.getFxImage(), this));
                         bombers.add(new Player(col, row, SpriteContainer.player_right.getFxImage(), this));
+                        tileMap[row][col] = " ";
                     }
                     case '1' -> {
                         tiles.add(new Wall(col, row, SpriteContainer.wall_top_left_corner.getFxImage(), this));
+                        tileMap[row][col] = "b";
                     }
                     case '2' -> {
                         tiles.add(new Wall(col, row, SpriteContainer.wall_top_right_corner.getFxImage(), this));
+                        tileMap[row][col] = "b";
                     }
                     case '3' -> {
                         tiles.add(new Wall(col, row, SpriteContainer.wall_bottom_right_corner.getFxImage(), this));
+                        tileMap[row][col] = "b";
                     }
                     case '4' -> {
                         tiles.add(new Wall(col, row, SpriteContainer.wall_bottom_left_corner.getFxImage(), this));
+                        tileMap[row][col] = "b";
                     }
                     case '|' -> {
+                        tileMap[row][col] = "b";
                         if (col == 0) {
                             tiles.add(new Wall(col, row, SpriteContainer.wall_left_side.getFxImage(), this));
                         } else {
@@ -212,6 +222,7 @@ public class Level extends Canvas {
                         }
                     }
                     case '-' -> {
+                        tileMap[row][col] = "b";
                         if (row == 0) {
                             tiles.add(new Wall(col, row, SpriteContainer.wall_top_middle.getFxImage(), this));
                         } else {
@@ -219,17 +230,22 @@ public class Level extends Canvas {
                         }
                     }
                     case 'w' -> {
+                        tileMap[row][col] = "b";
+//                        System.out.println("create map " + row + " " + col);
                         tiles.add(new Wall(col, row, SpriteContainer.wall.getFxImage(), this));
                     }
                     case 'j' -> {
+                        tileMap[row][col] = " ";
                         tiles.add(new Grass(col, row, SpriteContainer.grass.getFxImage(), this));
                         jellies.add(new Jelly(col, row, Animation.skellyRightAni.get(0).getFxImage(), this));
                     }
                     case '*' -> {
+                        tileMap[row][col] = "b";
                         tiles.add(new Brick(col, row, SpriteContainer.brick.getFxImage(),
                         new Grass(col, row, SpriteContainer.grass.getFxImage(), this), this));
                     }
                     default -> {
+                        tileMap[row][col] = " ";
                         int random = (int) (Math.random() * 3 + 1);
                         Image grassImage = SpriteContainer.grass.getFxImage();
                         switch (random) {
@@ -246,6 +262,15 @@ public class Level extends Canvas {
         numberOfEnemies = jellies.size();
     }
 
+    public void printTileMap() {
+        for (int row = 0; row < Constants.ROWS; row++) {
+            for (int col = 0; col < Constants.COLUMNS; col++) {
+                System.out.print(tileMap[row][col]);
+            }
+                System.out.println();
+            }
+        }
+
     private void render() {
 
         tiles.forEach(e -> e.render(gc));
@@ -255,6 +280,8 @@ public class Level extends Canvas {
         jellies.forEach(j -> j.render(gc));
 
         bombers.forEach(bomber -> bomber.render(gc));
+
+            jellies.get(0).showPath(jellies.get(0).getNode(), bombers.get(0).getNode());
     }
 
     private void update() {
@@ -336,5 +363,37 @@ public class Level extends Canvas {
         isRunning = false;
         goToNextLevel = true;
     }
+
+
+
+
+
+
+
+
+
+
+
+
+    public Level(String levelPath) throws IOException {
+
+
+        loadMap(levelPath);
+
+        // Init Scene and Canvas
+//        levelCanvas = new Canvas(Constants.SCREEN_WIDTH, Constants.SCREEN_HEIGHT);
+//        gc = levelCanvas.getGraphicsContext2D();
+//        container.getChildren().add(levelCanvas);
+//        levelScene = new Scene(container);
+
+        createMap();
+
+        // Play Theme Song
+//        soundTrack.setFile("Main");
+//        soundTrack.play();
+//        soundTrack.loop();
+
+    }
+
 
 }

@@ -37,6 +37,14 @@ public abstract class Character extends Entity {
         hitBox.setHeight(Constants.SOLID_AREA_HEIGHT);
     }
 
+    public int getNode() {
+        int col = (int) ((this.x + Constants.HGAP) / Constants.TILES_SIZE);
+        int row = (int) ((this.y + Constants.VGAP) / Constants.TILES_SIZE);
+//        System.out.println(this.x + " " + this.y + " " + col + " " + row + " "
+//        + (row * Constants.COLUMNS + col));
+        return row * Constants.COLUMNS + col;
+    }
+
     public void isKill() {
         if (alive) {
             this.delay = 10;
