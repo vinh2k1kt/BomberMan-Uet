@@ -28,16 +28,9 @@ public class Bomb extends Tile {
 
     public int timeBeforeExploded = 120;
 
-    public Bomb(double xUnit, double yUnit, Image img, Player owner) {
-        super(xUnit, yUnit, img);
+    public Bomb(double xUnit, double yUnit, Image img, Player owner, Level level) {
+        super(xUnit, yUnit, img, level);
         this.owner = owner;
-    }
-
-    public void setHitBox(double x, double y) {
-        hitBox.setX(x);
-        hitBox.setY(y);
-        hitBox.setWidth(Constants.SOLID_AREA_WIDTH);
-        hitBox.setHeight(Constants.SOLID_AREA_HEIGHT);
     }
 
     public void chooseSprite() {
@@ -86,7 +79,7 @@ public class Bomb extends Tile {
 
     public void render(GraphicsContext gc) {
         super.render(gc);
-        flames.forEach(f -> f.render(Level.gc));
+        flames.forEach(f -> f.render(level.gc));
     }
 
     private void updateFlame() {
@@ -94,6 +87,9 @@ public class Bomb extends Tile {
     }
 
     private void explode() {
+
+        level.soundTrack.setFile("BombExplode");
+        level.soundTrack.play();
 
         //Clear Bomb's HitBox
         this.hitBox.setWidth(0);
@@ -103,7 +99,7 @@ public class Bomb extends Tile {
         this.ani = Animation.explosion_center;
         for (int i = 0; i < 5; i++) {
             flames.add(new Flame(this.x / Constants.TILES_SIZE, this.y / Constants.TILES_SIZE
-                    , null, i, this.owner));
+                    , null, i, this.owner, this.level));
         }
     }
 

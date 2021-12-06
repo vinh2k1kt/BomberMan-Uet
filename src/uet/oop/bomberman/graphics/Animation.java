@@ -1,5 +1,6 @@
 package uet.oop.bomberman.graphics;
 
+import javafx.scene.canvas.GraphicsContext;
 import uet.oop.bomberman.Level;
 import uet.oop.bomberman.graphics.Sprite;
 import uet.oop.bomberman.graphics.SpriteSheet;
@@ -20,11 +21,17 @@ public class Animation {
     public static ArrayList<Sprite> deadAni = new ArrayList<>();
 
     /*
-    Jelly Animation
+    Enemies
      */
-    public static ArrayList<Sprite> jellyLeftAni = new ArrayList<>();
-    public static ArrayList<Sprite> jellyRightAni = new ArrayList<>();
-    public static ArrayList<Sprite> jellyDeadAni = new ArrayList<>();
+    public static ArrayList<Sprite> skellyLeftAni = new ArrayList<>();
+    public static ArrayList<Sprite> skellyRightAni = new ArrayList<>();
+    public static ArrayList<Sprite> ghostLeftAni = new ArrayList<>();
+    public static ArrayList<Sprite> ghostRightAni = new ArrayList<>();
+    public static ArrayList<Sprite> frogLeftAni = new ArrayList<>();
+    public static ArrayList<Sprite> frogRightAni = new ArrayList<>();
+    public static ArrayList<Sprite> batLeftAni = new ArrayList<>();
+    public static ArrayList<Sprite> batRightAni = new ArrayList<>();
+    public static ArrayList<Sprite> mobDeadAni = new ArrayList<>();
 
     /*
     Bomb Animation
@@ -44,43 +51,53 @@ public class Animation {
     public static ArrayList<Sprite> brick_explosion = new ArrayList<>();
 
     public static void initAnimation() {
+
+        //Titan Sprites
         for (int i = 0; i < Constants.FRAME_NUM; i++) {
 
             //Player
-            leftAni.add(SpriteSheet.sprites.get(Constants.LEFT_INDEX + i * Constants.SPRITE_COL));
-            rightAni.add(SpriteSheet.sprites.get(Constants.RIGHT_INDEX + i * Constants.SPRITE_COL));
-            upAni.add(SpriteSheet.sprites.get(Constants.UP_INDEX + i * Constants.SPRITE_COL));
-            downAni.add(SpriteSheet.sprites.get(Constants.DOWN_INDEX + i * Constants.SPRITE_COL));
-            deadAni.add(SpriteSheet.sprites.get(Constants.SPRITE_COL * 2 + 4 + i));
+            leftAni.add(SpriteSheet.spriteSheet.sprites.get(Constants.SPRITE_COL * 2 + i));
+            rightAni.add(SpriteSheet.spriteSheet.sprites.get(i));
+            upAni.add(SpriteSheet.spriteSheet.sprites.get(Constants.SPRITE_COL + i));
+            downAni.add(SpriteSheet.spriteSheet.sprites.get(Constants.SPRITE_COL * 3 + i));
+            deadAni.add(SpriteSheet.spriteSheet.sprites.get(Constants.SPRITE_COL * 2 + (9 + i)));
 
-            //Jelly
-            jellyLeftAni.add(SpriteSheet.sprites.get(9 + i * Constants.SPRITE_COL));
-            jellyRightAni.add(SpriteSheet.sprites.get(10 + i * Constants.SPRITE_COL));
-            jellyDeadAni.add(SpriteSheet.sprites.get(Constants.SPRITE_COL * (i + 1) - 1));
+            //Skelly
+            skellyLeftAni.add(SpriteSheet.spriteSheet.sprites.get(9 + i));
+            skellyRightAni.add(SpriteSheet.spriteSheet.sprites.get(Constants.SPRITE_COL + (9 + i)));
+            mobDeadAni.add(SpriteSheet.spriteSheet.sprites.get(Constants.SPRITE_COL * 6 - 4 + i));
 
-            //Bomb & Flame
-            bombAni.add(SpriteSheet.sprites.get(Constants.SPRITE_COL * 3 + i));
-
-            explosion_center.add(SpriteSheet.sprites.get(6 * Constants.SPRITE_COL - i * Constants.SPRITE_COL));
-
-            explosion_vertical_top.add(SpriteSheet.sprites.get(4 * Constants.SPRITE_COL - i + 3));
-            explosion_vertical_middle.add(SpriteSheet.sprites.get(5 * Constants.SPRITE_COL - i + 3));
-            explosion_vertical_bottom.add(SpriteSheet.sprites.get(6 * Constants.SPRITE_COL - i + 3));
-
-            explosion_horizontal_left.add(SpriteSheet.sprites.get(9 * Constants.SPRITE_COL - i * Constants.SPRITE_COL));
-            explosion_horizontal_middle.add(SpriteSheet.sprites.get(9 * Constants.SPRITE_COL - i * Constants.SPRITE_COL + 1));
-            explosion_horizontal_right.add(SpriteSheet.sprites.get(9 * Constants.SPRITE_COL - i * Constants.SPRITE_COL + 2));
+            //Frog
+            frogLeftAni.add(SpriteSheet.spriteSheet.sprites.get(5 + i));
+            frogRightAni.add(SpriteSheet.spriteSheet.sprites.get(Constants.SPRITE_COL + 5 + i));
 
             //Tile
-            brick_explosion.add(SpriteSheet.sprites.get(7 + (i + 1) * Constants.SPRITE_COL));
+            brick_explosion.add(SpriteSheet.spriteSheet.sprites.get(Constants.SPRITE_COL * 4 - 4 + i));
+        }
+
+        //Classic Sprites
+        for (int i = 0; i < 3; i++) {
+            //Bomb & Flame
+            bombAni.add(SpriteSheet.spriteSheet.sprites.get(Constants.SPRITE_COL * 3 + (10 + i)));
+
+            explosion_center.add(SpriteSheet.spriteSheet.sprites.get(Constants.SPRITE_COL * 3 + (15 + i)));
+
+
+            explosion_vertical_top.add(SpriteSheet.spriteSheet.sprites.get(17 + i));
+            explosion_vertical_middle.add(SpriteSheet.spriteSheet.sprites.get(Constants.SPRITE_COL + 17 + i));
+            explosion_vertical_bottom.add(SpriteSheet.spriteSheet.sprites.get(Constants.SPRITE_COL * 2 + 17 + i));
+
+            explosion_horizontal_left.add(SpriteSheet.spriteSheet.sprites.get(20 + i * Constants.SPRITE_COL));
+            explosion_horizontal_middle.add(SpriteSheet.spriteSheet.sprites.get(21 + i * Constants.SPRITE_COL));
+            explosion_horizontal_right.add(SpriteSheet.spriteSheet.sprites.get(22 + i * Constants.SPRITE_COL));
         }
     }
 
-    public static void testAni(ArrayList<Sprite> ani) {
+    public static void testAni(GraphicsContext gc, ArrayList<Sprite> ani, int row) {
         int count = 0;
         for (Sprite sprite : ani) {
-            Level.gc.drawImage(sprite.getFxImage(), count * Constants.TILES_SIZE, 0
-            , Constants.TILES_SIZE, Constants.TILES_SIZE);
+            gc.drawImage(sprite.getFxImage(), count * Constants.TILES_SIZE, row * Constants.TILES_SIZE
+                    , Constants.TILES_SIZE, Constants.TILES_SIZE);
             count++;
         }
     }

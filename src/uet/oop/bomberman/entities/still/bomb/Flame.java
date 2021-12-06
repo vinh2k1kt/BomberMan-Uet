@@ -17,8 +17,8 @@ public class Flame extends Tile {
     protected ArrayList<FlameSegment> flameSegments = new ArrayList<>();
     protected Player cause;
 
-    public Flame(double xUnit, double yUnit, Image img, int direction, Player cause) {
-        super(xUnit, yUnit, img);
+    public Flame(double xUnit, double yUnit, Image img, int direction, Player cause, Level level) {
+        super(xUnit, yUnit, img, level);
         this.direction = direction;
         this.cause = cause;
         createFlameSegment();
@@ -42,7 +42,7 @@ public class Flame extends Tile {
                 case 2 -> xUnit--;
                 case 3 -> xUnit++;
             }
-            flameSegments.add(new FlameSegment(xUnit, yUnit, null, direction, isLast));
+            flameSegments.add(new FlameSegment(xUnit, yUnit, null, direction, isLast, this.level));
         }
     }
 
@@ -56,12 +56,12 @@ public class Flame extends Tile {
             case 0 -> {
                 yUnit++;
                 while (length < cause.bombRange) {
-                    if (Level.tiles.get((int) (xUnit + yUnit * Constants.COLUMNS + length * Constants.COLUMNS)) instanceof Wall
-                            || Level.tiles.get((int) (xUnit + yUnit * Constants.COLUMNS + length)) instanceof Bomb) {
+                    if (level.tiles.get((int) (xUnit + yUnit * Constants.COLUMNS + length * Constants.COLUMNS)) instanceof Wall
+                            || level.tiles.get((int) (xUnit + yUnit * Constants.COLUMNS + length)) instanceof Bomb) {
                         return length;
                     }
 
-                    if (Level.tiles.get((int) (xUnit + yUnit * Constants.COLUMNS + length)) instanceof Brick) {
+                    if (level.tiles.get((int) (xUnit + yUnit * Constants.COLUMNS + length)) instanceof Brick) {
                         return ++length;
                     }
 
@@ -71,12 +71,12 @@ public class Flame extends Tile {
             case 1 -> {
                 yUnit--;
                 while (length < cause.bombRange) {
-                    if (Level.tiles.get((int) (xUnit + yUnit * Constants.COLUMNS - length * Constants.COLUMNS)) instanceof Wall
-                            || Level.tiles.get((int) (xUnit + yUnit * Constants.COLUMNS + length)) instanceof Bomb) {
+                    if (level.tiles.get((int) (xUnit + yUnit * Constants.COLUMNS - length * Constants.COLUMNS)) instanceof Wall
+                            || level.tiles.get((int) (xUnit + yUnit * Constants.COLUMNS + length)) instanceof Bomb) {
                         return length;
                     }
 
-                    if (Level.tiles.get((int) (xUnit + yUnit * Constants.COLUMNS + length)) instanceof Brick) {
+                    if (level.tiles.get((int) (xUnit + yUnit * Constants.COLUMNS + length)) instanceof Brick) {
                         return ++length;
                     }
 
@@ -86,12 +86,12 @@ public class Flame extends Tile {
             case 2 -> {
                 xUnit--;
                 while (length < cause.bombRange) {
-                    if (Level.tiles.get((int) (xUnit + yUnit * Constants.COLUMNS - length)) instanceof Wall) {
+                    if (level.tiles.get((int) (xUnit + yUnit * Constants.COLUMNS - length)) instanceof Wall) {
                         return length;
                     }
 
-                    if (Level.tiles.get((int) (xUnit + yUnit * Constants.COLUMNS + length)) instanceof Brick
-                            || Level.tiles.get((int) (xUnit + yUnit * Constants.COLUMNS + length)) instanceof Bomb) {
+                    if (level.tiles.get((int) (xUnit + yUnit * Constants.COLUMNS + length)) instanceof Brick
+                            || level.tiles.get((int) (xUnit + yUnit * Constants.COLUMNS + length)) instanceof Bomb) {
                         return ++length;
                     }
 
@@ -101,12 +101,12 @@ public class Flame extends Tile {
             case 3 -> {
                 xUnit++;
                 while (length < cause.bombRange) {
-                    if (Level.tiles.get((int) (xUnit + yUnit * Constants.COLUMNS + length)) instanceof Wall
-                            || Level.tiles.get((int) (xUnit + yUnit * Constants.COLUMNS + length)) instanceof Bomb) {
+                    if (level.tiles.get((int) (xUnit + yUnit * Constants.COLUMNS + length)) instanceof Wall
+                            || level.tiles.get((int) (xUnit + yUnit * Constants.COLUMNS + length)) instanceof Bomb) {
                         return length;
                     }
 
-                    if (Level.tiles.get((int) (xUnit + yUnit * Constants.COLUMNS + length)) instanceof Brick) {
+                    if (level.tiles.get((int) (xUnit + yUnit * Constants.COLUMNS + length)) instanceof Brick) {
                         return ++length;
                     }
 

@@ -11,8 +11,8 @@ public abstract class Layered extends Tile {
     private Tile bufferedEntity;
     public boolean canRemove = false;
 
-    public Layered(double xUnit, double yUnit, Image img, Tile bufferedEntity) {
-        super(xUnit, yUnit, img);
+    public Layered(double xUnit, double yUnit, Image img, Tile bufferedEntity, Level level) {
+        super(xUnit, yUnit, img, level);
         this.bufferedEntity = bufferedEntity;
 
         hitBox.setX(xUnit * Constants.TILES_SIZE);
@@ -21,8 +21,8 @@ public abstract class Layered extends Tile {
         hitBox.setHeight(Constants.TILES_SIZE);
     }
 
-    public Layered(double xUnit, double yUnit, Image img) {
-        super(xUnit, yUnit, img);
+    public Layered(double xUnit, double yUnit, Image img, Level level) {
+        super(xUnit, yUnit, img, level);
 
         hitBox.setX(xUnit * Constants.TILES_SIZE);
         hitBox.setY(yUnit * Constants.TILES_SIZE);
@@ -40,11 +40,11 @@ public abstract class Layered extends Tile {
 
     public void renderBufferedEntity() {
         if (bufferedEntity instanceof Layered) {
-            Level.gc.drawImage(bufferedEntity.img, x, y, Constants.TILES_SIZE, Constants.TILES_SIZE);
-            Level.gc.drawImage(((Layered) bufferedEntity).getBufferedEntity().img, x, y, Constants.TILES_SIZE
+            level.gc.drawImage(bufferedEntity.img, x, y, Constants.TILES_SIZE, Constants.TILES_SIZE);
+            level.gc.drawImage(((Layered) bufferedEntity).getBufferedEntity().img, x, y, Constants.TILES_SIZE
                     , Constants.TILES_SIZE);
         } else {
-            Level.gc.drawImage(bufferedEntity.img, x, y, Constants.TILES_SIZE, Constants.TILES_SIZE);
+            level.gc.drawImage(bufferedEntity.img, x, y, Constants.TILES_SIZE, Constants.TILES_SIZE);
         }
     }
 

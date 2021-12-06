@@ -2,7 +2,13 @@ package uet.oop.bomberman.util;
 
 import javafx.scene.paint.Color;
 
+import java.util.ArrayList;
+import java.util.Arrays;
+
 public class Constants {
+
+    public static String[] levels = {"res/levels/Level1.txt", "res/levels/Level2.txt"};
+    public static ArrayList<String> levelPath = new ArrayList<>(Arrays.asList(levels));
 
     /**
      * Screen and Stuff
@@ -15,7 +21,7 @@ public class Constants {
     public static int COLUMNS = 31;
     public static int ROWS = 13;
 
-    public static double SCREEN_WIDTH  = TILES_SIZE * COLUMNS;
+    public static double SCREEN_WIDTH = TILES_SIZE * COLUMNS;
     public static double SCREEN_HEIGHT = TILES_SIZE * ROWS;
 
     public static final Color HITBOX_COLOR = Color.TRANSPARENT;
@@ -25,8 +31,8 @@ public class Constants {
     /**
      * Sprite and animation
      */
-    public static final int SPRITE_COL = 16;
-    public static final int SPRITE_ROW = 12;
+    public static final int SPRITE_COL = 24;
+    public static final int SPRITE_ROW = 14;
 
     public static final int FRAME_NUM = 3;
 
@@ -47,4 +53,6 @@ public class Constants {
      * Enemy
      */
     public static final int ENEMY_SPEED = 2;
+
+    public static String TEST = "Level 1";
 }

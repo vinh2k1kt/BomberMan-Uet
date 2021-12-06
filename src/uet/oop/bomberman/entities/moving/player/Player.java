@@ -18,21 +18,26 @@ public class Player extends Character {
     private double dx, dy;
     private double lastX = -1, lastY = -1;
 
-    private final CollisionChecker collisionChecker = new CollisionChecker(Level.levelScene, this);
+    private final CollisionChecker collisionChecker;
 
-    public int bombNum = 2;
-    public int bombRange = 2;
+    public int bombNum = 1;
+    public int bombRange = 1;
 
-    public Player(double x, double y, Image img) {
-        super(x, y, img);
+    public Player(double x, double y, Image img, Level level) {
+        super(x, y, img, level);
+        this.collisionChecker = new CollisionChecker(this, level);
         alive = true;
 
-        Level.levelScene.setOnKeyPressed(keyEvent -> {
+        level.levelScene.setOnKeyPressed(keyEvent -> {
             resetTracking();
             switch (keyEvent.getCode()) {
                 case A -> {
                     left = true;
                     currentDirection = Direction.LEFT;
+                }
+                case Q -> {
+                    level.screenController.setCurrentScene(level.screenController.loadingScreen.scene);
+                    System.out.println("Pressed");
                 }
                 case D -> {
                     right = true;
@@ -47,13 +52,17 @@ public class Player extends Character {
                     currentDirection = Direction.DOWN;
                 }
                 case SPACE -> {
-                    if (Level.bombs.size() < bombNum) {
+                    if (level.bombs.size() < bombNum) {
                         Bomb bomb = new Bomb(Math.round(this.x / Constants.TILES_SIZE)
                                 , Math.round(this.y / Constants.TILES_SIZE)
-                                , SpriteContainer.Bomb.getFxImage(), this);
+                                , SpriteContainer.Bomb.getFxImage(), this, this.level);
                         if (!(Math.round(bomb.x / Constants.TILES_SIZE) == lastX) ||
                                 !(Math.round(bomb.y / Constants.TILES_SIZE) == lastY)) {
-                            Level.bombs.add(bomb);
+
+                            level.soundTrack.setFile("Placing");
+                            level.soundTrack.play();
+
+                            level.bombs.add(bomb);
                             lastX = Math.round(this.x / Constants.TILES_SIZE);
                             lastY = Math.round(this.y / Constants.TILES_SIZE);
                         }
@@ -64,6 +73,9 @@ public class Player extends Character {
                         isMoving = true;
                     }
                 }
+                case P -> {
+                    level.pause();
+                }
                 default -> {
                     isMoving = false;
                     currentDirection = Direction.NONE;
@@ -71,7 +83,7 @@ public class Player extends Character {
             }
         });
 
-        Level.levelScene.setOnKeyReleased(keyEvent -> {
+        level.levelScene.setOnKeyReleased(keyEvent -> {
             switch (keyEvent.getCode()) {
                 case A -> {
                     left = false;
@@ -188,7 +200,7 @@ public class Player extends Character {
             resetTracking();
 
             //Remove KeyHandler;
-            Level.levelScene.setOnKeyReleased(keyEvent -> {
+            level.levelScene.setOnKeyReleased(keyEvent -> {
 
             });
         }
@@ -202,6 +214,10 @@ public class Player extends Character {
         count++;
 
         if (count == delay) {
+
+//            level.soundTrack.setFile("Walking");
+//            level.soundTrack.play();
+
             index++;
             count = 0;
         }
