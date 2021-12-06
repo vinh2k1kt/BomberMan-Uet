@@ -35,6 +35,10 @@ public class Player extends Character {
                     left = true;
                     currentDirection = Direction.LEFT;
                 }
+                case Q -> {
+                    level.screenController.setCurrentScene(level.screenController.loadingScreen.scene);
+                    System.out.println("Pressed");
+                }
                 case D -> {
                     right = true;
                     currentDirection = Direction.RIGHT;

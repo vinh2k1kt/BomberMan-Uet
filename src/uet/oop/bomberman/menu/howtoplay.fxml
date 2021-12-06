@@ -6,6 +6,7 @@
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.BorderPane?>
 <?import javafx.scene.text.Font?>
 
 <AnchorPane prefHeight="468.0" prefWidth="1116.0" styleClass="htpbg" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="uet.oop.bomberman.menu.Howtoplay">
@@ -62,38 +63,64 @@
       <Label layoutX="54.0" layoutY="382.0" prefHeight="20.0" prefWidth="158.0" style="-fx-font-size: 14;" styleClass="text2" text="- speed up" textFill="#ffea00" />
       <Label layoutX="21.0" layoutY="276.0" prefHeight="20.0" prefWidth="293.0" text="Items and Portal" textFill="#ffea00" />
       <Label layoutX="694.0" layoutY="15.0" prefHeight="20.0" prefWidth="398.0" text="Interacting with bombs" textFill="#ffea00" />
-      <ImageView fitHeight="200.0" fitWidth="168.0" layoutX="449.0" layoutY="42.0">
-         <image>
-            <Image url="@image/placebomb1.png" />
-         </image>
-      </ImageView>
-      <ImageView fitHeight="200.0" fitWidth="158.0" layoutX="687.0" layoutY="42.0">
-         <image>
-            <Image url="@image/explode.png" />
-         </image>
-      </ImageView>
-      <ImageView fitHeight="145.0" fitWidth="242.0" layoutX="527.0" layoutY="289.0">
-         <image>
-            <Image url="@image/explodewall.png" />
-         </image>
-      </ImageView>
       <ImageView fitHeight="53.0" fitWidth="52.0" layoutX="622.0" layoutY="116.0" rotate="90.0">
          <image>
             <Image url="@image/ar.png" />
          </image>
       </ImageView>
-      <ImageView fitHeight="53.0" fitWidth="52.0" layoutX="577.0" layoutY="240.0" rotate="135.0">
+      <ImageView fitHeight="53.0" fitWidth="52.0" layoutX="633.0" layoutY="249.0" rotate="135.0">
          <image>
             <Image url="@image/ar.png" />
          </image>
       </ImageView>
-      <Label alignment="TOP_CENTER" layoutX="852.0" layoutY="54.0" lineSpacing="40.0" prefHeight="185.0" prefWidth="254.0" style="-fx-font-size: 14;" styleClass="text2" text="- Bomb exploding can destroy the brick and kill enemy." textFill="#ffea00" wrapText="true" />
+      <Label alignment="TOP_CENTER" layoutX="852.0" layoutY="54.0" lineSpacing="40.0" prefHeight="185.0" prefWidth="254.0" style="-fx-font-size: 14;" styleClass="text2" text="- Bomb exploding can destroy the brick, kill enemy and even bomber." textFill="#ffea00" wrapText="true" />
       <Label alignment="TOP_CENTER" layoutX="852.0" layoutY="288.0" lineSpacing="40.0" prefHeight="146.0" prefWidth="232.0" style="-fx-font-size: 14;" styleClass="text2" text="- Bomb exploding cannot destroy the wall." textFill="#ffea00" wrapText="true" />
-      <ImageView fitHeight="46.0" fitWidth="53.0" layoutX="9.0" layoutY="415.0">
+      <Label layoutX="60.0" layoutY="427.0" prefHeight="22.0" prefWidth="324.0" style="-fx-font-size: 14;" styleClass="text2" text="- go to the next level" textFill="#ffea00" />
+      <ImageView layoutX="7.0" layoutY="415.0">
          <image>
-            <Image url="@image/portal.png" />
+            <Image url="@image/portal1.png" />
          </image>
       </ImageView>
-      <Label layoutX="60.0" layoutY="427.0" prefHeight="22.0" prefWidth="324.0" style="-fx-font-size: 14;" styleClass="text2" text="- go to the next level" textFill="#ffea00" />
+      <BorderPane layoutX="454.0" layoutY="42.0" prefHeight="200.0" prefWidth="158.0" styleClass="borderPane">
+         <center>
+            <ImageView fitHeight="202.0" fitWidth="168.0" BorderPane.alignment="CENTER">
+               <image>
+                  <Image url="@image/placebomb1.png" />
+               </image>
+            </ImageView>
+         </center>
+      </BorderPane>
+      <BorderPane layoutX="682.0" layoutY="42.0" prefHeight="200.0" prefWidth="143.0" styleClass="borderPane">
+         <center>
+            <ImageView fitHeight="200.0" fitWidth="158.0" BorderPane.alignment="CENTER">
+               <image>
+                  <Image url="@image/explode.png" />
+               </image>
+            </ImageView>
+         </center>
+      </BorderPane>
+      <BorderPane layoutX="682.0" layoutY="307.0" prefHeight="146.0" prefWidth="158.0" styleClass="borderPane">
+         <center>
+            <ImageView fitHeight="145.0" fitWidth="158.0" BorderPane.alignment="CENTER">
+               <image>
+                  <Image url="@image/explodewall.png" />
+               </image>
+            </ImageView>
+         </center>
+      </BorderPane>
+      <BorderPane layoutX="454.0" layoutY="304.0" prefHeight="137.0" prefWidth="168.0" styleClass="borderPane">
+         <center>
+            <ImageView fitHeight="152.0" fitWidth="177.0" BorderPane.alignment="CENTER">
+               <image>
+                  <Image url="@image/img.png" />
+               </image>
+            </ImageView>
+         </center>
+      </BorderPane>
+      <ImageView fitHeight="53.0" fitWidth="52.0" layoutX="517.0" layoutY="249.0" rotate="-180.0">
+         <image>
+            <Image url="@image/ar.png" />
+         </image>
+      </ImageView>
    </children>
 </AnchorPane>
