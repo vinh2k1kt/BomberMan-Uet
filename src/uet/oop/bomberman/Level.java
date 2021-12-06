@@ -352,7 +352,7 @@ public class Level extends Canvas {
             URL url = new File("src/uet/oop/bomberman/menu/gameOver.fxml").toURI().toURL();
             Parent root = FXMLLoader.load(url);
             stage.setScene(new Scene(root));
-            root.getStylesheets().add("uet/oop/bomberman/menu/style.css");
+            root.getStylesheets().add("uet/oop/bomberman/menu/image/style.css");
 
         } catch (IOException e) {
             e.printStackTrace();
