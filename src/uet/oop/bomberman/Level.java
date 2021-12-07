@@ -281,7 +281,7 @@ public class Level extends Canvas {
 
         bombers.forEach(bomber -> bomber.render(gc));
 
-            jellies.get(0).showPath(jellies.get(0).getNode(), bombers.get(0).getNode());
+           // jellies.get(0).showPath(jellies.get(0).getNode(), bombers.get(0).getNode());
     }
 
     private void update() {
@@ -353,7 +353,6 @@ public class Level extends Canvas {
             Parent root = FXMLLoader.load(url);
             stage.setScene(new Scene(root));
             root.getStylesheets().add("uet/oop/bomberman/menu/image/style.css");
-
         } catch (IOException e) {
             e.printStackTrace();
         }

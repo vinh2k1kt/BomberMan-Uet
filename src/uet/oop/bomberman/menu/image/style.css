@@ -25,6 +25,10 @@
 .gameoverBG {
     -fx-background-image: url("gameOver.png");
 }
+
+.loadingBG {
+    -fx-background-image: url("loadingwp.jpg");
+}
 /* Button */
 .button2:focused {
     -fx-effect:  dropshadow(gaussian, #67676D, 12, 0.8, 0.0, 3);
