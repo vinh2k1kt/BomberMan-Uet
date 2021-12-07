@@ -3,15 +3,17 @@ package uet.oop.bomberman.entities.still.bomb;
 import javafx.scene.image.Image;
 import javafx.scene.shape.Rectangle;
 import uet.oop.bomberman.Level;
+import uet.oop.bomberman.entities.moving.enemy.Bat;
 import uet.oop.bomberman.entities.moving.player.Player;
 import uet.oop.bomberman.entities.still.Tile;
 import uet.oop.bomberman.graphics.Animation;
 import uet.oop.bomberman.entities.still.block.destroyable.Brick;
-import uet.oop.bomberman.entities.moving.enemy.Jelly;
+import uet.oop.bomberman.entities.moving.enemy.Skelly;
 import uet.oop.bomberman.graphics.Sprite;
 import uet.oop.bomberman.util.Constants;
 
 import java.util.ArrayList;
+import java.util.Base64;
 
 public class FlameSegment extends Tile {
 
@@ -95,15 +97,21 @@ public class FlameSegment extends Tile {
             }
         }
 
-        for (Player bomber : level.bombers) {
-            if (this.hitBox.getBoundsInParent().intersects(bomber.hitBox.getBoundsInParent())) {
-                bomber.isKill();
+//        for (Player bomber : level.bombers) {
+//            if (this.hitBox.getBoundsInParent().intersects(bomber.hitBox.getBoundsInParent())) {
+//                bomber.isKill();
+//            }
+//        }
+
+        for (Skelly skelly : level.skellies) {
+            if (this.hitBox.getBoundsInParent().intersects(skelly.hitBox.getBoundsInParent())) {
+                skelly.isKill();
             }
         }
 
-        for (Jelly jelly : level.jellies) {
-            if (this.hitBox.getBoundsInParent().intersects(jelly.hitBox.getBoundsInParent())) {
-                jelly.isKill();
+        for (Bat bats : level.bats) {
+            if (this.hitBox.getBoundsInParent().intersects(bats.hitBox.getBoundsInParent())) {
+                bats.isKill();
             }
         }
 

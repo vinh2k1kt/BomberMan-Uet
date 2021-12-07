@@ -71,6 +71,9 @@ public class Animation {
             frogLeftAni.add(SpriteSheet.spriteSheet.sprites.get(5 + i));
             frogRightAni.add(SpriteSheet.spriteSheet.sprites.get(Constants.SPRITE_COL + 5 + i));
 
+            //Bat
+            batLeftAni.add(SpriteSheet.spriteSheet.sprites.get(14 + i));
+            batRightAni.add(SpriteSheet.spriteSheet.sprites.get(Constants.SPRITE_COL + 14 + i));
             //Tile
             brick_explosion.add(SpriteSheet.spriteSheet.sprites.get(Constants.SPRITE_COL * 4 - 4 + i));
         }

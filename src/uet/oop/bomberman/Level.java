@@ -10,7 +10,8 @@ import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.image.Image;
 import javafx.stage.Stage;
-import uet.oop.bomberman.entities.moving.enemy.Jelly;
+import uet.oop.bomberman.entities.moving.enemy.Bat;
+import uet.oop.bomberman.entities.moving.enemy.Skelly;
 import uet.oop.bomberman.entities.moving.player.Player;
 import uet.oop.bomberman.entities.still.Tile;
 import uet.oop.bomberman.entities.still.block.Layered;
@@ -38,7 +39,6 @@ import java.util.Scanner;
 
 public class Level extends Canvas {
 
-    boolean first = true;
     public Scene levelScene;
     public Canvas levelCanvas;
     public GraphicsContext gc;
@@ -50,7 +50,8 @@ public class Level extends Canvas {
     public String[][] tileMap;
     public ArrayList<Bomb> bombs = new ArrayList<>();
     public ArrayList<Player> bombers = new ArrayList<>();
-    public ArrayList<Jelly> jellies = new ArrayList<>();
+    public ArrayList<Skelly> skellies = new ArrayList<>();
+    public ArrayList<Bat> bats = new ArrayList<>();
     public int numberOfEnemies;
 
     public boolean isRunning = true;
@@ -65,7 +66,7 @@ public class Level extends Canvas {
     public final static long startNanoTime = System.nanoTime();
     public final Sound soundTrack = new Sound();
 
-    private Group container = new Group();
+    private final Group container = new Group();
 
     public final AnimationTimer timer = new AnimationTimer() {
         @Override
@@ -80,12 +81,6 @@ public class Level extends Canvas {
                     update();
                     render();
 
-//                    gc.clearRect(0, 0, Constants.SCREEN_WIDTH, Constants.SCREEN_HEIGHT);
-//                    Animation.testAni(gc, Animation.skellyLeftAni, 0);
-//                    Animation.testAni(gc, Animation.skellyLeftAni, 0);
-
-//                    SpriteContainer.testSprite(gc, SpriteContainer.grass1, 0);
-//                    SpriteContainer.testSprite(gc, SpriteContainer.grass2, 1);
                 } else {
                     if (gameOver) {
                         renderGameOverSccene();
@@ -132,7 +127,7 @@ public class Level extends Canvas {
 
     public void loadMap(String path) throws IOException {
         //Clear Previous Level Data
-        jellies.clear();
+        skellies.clear();
         bombers.clear();
         tiles.clear();
 
@@ -234,15 +229,20 @@ public class Level extends Canvas {
 //                        System.out.println("create map " + row + " " + col);
                         tiles.add(new Wall(col, row, SpriteContainer.wall.getFxImage(), this));
                     }
-                    case 'j' -> {
+                    case 'J' -> {
                         tileMap[row][col] = " ";
                         tiles.add(new Grass(col, row, SpriteContainer.grass.getFxImage(), this));
-                        jellies.add(new Jelly(col, row, Animation.skellyRightAni.get(0).getFxImage(), this));
+                        skellies.add(new Skelly(col, row, Animation.skellyRightAni.get(0).getFxImage(), this));
+                    }
+                    case 'B' -> {
+                        tileMap[row][col] = " ";
+                        tiles.add(new Grass(col, row, SpriteContainer.grass.getFxImage(), this));
+                        bats.add(new Bat(col, row, Animation.batRightAni.get(0).getFxImage(), this));
                     }
                     case '*' -> {
                         tileMap[row][col] = "b";
                         tiles.add(new Brick(col, row, SpriteContainer.brick.getFxImage(),
-                        new Grass(col, row, SpriteContainer.grass.getFxImage(), this), this));
+                                new Grass(col, row, SpriteContainer.grass.getFxImage(), this), this));
                     }
                     default -> {
                         tileMap[row][col] = " ";
@@ -259,7 +259,7 @@ public class Level extends Canvas {
             }
             row++;
         }
-        numberOfEnemies = jellies.size();
+        numberOfEnemies = skellies.size();
     }
 
     public void printTileMap() {
@@ -267,9 +267,9 @@ public class Level extends Canvas {
             for (int col = 0; col < Constants.COLUMNS; col++) {
                 System.out.print(tileMap[row][col]);
             }
-                System.out.println();
-            }
+            System.out.println();
         }
+    }
 
     private void render() {
 
@@ -277,11 +277,13 @@ public class Level extends Canvas {
 
         bombs.forEach(b -> b.render(gc));
 
-        jellies.forEach(j -> j.render(gc));
+        skellies.forEach(j -> j.render(gc));
+
+        bats.forEach(b -> b.render(gc));
 
         bombers.forEach(bomber -> bomber.render(gc));
 
-            jellies.get(0).showPath(jellies.get(0).getNode(), bombers.get(0).getNode());
+//        bats.get(0).showPath(bats.get(0).getNode(), bombers.get(0).getNode());
     }
 
     private void update() {
@@ -290,6 +292,10 @@ public class Level extends Canvas {
         for (Tile tile : tiles) {
             if (tile instanceof Layered) {
                 if (((Layered) tile).canRemove) {
+
+                    tileMap[tile.getYUnit()][tile.getXUnit()] = " ";
+                    bats.forEach(Bat::setUpdateRequired);
+
                     tiles.set(count, ((Layered) tile).getBufferedEntity());
                 }
             }
@@ -302,9 +308,14 @@ public class Level extends Canvas {
             bombs.forEach(Bomb::update);
         }
 
-        jellies.removeIf(Jelly::isDead);
-        if (!jellies.isEmpty()) {
-            jellies.forEach(Jelly::update);
+        skellies.removeIf(Skelly::isDead);
+        if (!skellies.isEmpty()) {
+            skellies.forEach(Skelly::update);
+        }
+
+        bats.removeIf(Bat::isDead);
+        if (!bats.isEmpty()) {
+            bats.forEach(Bat::update);
         }
 
         bombers.removeIf(Player::isDead);
@@ -363,37 +374,4 @@ public class Level extends Canvas {
         isRunning = false;
         goToNextLevel = true;
     }
-
-
-
-
-
-
-
-
-
-
-
-
-    public Level(String levelPath) throws IOException {
-
-
-        loadMap(levelPath);
-
-        // Init Scene and Canvas
-//        levelCanvas = new Canvas(Constants.SCREEN_WIDTH, Constants.SCREEN_HEIGHT);
-//        gc = levelCanvas.getGraphicsContext2D();
-//        container.getChildren().add(levelCanvas);
-//        levelScene = new Scene(container);
-
-        createMap();
-
-        // Play Theme Song
-//        soundTrack.setFile("Main");
-//        soundTrack.play();
-//        soundTrack.loop();
-
-    }
-
-
 }

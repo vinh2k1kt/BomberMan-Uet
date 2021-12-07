@@ -1,8 +1,8 @@
 1 13 31
 1-----------------------------2
-|           j  *   *  * * *   |
+|    p      * B*   *  * * *   |
 | w w w*w w w*w*w w w w*w*w*w |
-| px*     b**  *      *   * * |
+|  x*     b**  *      *   * * |
 | w w w w w*w w w*w*w w w w w*|
 |f         x **  *  *         |
 | w w w w w w w w w*w w*w w w |
