@@ -41,7 +41,6 @@
 
 .button4:focused {
     -fx-effect:  dropshadow(gaussian, grey, 12, 0.8, 0.0, 3);
-    -fx-background-image: url("temp2.png");
 }
 
 .borderPane {
