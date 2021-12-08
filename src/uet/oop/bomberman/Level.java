@@ -25,6 +25,8 @@ import uet.oop.bomberman.entities.still.block.undestroyable.Wall;
 import uet.oop.bomberman.entities.still.bomb.Bomb;
 import uet.oop.bomberman.graphics.Animation;
 import uet.oop.bomberman.graphics.SpriteContainer;
+import uet.oop.bomberman.menu.GameOver;
+import uet.oop.bomberman.menu.Menu;
 import uet.oop.bomberman.sound.Sound;
 import uet.oop.bomberman.util.Constants;
 
@@ -37,7 +39,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 
-public class Level extends Canvas {
+public class Level {
 
     public Scene levelScene;
     public Canvas levelCanvas;
@@ -59,14 +61,15 @@ public class Level extends Canvas {
     public boolean goToNextLevel = false;
     public boolean isPause = false;
 
-    public double currentGameTime;
     public double lastNanoTime;
     public double deltaTime;
-    public double drawInterval = 1000000000 / 120.0;
-    public final static long startNanoTime = System.nanoTime();
+    public double FPS = 60;
+    public double drawInterval = 1000000000 / FPS;
     public final Sound soundTrack = new Sound();
 
     private final Group container = new Group();
+    private int time = 200;
+    private int renderedFrame = 0;
 
     public final AnimationTimer timer = new AnimationTimer() {
         @Override
@@ -74,8 +77,13 @@ public class Level extends Canvas {
             deltaTime += (currentNanoTime - lastNanoTime) / drawInterval;
 
             lastNanoTime = currentNanoTime;
+            if (renderedFrame == FPS) {
+                time--;
+                renderedFrame = 0;
+            }
 
             if (deltaTime >= 1) {
+                renderedFrame++;
                 if (isRunning) {
                     gc.clearRect(0, 0, Constants.SCREEN_WIDTH, Constants.SCREEN_HEIGHT);
                     update();
@@ -83,7 +91,8 @@ public class Level extends Canvas {
 
                 } else {
                     if (gameOver) {
-                        renderGameOverSccene();
+                        screenController.setCurrentScene(screenController.gameOverScene);
+                        gameOver = false;
                     }
                     if (goToNextLevel) {
                         try {
@@ -110,6 +119,7 @@ public class Level extends Canvas {
         levelCanvas = new Canvas(Constants.SCREEN_WIDTH, Constants.SCREEN_HEIGHT);
         gc = levelCanvas.getGraphicsContext2D();
         container.getChildren().add(levelCanvas);
+        container.getStylesheets().add("style.css");
         levelScene = new Scene(container);
 
         createMap();
@@ -226,7 +236,6 @@ public class Level extends Canvas {
                     }
                     case 'w' -> {
                         tileMap[row][col] = "b";
-//                        System.out.println("create map " + row + " " + col);
                         tiles.add(new Wall(col, row, SpriteContainer.wall.getFxImage(), this));
                     }
                     case 'J' -> {
@@ -259,7 +268,7 @@ public class Level extends Canvas {
             }
             row++;
         }
-        numberOfEnemies = skellies.size();
+        numberOfEnemies = skellies.size() + bats.size();
     }
 
     public void printTileMap() {
@@ -283,7 +292,13 @@ public class Level extends Canvas {
 
         bombers.forEach(bomber -> bomber.render(gc));
 
-//        bats.get(0).showPath(bats.get(0).getNode(), bombers.get(0).getNode());
+//        gc.setFill(Color.YELLOW);
+//        gc.setFont(new Font(40));
+//        gc.fillText(String.valueOf(time), 100, 100);
+
+        if (!bats.isEmpty() && !bombers.isEmpty()) {
+            bats.get(0).showPath(bats.get(0).getNode(), bombers.get(0).getNode());
+        }
     }
 
     private void update() {
@@ -334,13 +349,13 @@ public class Level extends Canvas {
         if (isPause) {
             isPause = false;
             timer.start();
-            for (Node node : screenController.nodes) {
+            for (Node node : screenController.subMenuNodes) {
                 container.getChildren().remove(node);
             }
         } else {
             isPause = true;
             timer.stop();
-            for (Node node : screenController.nodes) {
+            for (Node node : screenController.subMenuNodes) {
                 container.getChildren().add(node);
             }
         }
@@ -352,22 +367,6 @@ public class Level extends Canvas {
     public void gameOver() {
         isRunning = false;
         gameOver = true;
-    }
-
-    /**
-     * Render Game OverScene
-     */
-    public void renderGameOverSccene() {
-        gc.clearRect(0, 0, Constants.SCREEN_WIDTH, Constants.SCREEN_HEIGHT);
-        try {
-            URL url = new File("src/uet/oop/bomberman/menu/gameOver.fxml").toURI().toURL();
-            Parent root = FXMLLoader.load(url);
-            stage.setScene(new Scene(root));
-            root.getStylesheets().add("uet/oop/bomberman/menu/style.css");
-
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
     }
 
     public void complete() {

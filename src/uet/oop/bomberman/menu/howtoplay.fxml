@@ -13,13 +13,13 @@
    <children>
       <ImageView fitHeight="79.0" fitWidth="100.0" layoutX="16.0" layoutY="47.0" pickOnBounds="true" preserveRatio="true">
          <image>
-            <Image url="@image/character.gif" />
+            <Image url="@../../../../../res/image/character.gif" />
          </image>
       </ImageView>
       <Label layoutX="95.0" layoutY="63.0" lineSpacing="30.0" prefHeight="79.0" prefWidth="212.0" style="-fx-font-size: 14;" styleClass="text2" text="Press          to move" textAlignment="CENTER" textFill="#ffea00" wrapText="true" />
       <ImageView fitHeight="86.0" fitWidth="86.0" layoutX="12.0" layoutY="184.0" pickOnBounds="true" preserveRatio="true">
          <image>
-            <Image url="@image/unknown.png" />
+            <Image url="@../../../../../res/image/unknown.png" />
          </image>
       </ImageView>
       <Label layoutX="189.0" layoutY="193.0" prefHeight="22.0" prefWidth="86.0" style="-fx-text-fill: red; -fx-font-size: 15;" styleClass="text2" text="Space">
@@ -45,17 +45,17 @@
       <Label layoutX="179.0" layoutY="75.0" style="-fx-font-size: 12;" styleClass="text2" text="W, A, S, D" textFill="RED" />
       <ImageView fitHeight="22.0" fitWidth="22.0" layoutX="22.0" layoutY="339.0" pickOnBounds="true" preserveRatio="true">
          <image>
-            <Image url="@image/blue.png" />
+            <Image url="@../../../../../res/image/blue.png" />
          </image>
       </ImageView>
       <ImageView fitHeight="22.0" fitWidth="29.0" layoutX="22.0" layoutY="381.0" pickOnBounds="true" preserveRatio="true">
          <image>
-            <Image url="@image/green.png" />
+            <Image url="@../../../../../res/image/green.png" />
          </image>
       </ImageView>
       <ImageView fitHeight="22.0" fitWidth="22.0" layoutX="22.0" layoutY="304.0" pickOnBounds="true" preserveRatio="true">
          <image>
-            <Image url="@image/red.png" />
+            <Image url="@../../../../../res/image/red.png" />
          </image>
       </ImageView>
       <Label layoutX="54.0" layoutY="305.0" prefHeight="20.0" prefWidth="324.0" style="-fx-font-size: 14;" styleClass="text2" text="- increse bomb's length" textFill="#ffea00" />
@@ -65,12 +65,12 @@
       <Label layoutX="694.0" layoutY="15.0" prefHeight="20.0" prefWidth="398.0" text="Interacting with bombs" textFill="#ffea00" />
       <ImageView fitHeight="53.0" fitWidth="52.0" layoutX="622.0" layoutY="116.0" rotate="90.0">
          <image>
-            <Image url="@image/ar.png" />
+            <Image url="@../../../../../res/image/ar.png" />
          </image>
       </ImageView>
       <ImageView fitHeight="53.0" fitWidth="52.0" layoutX="633.0" layoutY="249.0" rotate="135.0">
          <image>
-            <Image url="@image/ar.png" />
+            <Image url="@../../../../../res/image/ar.png" />
          </image>
       </ImageView>
       <Label alignment="TOP_CENTER" layoutX="852.0" layoutY="54.0" lineSpacing="40.0" prefHeight="185.0" prefWidth="254.0" style="-fx-font-size: 14;" styleClass="text2" text="- Bomb exploding can destroy the brick, kill enemy and even bomber." textFill="#ffea00" wrapText="true" />
@@ -78,14 +78,14 @@
       <Label layoutX="60.0" layoutY="427.0" prefHeight="22.0" prefWidth="324.0" style="-fx-font-size: 14;" styleClass="text2" text="- go to the next level" textFill="#ffea00" />
       <ImageView layoutX="7.0" layoutY="415.0">
          <image>
-            <Image url="@image/portal1.png" />
+            <Image url="@../../../../../res/image/portal1.png" />
          </image>
       </ImageView>
       <BorderPane layoutX="454.0" layoutY="42.0" prefHeight="200.0" prefWidth="158.0" styleClass="borderPane">
          <center>
             <ImageView fitHeight="202.0" fitWidth="168.0" BorderPane.alignment="CENTER">
                <image>
-                  <Image url="@image/placebomb1.png" />
+                  <Image url="@../../../../../res/image/placebomb1.png" />
                </image>
             </ImageView>
          </center>
@@ -94,7 +94,7 @@
          <center>
             <ImageView fitHeight="200.0" fitWidth="158.0" BorderPane.alignment="CENTER">
                <image>
-                  <Image url="@image/explode.png" />
+                  <Image url="@../../../../../res/image/explode.png" />
                </image>
             </ImageView>
          </center>
@@ -103,7 +103,7 @@
          <center>
             <ImageView fitHeight="145.0" fitWidth="158.0" BorderPane.alignment="CENTER">
                <image>
-                  <Image url="@image/explodewall.png" />
+                  <Image url="@../../../../../res/image/explodewall.png" />
                </image>
             </ImageView>
          </center>
@@ -112,14 +112,14 @@
          <center>
             <ImageView fitHeight="152.0" fitWidth="177.0" BorderPane.alignment="CENTER">
                <image>
-                  <Image url="@image/img.png" />
+                  <Image url="@../../../../../res/image/img.png" />
                </image>
             </ImageView>
          </center>
       </BorderPane>
       <ImageView fitHeight="53.0" fitWidth="52.0" layoutX="517.0" layoutY="249.0" rotate="-180.0">
          <image>
-            <Image url="@image/ar.png" />
+            <Image url="@../../../../../res/image/ar.png" />
          </image>
       </ImageView>
    </children>

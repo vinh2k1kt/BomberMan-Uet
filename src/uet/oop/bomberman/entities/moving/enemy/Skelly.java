@@ -16,7 +16,7 @@ import java.util.List;
 public class Skelly extends Character {
     private int renderDeadImageTime  = 10;
     private final CollisionChecker collisionChecker;
-    private final double speed = 0;
+    private final double speed = 2;
     private double dx, dy;
 
     public Skelly(int xUnit, int yUnit, Image img, Level level) {

@@ -1,69 +1,101 @@
 package uet.oop.bomberman;
 
-import javafx.application.Platform;
 import javafx.concurrent.Task;
-import javafx.concurrent.WorkerStateEvent;
-import javafx.event.EventHandler;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.Button;
+import javafx.scene.control.Label;
+import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
+import uet.oop.bomberman.menu.GameOver;
 import uet.oop.bomberman.menu.Menu;
+import uet.oop.bomberman.menu.Submenu;
 import uet.oop.bomberman.util.Constants;
-
 import java.io.File;
 import java.io.IOException;
 import java.net.URL;
 import java.util.ArrayList;
 
 public class ScreenController {
+    Label loadingLabel;
+    Label gameOverLabel;
 
-    public ArrayList<Node> nodes = new ArrayList<>();
-    Stage stage;
+    public ArrayList<Node> subMenuNodes = new ArrayList<>();
+    Stage primaryStage;
     Level level;
-    public LoadingScreen loadingScreen;
+
+    public Scene loadingScene;
+    public Scene gameOverScene;
     public Scene currentScene;
     public static int x = 0;
-    public int levelIndex = 0;
+    public int levelIndex = -1;
 
-    public ScreenController(Stage primaryStage) throws IOException {
+    public ScreenController(Stage primaryStage) throws IOException, InterruptedException {
 
-        URL url = new File("src/uet/oop/bomberman/menu/menu.fxml").toURI().toURL();
+        URL url = new File("src/uet/oop/bomberman/menu/submenu.fxml").toURI().toURL();
         Parent root = FXMLLoader.load(url);
+        root.getStylesheets().add("style.css");
         for (Node node : root.getChildrenUnmodifiable()) {
-            nodes.add(node);
+            subMenuNodes.add(node);
             if (node instanceof Parent)
                 break;
         }
 
-        stage = primaryStage;
-        level = new Level(primaryStage, Constants.levelPath.get(levelIndex), this);
-        Menu.level = level;
-        loadingScreen = new LoadingScreen();
-        currentScene = level.levelScene;
-//        currentScene = loadingScreen.scene;
-        setCurrentScene(currentScene);
-    }
+        url = new File("src/uet/oop/bomberman/menu/gameOver.fxml").toURI().toURL();
+        root = FXMLLoader.load(url);
+        root.getStylesheets().add("style.css");
+        gameOverScene =  new Scene(root);
 
-    public Scene getCurrentScene() {
-        return currentScene;
+        //Getting GameOver Label So We Can Change The Text Cause Javafx Suck And We Can't Do It Normally
+        for (Node node : root.getChildrenUnmodifiable()) {
+            if (node instanceof Label) {
+                gameOverLabel = (Label) node;
+                break;
+            }
+        }
+
+        url = new File("src/uet/oop/bomberman/menu/loading.fxml").toURI().toURL();
+        root = FXMLLoader.load(url);
+        root.getStylesheets().add("style.css");
+
+        //Do The Exact Same Thing We Did To GameOver Label
+        for (Node node : root.getChildrenUnmodifiable()) {
+            if (node instanceof Label) {
+                loadingLabel = (Label) node;
+                break;
+            }
+        }
+        loadingScene =  new Scene(root);
+
+        this.primaryStage = primaryStage;
+
+        renderLoadingScene();
     }
 
     public void setCurrentScene(Scene scene) {
         this.currentScene = scene;
-        stage.setScene(currentScene);
+        primaryStage.setScene(currentScene);
     }
 
     public void renderLoadingScene() throws IOException, InterruptedException {
-        setCurrentScene(this.loadingScreen.scene);
-
-        if (levelIndex < Constants.levelPath.size()) {
+        if (levelIndex < Constants.levelPath.size() - 1) {
             levelIndex++;
+        } else {
+            gameOverLabel.setText("Game Completed!");
+            setCurrentScene(gameOverScene);
+            return;
         }
 
-        level.loadMap(Constants.levelPath.get(levelIndex));
-        level.createMap();
+        level = new Level(primaryStage, Constants.levelPath.get(levelIndex), this);
+        Menu.level = level;
+        GameOver.level = level;
+        Submenu.level = level;
+
+        loadingLabel.setText("Level " + (levelIndex + 1));
+        setCurrentScene(loadingScene);
 
         Task<Void> sleeper = new Task<>() {
             @Override

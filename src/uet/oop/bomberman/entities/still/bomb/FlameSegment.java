@@ -97,11 +97,11 @@ public class FlameSegment extends Tile {
             }
         }
 
-//        for (Player bomber : level.bombers) {
-//            if (this.hitBox.getBoundsInParent().intersects(bomber.hitBox.getBoundsInParent())) {
-//                bomber.isKill();
-//            }
-//        }
+        for (Player bomber : level.bombers) {
+            if (this.hitBox.getBoundsInParent().intersects(bomber.hitBox.getBoundsInParent())) {
+                bomber.isKill();
+            }
+        }
 
         for (Skelly skelly : level.skellies) {
             if (this.hitBox.getBoundsInParent().intersects(skelly.hitBox.getBoundsInParent())) {

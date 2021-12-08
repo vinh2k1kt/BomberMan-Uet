@@ -9,24 +9,25 @@ import javafx.scene.Scene;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
 import uet.oop.bomberman.Level;
-
+import uet.oop.bomberman.ScreenController;
 import java.io.File;
 import java.io.IOException;
 import java.net.URL;
 
 public class Menu {
 
+    public static Level level;
     Stage primaryStage;
 
-    public static Level level;
 
     @FXML
     AnchorPane anchorPane = new AnchorPane();
-    public void playButton(ActionEvent event) throws IOException {
-        level.pause();
+    public void playButton(ActionEvent event) throws IOException, InterruptedException {
+        primaryStage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+        new ScreenController(primaryStage);
     }
 
-    public void exitButton(ActionEvent event) throws IOException {
+    public void exitButton(ActionEvent event) {
         primaryStage = (Stage) ((Node) event.getSource()).getScene().getWindow();
         primaryStage.close();
     }
@@ -37,7 +38,7 @@ public class Menu {
         primaryStage = (Stage) ((Node) event.getSource()).getScene().getWindow();
         primaryStage.setTitle("BomberMan");
         primaryStage.setScene(new Scene(root));
-        root.getStylesheets().add("uet/oop/bomberman/menu/image/style.css");
+        root.getStylesheets().add("style.css");
     }
 }
 

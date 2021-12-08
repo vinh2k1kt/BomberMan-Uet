@@ -15,24 +15,24 @@
 /* Background */
 
 .bodybg {
-    -fx-background-image: url("menu_bgLS.jpg");
+    -fx-background-image: url("image/menu_bgLS.jpg");
 }
 
 .htpbg {
-    -fx-background-image: url("htpbgpng.png");
+    -fx-background-image: url("image/htpbgpng.png");
 }
 
 .gameoverBG {
-    -fx-background-image: url("gameOver.png");
+    -fx-background-image: url("image/gameOver.png");
 }
 
 .loadingBG {
-    -fx-background-image: url("loadingwp.jpg");
+    -fx-background-image: url("image/loadingwp.jpg");
 }
 /* Button */
 .button2:focused {
     -fx-effect:  dropshadow(gaussian, #67676D, 12, 0.8, 0.0, 3);
-    -fx-background-image: url("temp2.png");
+    -fx-background-image: url("image/temp2.png");
 }
 
 .button3:hover{
@@ -41,7 +41,7 @@
 
 .button4:focused {
     -fx-effect:  dropshadow(gaussian, grey, 12, 0.8, 0.0, 3);
-    -fx-background-image: url("temp2.png");
+    -fx-background-image: url("image/temp2.png");
 }
 
 .borderPane {

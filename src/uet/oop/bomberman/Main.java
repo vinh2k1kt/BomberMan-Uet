@@ -24,9 +24,9 @@ public class Main extends Application {
         Parent root = FXMLLoader.load(url);
         primaryStage.setTitle("BomberMan");
         primaryStage.setScene(new Scene(root));
-        root.getStylesheets().add("uet/oop/bomberman/menu/image/style.css");
+        root.getStylesheets().add("style.css");
 
-        primaryStage.setScene(new ScreenController(primaryStage).getCurrentScene());
+//        primaryStage.setScene(new ScreenController(primaryStage).getCurrentScene());
         primaryStage.show();
     }
 
