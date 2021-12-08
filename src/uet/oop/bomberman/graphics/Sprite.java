@@ -5,6 +5,7 @@ import javafx.scene.image.Image;
 import uet.oop.bomberman.dataStructure.AssetPool;
 
 import javax.imageio.ImageIO;
+import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.io.File;
 

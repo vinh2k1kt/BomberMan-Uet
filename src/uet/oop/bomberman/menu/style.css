@@ -1,7 +1,0 @@
-.bodybg {
-    -fx-background-image: url("bombermanR.png");
-}
-.button2:hover{
-    -fx-background-color: #04c7b3;
-    -fx-text-fill: white;
-}
