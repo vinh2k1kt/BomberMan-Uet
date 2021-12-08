@@ -3,9 +3,8 @@
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.layout.AnchorPane?>
 
-
 <AnchorPane prefHeight="468.0" prefWidth="1116.0" styleClass="loadingBG" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="uet.oop.bomberman.menu.Loading">
    <children>
-      <Label alignment="CENTER" layoutX="458.0" layoutY="210.0" prefHeight="47.0" prefWidth="200.0" text="Level 1" textFill="WHITE" />
+      <Label fx:id="LoadingContext" alignment="CENTER" layoutX="458.0" layoutY="210.0" prefHeight="47.0" prefWidth="200.0" text="Level 1" textFill="WHITE" />
    </children>
 </AnchorPane>

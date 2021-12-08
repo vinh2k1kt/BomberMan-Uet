@@ -1,7 +1,9 @@
 package uet.oop.bomberman.entities.moving.player;
 
+import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.image.Image;
 import uet.oop.bomberman.Level;
+import uet.oop.bomberman.entities.moving.enemy.Bat;
 import uet.oop.bomberman.entities.still.bomb.Bomb;
 import uet.oop.bomberman.graphics.Animation;
 import uet.oop.bomberman.entities.moving.Character;
@@ -18,10 +20,10 @@ public class Player extends Character {
     private double dx, dy;
     private double lastX = -1, lastY = -1;
 
-    private final CollisionChecker collisionChecker;
+    public final CollisionChecker collisionChecker;
 
-    public int bombNum = 1;
-    public int bombRange = 1;
+    public int bombNum = 3;
+    public int bombRange = 3;
 
     public Player(double x, double y, Image img, Level level) {
         super(x, y, img, level);
@@ -36,7 +38,7 @@ public class Player extends Character {
                     currentDirection = Direction.LEFT;
                 }
                 case Q -> {
-                    level.screenController.setCurrentScene(level.screenController.loadingScreen.scene);
+                    level.screenController.setCurrentScene(level.screenController.loadingScene);
                     System.out.println("Pressed");
                 }
                 case D -> {
@@ -62,7 +64,11 @@ public class Player extends Character {
                             level.soundTrack.setFile("Placing");
                             level.soundTrack.play();
 
+                            // Update List for chasing
                             level.bombs.add(bomb);
+                            level.tileMap[bomb.getYUnit()][bomb.getXUnit()] = "b";
+                            level.bats.forEach(Bat::setUpdateRequired);
+
                             lastX = Math.round(this.x / Constants.TILES_SIZE);
                             lastY = Math.round(this.y / Constants.TILES_SIZE);
                         }
@@ -140,10 +146,10 @@ public class Player extends Character {
             Update Hitbox
              */
 
-            hitBox.setX(x + 4);
-            hitBox.setY(y + 4);
-            hitBox.setWidth(Constants.TILES_SIZE - 12);
-            hitBox.setHeight(Constants.TILES_SIZE - 8);
+            hitBox.setX(x + Constants.HGAP);
+            hitBox.setY(y + Constants.VGAP);
+            hitBox.setWidth(Constants.SOLID_AREA_WIDTH);
+            hitBox.setHeight(Constants.SOLID_AREA_HEIGHT);
 
             resetBombTracking();
 
@@ -236,5 +242,10 @@ public class Player extends Character {
                 case RIGHT -> this.img = Animation.rightAni.get(index).getFxImage();
             }
         }
+    }
+
+    public void render(GraphicsContext gc) {
+        super.render(gc);
+        collisionChecker.checkHitbox(this);
     }
 }

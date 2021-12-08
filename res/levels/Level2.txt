@@ -1,16 +1,16 @@
 2 13 31
 1-----------------------------2
-|p * *j       *  ** * *      *|
+|p * *      *   B** * *      *|
 |w w w w w*w w w*w w w w w w*w|
 |    * * *** **      *    **  |
-| w*w w w w wjw wbw1w w w w w*|
+| w*w w w w w w wbw1w w w w w*|
 |          *     **      *  **|
 | w w*w w w w w w*w*w*w*w w w |
 |   *        *   * *x* *      |
 | w w w w*w w w w w w w*w w*w |
-|   ****         *j           |
+|   ****         *            |
 | w w w w w w w w w*w w w w w*|
-|  ** *   *    j              |
+|  ** *   *                   |
 3-----------------------------4
 
 

@@ -96,7 +96,7 @@ public class PathFinding {
         addUndirectedEdge(graph, u, v, 1);
     }
 
-    public void checkNode(int node_num, List<List<Edge>> graph) {
+    public void initNodeList(int node_num, List<List<Edge>> graph) {
         int col;
         int row;
         if (node_num % Constants.COLUMNS == 0 && node_num != 0) {
@@ -200,23 +200,23 @@ public class PathFinding {
 //                    + " " + (visited.get(from)));
 //        }
         if (!graph.get(from).isEmpty() && graph.get(from).get(0).to == to) {
-            System.out.println("already have " + from + " " + visited.get(from) + " Actual to " + to);
+//            System.out.println("already have " + from + " " + visited.get(from) + " Actual to " + to);
 
         } else {
 
-            System.out.println("\t\tCol & Row to insert " + row + " " + col);
+//            System.out.println("\t\tCol & Row to insert " + row + " " + col);
 
             if (level.tileMap[row][col].equals(" ")) {
 
 
-                System.out.println("\t\tInsert Edge " + from + " " + to);
+//                System.out.println("\t\tInsert Edge " + from + " " + to);
 
 
                 addUnweightedUndirectedEdge(graph, from, to);
                 visited.put(from, to);
             } else {
 
-                System.out.println("\t\tCan't Insert This " + level.tileMap[row][col] + " " + from + " " + to);
+//                System.out.println("\t\tCan't Insert This " + level.tileMap[row][col] + " " + from + " " + to);
 
             }
         }
@@ -224,5 +224,29 @@ public class PathFinding {
 
     public String formatPath(List<Integer> path) {
         return path.stream().map(Object::toString).collect(Collectors.joining(" -> "));
+    }
+
+    public int toNode(int row, int col) {
+        return row * Constants.COLUMNS + col;
+    }
+
+    public int toRow(int node_num) {
+        int row;
+        if (node_num % Constants.COLUMNS == 0 && node_num != 0) {
+            node_num--;
+        }
+        row = node_num / Constants.COLUMNS;
+        return row;
+    }
+
+    public int toCol(int node_num) {
+        int col;
+        int row;
+        if (node_num % Constants.COLUMNS == 0 && node_num != 0) {
+            node_num--;
+        }
+        row = node_num / Constants.COLUMNS;
+        col = node_num - row * Constants.COLUMNS;
+        return col;
     }
 }

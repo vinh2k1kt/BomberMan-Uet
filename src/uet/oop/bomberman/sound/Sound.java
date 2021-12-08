@@ -15,7 +15,7 @@ public class Sound {
 
     public Sound() throws MalformedURLException {
 //        soundCollection.put("Main", new File("res/sound/03_Stage Theme.wav").toURI().toURL());
-        soundCollection.put("Main", new File("res/sound/Megalovania - Undertale (8 Bit Universe Version).wav").toURI().toURL());
+        soundCollection.put("Main", new File("res/sound/Titan Souls Soundtrack - Souls.wav").toURI().toURL());
         soundCollection.put("BombExplode", new File("res/sound/BombExplode.wav").toURI().toURL());
         soundCollection.put("Placing", new File("res/sound/BombPlacing.wav").toURI().toURL());
         soundCollection.put("Walking", new File("res/sound/Walk.wav").toURI().toURL());
