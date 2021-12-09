@@ -155,7 +155,7 @@ public class Level {
         levelScene = new Scene(container);
 
         Font[] customFont = Font.loadFonts(new FileInputStream(
-                "E:\\Java\\BomberMan\\res\\PressStart2P-Regular.ttf"), 14);
+                "res/PressStart2P-Regular.ttf"), 14);
         gc.setFont(customFont[0]);
 
         createMap();
