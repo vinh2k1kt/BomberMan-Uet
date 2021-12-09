@@ -9,6 +9,7 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
 import uet.oop.bomberman.Level;
+import uet.oop.bomberman.ScreenController;
 import uet.oop.bomberman.sound.Sound;
 
 import java.io.File;
@@ -20,6 +21,7 @@ public class GameOver implements Initializable {
 
     public static boolean firstTime = false;
     public static boolean isGameOver;
+    public static ScreenController sc;
     public static Level level;
     Sound sound;
 
@@ -34,20 +36,20 @@ public class GameOver implements Initializable {
                 sound.setFile("Souls");
             }
             isGameOver = false;
-            System.out.println("gameOver");
             sound.play();
         }
     }
 
     @FXML
     void Replay(ActionEvent event) throws IOException, InterruptedException {
-        sound.play();
+        sound.stop();
+        level.finalLevel = false;
         level.screenController.levelIndex = -1;
         level.screenController.renderLoadingScene();
     }
 
     public void exitButton(ActionEvent event) throws IOException {
-        sound.play();
+        sound.stop();
         URL url = new File("src/uet/oop/bomberman/menu/menu.fxml").toURI().toURL();
         Parent root = FXMLLoader.load(url);
         Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();

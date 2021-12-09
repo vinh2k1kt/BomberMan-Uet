@@ -46,6 +46,7 @@ public class Constants {
     /**
      * Player
      */
+    public static final double SPEED = 2;
     public static final double VGAP = 8;
     public static final double HGAP = 8;
     public static final double SOLID_AREA_WIDTH = TILES_SIZE - HGAP * 3;

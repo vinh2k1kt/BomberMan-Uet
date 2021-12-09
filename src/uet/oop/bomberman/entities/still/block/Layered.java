@@ -4,11 +4,15 @@ import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.image.Image;
 import uet.oop.bomberman.Level;
 import uet.oop.bomberman.entities.still.Tile;
+import uet.oop.bomberman.entities.still.block.undestroyable.Grass;
+import uet.oop.bomberman.graphics.Sprite;
+import uet.oop.bomberman.graphics.SpriteContainer;
 import uet.oop.bomberman.util.Constants;
 
 public abstract class Layered extends Tile {
 
     private Tile bufferedEntity;
+    public boolean isTrap = false;
     public boolean canRemove = false;
 
     public Layered(double xUnit, double yUnit, Image img, Tile bufferedEntity, Level level) {

@@ -6,6 +6,9 @@ import uet.oop.bomberman.Level;
 import uet.oop.bomberman.entities.moving.enemy.Bat;
 import uet.oop.bomberman.entities.moving.enemy.Ghost;
 import uet.oop.bomberman.entities.moving.enemy.Skelly;
+import uet.oop.bomberman.entities.still.Tile;
+import uet.oop.bomberman.entities.still.block.Layered;
+import uet.oop.bomberman.entities.still.block.undestroyable.Grass;
 import uet.oop.bomberman.entities.still.bomb.Bomb;
 import uet.oop.bomberman.graphics.Animation;
 import uet.oop.bomberman.entities.moving.Character;
@@ -24,8 +27,8 @@ public class Player extends Character {
 
     public final CollisionChecker collisionChecker;
 
-    public int bombNum = 3;
-    public int bombRange = 3;
+    public int bombNum = 1;
+    public int bombRange = 1;
 
     public Player(double x, double y, Image img, Level level) {
         super(x, y, img, level);
@@ -99,6 +102,13 @@ public class Player extends Character {
 
                     for (Ghost ghost : level.ghosts) {
                         ghost.isKill();
+                    }
+
+                    for (Tile tile : level.tiles) {
+                        if (tile instanceof Layered && ((Layered) tile).isTrap) {
+                            ((Layered) tile).isTrap = false;
+                            tile.img = SpriteContainer.grass.getFxImage();
+                        }
                     }
                 }
             }

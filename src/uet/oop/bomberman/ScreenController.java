@@ -38,11 +38,7 @@ public class ScreenController {
         URL url = new File("src/uet/oop/bomberman/menu/submenu.fxml").toURI().toURL();
         Parent root = FXMLLoader.load(url);
         root.getStylesheets().add("style.css");
-        for (Node node : root.getChildrenUnmodifiable()) {
-            subMenuNodes.add(node);
-            if (node instanceof Parent)
-                break;
-        }
+        subMenuNodes.addAll(root.getChildrenUnmodifiable());
 
         level = new Level(primaryStage, Constants.levelPath.get(levelIndex + 1), this);
 
@@ -50,17 +46,6 @@ public class ScreenController {
         GameOver.level = level;
         Submenu.level = level;
 
-        url = new File("src/uet/oop/bomberman/menu/gameOver.fxml").toURI().toURL();
-        root = FXMLLoader.load(url);
-        root.getStylesheets().add("style.css");
-
-        //Getting GameOver Label So We Can Change The Text Cause Javafx Suck And We Can't Do It Normally
-        for (Node node : root.getChildrenUnmodifiable()) {
-            if (node instanceof Label) {
-                gameOverLabel = (Label) node;
-                break;
-            }
-        }
 
         url = new File("src/uet/oop/bomberman/menu/loading.fxml").toURI().toURL();
         root = FXMLLoader.load(url);
@@ -87,18 +72,32 @@ public class ScreenController {
         if (levelIndex < Constants.levelPath.size() - 1) {
             levelIndex++;
         } else {
-            gameOverLabel.setText("Game Completed!");
-
+            level.goToNextLevel = false;
+            level.finalLevel = true;
+        }
+        if (level.finalLevel) {
             try {
                 GameOver.firstTime = true;
+                GameOver.isGameOver = false;
                 URL url = new File("src/uet/oop/bomberman/menu/gameOver.fxml").toURI().toURL();
                 Parent root = FXMLLoader.load(url);
                 root.getStylesheets().add("style.css");
+
+                //Getting GameOver Label So We Can Change The Text Cause Javafx Suck And We Can't Do It Normally
+                for (Node node : root.getChildrenUnmodifiable()) {
+                    if (node instanceof Label) {
+                        gameOverLabel = (Label) node;
+                        break;
+                    }
+                }
+
+                gameOverLabel.setText("Game Completed!");
+                level.finalLevel = false;
                 setCurrentScene(new Scene(root));
+                return;
             } catch (IOException e) {
                 e.printStackTrace();
             }
-
             return;
         }
 
