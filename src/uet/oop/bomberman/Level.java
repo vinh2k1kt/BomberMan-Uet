@@ -9,8 +9,12 @@ import javafx.scene.Scene;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.image.Image;
+import javafx.scene.paint.Color;
+import javafx.scene.text.Font;
 import javafx.stage.Stage;
 import uet.oop.bomberman.entities.moving.enemy.Bat;
+import uet.oop.bomberman.entities.moving.enemy.Frog;
+import uet.oop.bomberman.entities.moving.enemy.Ghost;
 import uet.oop.bomberman.entities.moving.enemy.Skelly;
 import uet.oop.bomberman.entities.moving.player.Player;
 import uet.oop.bomberman.entities.still.Tile;
@@ -26,7 +30,6 @@ import uet.oop.bomberman.entities.still.bomb.Bomb;
 import uet.oop.bomberman.graphics.Animation;
 import uet.oop.bomberman.graphics.SpriteContainer;
 import uet.oop.bomberman.menu.GameOver;
-import uet.oop.bomberman.menu.Menu;
 import uet.oop.bomberman.sound.Sound;
 import uet.oop.bomberman.util.Constants;
 
@@ -53,13 +56,16 @@ public class Level {
     public ArrayList<Bomb> bombs = new ArrayList<>();
     public ArrayList<Player> bombers = new ArrayList<>();
     public ArrayList<Skelly> skellies = new ArrayList<>();
+    public ArrayList<Ghost> ghosts = new ArrayList<>();
     public ArrayList<Bat> bats = new ArrayList<>();
+    public ArrayList<Frog> frogs = new ArrayList<>();
     public int numberOfEnemies;
 
     public boolean isRunning = true;
     public boolean gameOver = false;
     public boolean goToNextLevel = false;
     public boolean isPause = false;
+    public boolean finalLevel = false;
 
     public double lastNanoTime;
     public double deltaTime;
@@ -68,7 +74,7 @@ public class Level {
     public final Sound soundTrack = new Sound();
 
     private final Group container = new Group();
-    private int time = 200;
+    private int time = 202;
     private int renderedFrame = 0;
 
     public final AnimationTimer timer = new AnimationTimer() {
@@ -90,8 +96,20 @@ public class Level {
                     render();
 
                 } else {
+                    soundTrack.stop();
                     if (gameOver) {
-                        screenController.setCurrentScene(screenController.gameOverScene);
+                        GameOver.isGameOver = true;
+                        GameOver.firstTime = true;
+
+                        try {
+                            URL url = new File("src/uet/oop/bomberman/menu/gameOver.fxml").toURI().toURL();
+                            Parent root = FXMLLoader.load(url);
+                            root.getStylesheets().add("style.css");
+                            screenController.setCurrentScene(new Scene(root));
+                        } catch (IOException e) {
+                            e.printStackTrace();
+                        }
+
                         gameOver = false;
                     }
                     if (goToNextLevel) {
@@ -122,12 +140,11 @@ public class Level {
         container.getStylesheets().add("style.css");
         levelScene = new Scene(container);
 
-        createMap();
+        Font[] customFont = Font.loadFonts(new FileInputStream(
+                "E:\\Java\\BomberMan\\res\\PressStart2P-Regular.ttf"), 14);
+        gc.setFont(customFont[0]);
 
-        // Play Theme Song
-//        soundTrack.setFile("Main");
-//        soundTrack.play();
-//        soundTrack.loop();
+        createMap();
 
         sc.setCurrentScene(this.levelScene);
 
@@ -145,6 +162,7 @@ public class Level {
         gameOver = false;
         goToNextLevel = false;
         isRunning = true;
+        time = 202;
 
         // Clear to load new map
         mapDataFile.clear();
@@ -157,7 +175,7 @@ public class Level {
         Constants.ROWS = Integer.parseInt(levelInfo[1]);
         Constants.COLUMNS = Integer.parseInt(levelInfo[2]);
         Constants.SCREEN_WIDTH = Constants.COLUMNS * Constants.TILES_SIZE;
-        Constants.SCREEN_HEIGHT = Constants.ROWS * Constants.TILES_SIZE;
+        Constants.SCREEN_HEIGHT = Constants.ROWS * Constants.TILES_SIZE + 50;
         tileMap = new String[Constants.ROWS][Constants.COLUMNS];
 
         while (sc.hasNextLine()) {
@@ -248,6 +266,17 @@ public class Level {
                         tiles.add(new Grass(col, row, SpriteContainer.grass.getFxImage(), this));
                         bats.add(new Bat(col, row, Animation.batRightAni.get(0).getFxImage(), this));
                     }
+                    case 'G' -> {
+                        tileMap[row][col] = " ";
+                        tiles.add(new Grass(col, row, SpriteContainer.grass.getFxImage(), this));
+                        ghosts.add(new Ghost(col, row, Animation.ghostRightAni.get(0).getFxImage(), this));
+                    }
+                    case 'F' -> {
+                        tileMap[row][col] = "b";
+                        tiles.add(new Brick(col, row, SpriteContainer.brick.getFxImage(),
+                                new Grass(col, row, SpriteContainer.grass.getFxImage(), this), this, true));
+                        numberOfEnemies++;
+                    }
                     case '*' -> {
                         tileMap[row][col] = "b";
                         tiles.add(new Brick(col, row, SpriteContainer.brick.getFxImage(),
@@ -268,7 +297,7 @@ public class Level {
             }
             row++;
         }
-        numberOfEnemies = skellies.size() + bats.size();
+        numberOfEnemies += skellies.size() + bats.size() + ghosts.size();
     }
 
     public void printTileMap() {
@@ -280,28 +309,12 @@ public class Level {
         }
     }
 
-    private void render() {
-
-        tiles.forEach(e -> e.render(gc));
-
-        bombs.forEach(b -> b.render(gc));
-
-        skellies.forEach(j -> j.render(gc));
-
-        bats.forEach(b -> b.render(gc));
-
-        bombers.forEach(bomber -> bomber.render(gc));
-
-//        gc.setFill(Color.YELLOW);
-//        gc.setFont(new Font(40));
-//        gc.fillText(String.valueOf(time), 100, 100);
-
-        if (!bats.isEmpty() && !bombers.isEmpty()) {
-            bats.get(0).showPath(bats.get(0).getNode(), bombers.get(0).getNode());
-        }
-    }
-
+    //Update
     private void update() {
+
+        if (time < 0) {
+            gameOver();
+        }
 
         int count = 0;
         for (Tile tile : tiles) {
@@ -310,7 +323,10 @@ public class Level {
 
                     tileMap[tile.getYUnit()][tile.getXUnit()] = " ";
                     bats.forEach(Bat::setUpdateRequired);
-
+                    if (((Layered) tile).isTrap) {
+                        frogs.add(new Frog(tile.getXUnit(), tile.getYUnit()
+                                , Animation.frogRightAni.get(0).getFxImage(), this));
+                    }
                     tiles.set(count, ((Layered) tile).getBufferedEntity());
                 }
             }
@@ -333,6 +349,16 @@ public class Level {
             bats.forEach(Bat::update);
         }
 
+        ghosts.removeIf(Ghost::isDead);
+        if (!ghosts.isEmpty()) {
+            ghosts.forEach(Ghost::update);
+        }
+
+        frogs.removeIf(Frog::isDead);
+        if (!frogs.isEmpty()) {
+            frogs.forEach(Frog::update);
+        }
+
         bombers.removeIf(Player::isDead);
         if (!bombers.isEmpty()) {
             bombers.forEach(Player::update);
@@ -342,17 +368,65 @@ public class Level {
         }
     }
 
+    //Render
+    private void render() {
+
+        renderInfo();
+
+        tiles.forEach(e -> e.render(gc));
+
+        bombs.forEach(b -> b.render(gc));
+
+        skellies.forEach(j -> j.render(gc));
+
+        bats.forEach(b -> b.render(gc));
+
+        ghosts.forEach(g -> g.render(gc));
+
+        frogs.forEach(f -> f.render(gc));
+
+        bombers.forEach(bomber -> bomber.render(gc));
+
+        if (!bats.isEmpty() && !bombers.isEmpty()) {
+            bats.get(0).showPath(bats.get(0).getNode(), bombers.get(0).getNode());
+        }
+    }
+
+    private void renderInfo() {
+        gc.setFill(Color.BLACK);
+        gc.fillRect(0, Constants.SCREEN_HEIGHT - 50, Constants.SCREEN_WIDTH, 50);
+        gc.setFill(Color.WHITE);
+        gc.fillText(String.valueOf(time), 10, Constants.SCREEN_HEIGHT - 20);
+
+        gc.drawImage(SpriteContainer.flameItem.getFxImage(), Constants.TILES_SIZE * 21, Constants.SCREEN_HEIGHT - 42
+                , Constants.TILES_SIZE, Constants.TILES_SIZE);
+        gc.fillText(String.valueOf(bombers.get(0).bombRange), Constants.TILES_SIZE * 22, Constants.SCREEN_HEIGHT - 15);
+
+        gc.drawImage(SpriteContainer.bombItem.getFxImage(), Constants.TILES_SIZE * 24, Constants.SCREEN_HEIGHT - 42
+                , Constants.TILES_SIZE, Constants.TILES_SIZE);
+        gc.fillText(String.valueOf(bombers.get(0).bombNum), Constants.TILES_SIZE * 25, Constants.SCREEN_HEIGHT - 15);
+
+        gc.drawImage(SpriteContainer.speedItem.getFxImage(), Constants.TILES_SIZE * 27
+                , Constants.SCREEN_HEIGHT - 42
+                , Constants.TILES_SIZE, Constants.TILES_SIZE);
+        gc.fillText(String.valueOf((int) (bombers.get(0).speed / Constants.SPEED))
+                , Constants.TILES_SIZE * 28, Constants.SCREEN_HEIGHT - 15);
+
+    }
+
     /**
      * Pause Game
      */
     public void pause() {
         if (isPause) {
+            soundTrack.play();
             isPause = false;
             timer.start();
             for (Node node : screenController.subMenuNodes) {
                 container.getChildren().remove(node);
             }
         } else {
+            soundTrack.stop();
             isPause = true;
             timer.stop();
             for (Node node : screenController.subMenuNodes) {

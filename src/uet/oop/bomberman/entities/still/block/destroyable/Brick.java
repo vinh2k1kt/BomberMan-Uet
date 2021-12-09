@@ -24,6 +24,14 @@ public class Brick extends Layered {
 //        this.img = new Image(new File("res/brick.jpg").toURI().toString());
     }
 
+    public Brick(double xUnit, double yUnit, Image img, Tile bufferedEntity, Level level, boolean isTrap) {
+        super(xUnit, yUnit, img, bufferedEntity, level);
+        this.isTrap = isTrap;
+
+//        kwanUwU
+//        this.img = new Image(new File("res/brick.jpg").toURI().toString());
+    }
+
     public void destroy() {
         if (!destroyed) {
             destroyed = true;

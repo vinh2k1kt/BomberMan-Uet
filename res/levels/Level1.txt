@@ -1,12 +1,12 @@
 1 13 31
 1-----------------------------2
-|    p      *B *   *  * * *   |
+|    p       F *   *  * * *   |
 | w w w*w w w*w*w w w w*w*w*w |
 |  x*     b**  *      *   * * |
 | w w w w w*w w w*w*w w w w w*|
 |f         x **  *  *         |
 | w w w w w w w w w*w w*w w w |
-|*  *      *  *  J   *        |
+|*  *      *  *      *        |
 | w w w w*w w w w*w*w w w w w |
 |*    **  *       *           |
 | w*w w w w w w w*w w w w w w |

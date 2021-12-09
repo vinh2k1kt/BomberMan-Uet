@@ -4,10 +4,12 @@ import javafx.scene.paint.Color;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.HashMap;
 
 public class Constants {
 
     public static String[] levels = {"res/levels/Level1.txt", "res/levels/Level2.txt"};
+    public static HashMap<Integer, String> soundTrack = new HashMap<>();
     public static ArrayList<String> levelPath = new ArrayList<>(Arrays.asList(levels));
 
     /**
@@ -35,7 +37,7 @@ public class Constants {
     /**
      * Sprite and animation
      */
-    public static final int SPRITE_COL = 24;
+    public static final int SPRITE_COL = 26;
     public static final int SPRITE_ROW = 14;
 
     public static final int FRAME_NUM = 4;
@@ -44,6 +46,7 @@ public class Constants {
     /**
      * Player
      */
+    public static final double SPEED = 2;
     public static final double VGAP = 8;
     public static final double HGAP = 8;
     public static final double SOLID_AREA_WIDTH = TILES_SIZE - HGAP * 3;
