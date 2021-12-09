@@ -8,7 +8,7 @@ import java.util.List;
 
 public class SpriteSheet {
 
-	public static SpriteSheet spriteSheet = new SpriteSheet("res/SpriteSheet_Final.png",
+	public static SpriteSheet spriteSheet = new SpriteSheet("res/SpriteSheet_Final_final.png",
 			16, 16, 0, Constants.SPRITE_COL, Constants.SPRITE_COL * Constants.SPRITE_ROW);
 
 	public List<Sprite> sprites;

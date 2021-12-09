@@ -9,8 +9,11 @@ import javafx.scene.Scene;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.image.Image;
+import javafx.scene.paint.Color;
+import javafx.scene.text.Font;
 import javafx.stage.Stage;
 import uet.oop.bomberman.entities.moving.enemy.Bat;
+import uet.oop.bomberman.entities.moving.enemy.Ghost;
 import uet.oop.bomberman.entities.moving.enemy.Skelly;
 import uet.oop.bomberman.entities.moving.player.Player;
 import uet.oop.bomberman.entities.still.Tile;
@@ -26,13 +29,14 @@ import uet.oop.bomberman.entities.still.bomb.Bomb;
 import uet.oop.bomberman.graphics.Animation;
 import uet.oop.bomberman.graphics.SpriteContainer;
 import uet.oop.bomberman.menu.GameOver;
-import uet.oop.bomberman.menu.Menu;
 import uet.oop.bomberman.sound.Sound;
 import uet.oop.bomberman.util.Constants;
 
 import java.io.File;
 import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.net.MalformedURLException;
 import java.net.URL;
 import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
@@ -53,6 +57,7 @@ public class Level {
     public ArrayList<Bomb> bombs = new ArrayList<>();
     public ArrayList<Player> bombers = new ArrayList<>();
     public ArrayList<Skelly> skellies = new ArrayList<>();
+    public ArrayList<Ghost> ghosts = new ArrayList<>();
     public ArrayList<Bat> bats = new ArrayList<>();
     public int numberOfEnemies;
 
@@ -68,7 +73,7 @@ public class Level {
     public final Sound soundTrack = new Sound();
 
     private final Group container = new Group();
-    private int time = 200;
+    private int time = 202;
     private int renderedFrame = 0;
 
     public final AnimationTimer timer = new AnimationTimer() {
@@ -88,10 +93,25 @@ public class Level {
                     gc.clearRect(0, 0, Constants.SCREEN_WIDTH, Constants.SCREEN_HEIGHT);
                     update();
                     render();
+                    gc.setFill(Color.BLACK);
+                    gc.fillText(String.valueOf(time), 0, 30);
 
+                    Animation.testAni(gc, Animation.explosion_center, 10);
                 } else {
+                    soundTrack.stop();
                     if (gameOver) {
-                        screenController.setCurrentScene(screenController.gameOverScene);
+                        GameOver.isGameOver = true;
+                        GameOver.firstTime = true;
+
+                        try {
+                            URL url = new File("src/uet/oop/bomberman/menu/gameOver.fxml").toURI().toURL();
+                            Parent root = FXMLLoader.load(url);
+                            root.getStylesheets().add("style.css");
+                            screenController.setCurrentScene(new Scene(root));
+                        } catch (IOException e) {
+                            e.printStackTrace();
+                        }
+
                         gameOver = false;
                     }
                     if (goToNextLevel) {
@@ -122,12 +142,11 @@ public class Level {
         container.getStylesheets().add("style.css");
         levelScene = new Scene(container);
 
-        createMap();
+        Font[] customFont = Font.loadFonts(new FileInputStream(
+                "E:\\Java\\BomberMan\\res\\PressStart2P-Regular.ttf"), 14);
+        gc.setFont(customFont[0]);
 
-        // Play Theme Song
-//        soundTrack.setFile("Main");
-//        soundTrack.play();
-//        soundTrack.loop();
+        createMap();
 
         sc.setCurrentScene(this.levelScene);
 
@@ -145,6 +164,7 @@ public class Level {
         gameOver = false;
         goToNextLevel = false;
         isRunning = true;
+        time = 202;
 
         // Clear to load new map
         mapDataFile.clear();
@@ -248,6 +268,11 @@ public class Level {
                         tiles.add(new Grass(col, row, SpriteContainer.grass.getFxImage(), this));
                         bats.add(new Bat(col, row, Animation.batRightAni.get(0).getFxImage(), this));
                     }
+                    case 'G' -> {
+                        tileMap[row][col] = " ";
+                        tiles.add(new Grass(col, row, SpriteContainer.grass.getFxImage(), this));
+                        ghosts.add(new Ghost(col, row, Animation.ghostRightAni.get(0).getFxImage(), this));
+                    }
                     case '*' -> {
                         tileMap[row][col] = "b";
                         tiles.add(new Brick(col, row, SpriteContainer.brick.getFxImage(),
@@ -268,7 +293,7 @@ public class Level {
             }
             row++;
         }
-        numberOfEnemies = skellies.size() + bats.size();
+        numberOfEnemies = skellies.size() + bats.size() + ghosts.size();
     }
 
     public void printTileMap() {
@@ -290,11 +315,9 @@ public class Level {
 
         bats.forEach(b -> b.render(gc));
 
-        bombers.forEach(bomber -> bomber.render(gc));
+        ghosts.forEach(g -> g.render(gc));
 
-//        gc.setFill(Color.YELLOW);
-//        gc.setFont(new Font(40));
-//        gc.fillText(String.valueOf(time), 100, 100);
+        bombers.forEach(bomber -> bomber.render(gc));
 
         if (!bats.isEmpty() && !bombers.isEmpty()) {
             bats.get(0).showPath(bats.get(0).getNode(), bombers.get(0).getNode());
@@ -333,6 +356,11 @@ public class Level {
             bats.forEach(Bat::update);
         }
 
+        ghosts.removeIf(Ghost::isDead);
+        if (!ghosts.isEmpty()) {
+            ghosts.forEach(Ghost::update);
+        }
+
         bombers.removeIf(Player::isDead);
         if (!bombers.isEmpty()) {
             bombers.forEach(Player::update);
@@ -347,12 +375,14 @@ public class Level {
      */
     public void pause() {
         if (isPause) {
+            soundTrack.play();
             isPause = false;
             timer.start();
             for (Node node : screenController.subMenuNodes) {
                 container.getChildren().remove(node);
             }
         } else {
+            soundTrack.stop();
             isPause = true;
             timer.stop();
             for (Node node : screenController.subMenuNodes) {

@@ -15,7 +15,7 @@ public class Main extends Application {
 
     @Override
     public void start(Stage primaryStage) throws Exception{
-        new Sound();
+        Sound.initSound();
         Animation.initAnimation();
 
         primaryStage.setResizable(false);
@@ -26,7 +26,6 @@ public class Main extends Application {
         primaryStage.setScene(new Scene(root));
         root.getStylesheets().add("style.css");
 
-//        primaryStage.setScene(new ScreenController(primaryStage).getCurrentScene());
         primaryStage.show();
     }
 

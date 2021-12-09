@@ -11,6 +11,7 @@ import uet.oop.bomberman.graphics.SpriteContainer;
 import uet.oop.bomberman.util.Constants;
 import uet.oop.bomberman.util.Direction;
 
+import java.lang.management.GarbageCollectorMXBean;
 import java.util.List;
 
 public class Bat extends Character {
@@ -225,6 +226,7 @@ public class Bat extends Character {
     }
 
     public void updateAdjList() {
+        System.gc();
         AI.graph.clear();
         AI.graph = AI.createEmptyGraph(Constants.ROWS * Constants.COLUMNS);
         for (int node = 0; node < Constants.ROWS * Constants.COLUMNS; node++) {

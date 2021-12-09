@@ -9,17 +9,12 @@ public class SpeedItem extends Item{
     public SpeedItem(double xUnit, double yUnit, Image img, Level level) {
         super(xUnit, yUnit, img, level);
     }
-
-    @Override
-    public void update() {
-        for (Player bomber : level.bombers)
-            if (bomber.hitBox.getBoundsInParent().intersects(this.hitBox.getBoundsInParent())) {
-                setCanRemove();
-                updatePlayerBuff(bomber);
-            }
+        public void update() {
+        super.update();
     }
 
-    private void updatePlayerBuff(Player bomber) {
+    @Override
+    public void updatePlayerBuff(Player bomber) {
         bomber.speed++;
     }
 }

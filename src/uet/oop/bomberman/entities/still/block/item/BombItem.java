@@ -10,16 +10,12 @@ public class BombItem extends Item{
         super(xUnit, yUnit, img, level);
     }
 
-    @Override
     public void update() {
-        for (Player bomber : level.bombers)
-            if (bomber.hitBox.getBoundsInParent().intersects(this.hitBox.getBoundsInParent())) {
-                setCanRemove();
-                updatePlayerBuff(bomber);
-            }
+        super.update();
     }
 
-    private void updatePlayerBuff(Player bomber) {
+    @Override
+    public void updatePlayerBuff(Player bomber) {
         bomber.bombNum++;
     }
 

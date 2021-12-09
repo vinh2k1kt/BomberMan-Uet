@@ -2,6 +2,7 @@ package uet.oop.bomberman.entities.moving;
 
 import uet.oop.bomberman.Level;
 import uet.oop.bomberman.entities.Entity;
+import uet.oop.bomberman.entities.moving.enemy.Ghost;
 import uet.oop.bomberman.entities.still.block.item.Item;
 import uet.oop.bomberman.entities.still.bomb.Bomb;
 import uet.oop.bomberman.entities.moving.player.Player;
@@ -28,6 +29,11 @@ public class CollisionChecker {
 
                 //Check collied with tile
                 for (int i = -1; i <= 1; i++) {
+
+                    if (character instanceof Ghost) {
+                        return false;
+                    }
+
                     Entity tileToCheck = level.tiles.get((character.getYUnit() - 1) * Constants.COLUMNS + character.getXUnit() + i);
                     if (tileToCheck.hitBox.getBoundsInParent().intersects(character.hitBox.getBoundsInParent())
                             && !(tileToCheck instanceof Item)) {
@@ -56,6 +62,11 @@ public class CollisionChecker {
 
                 //Check collied with tile
                 for (int i = -1; i <= 1; i++) {
+
+                    if (character instanceof Ghost) {
+                        return false;
+                    }
+
                     Entity tileToCheck = level.tiles.get((character.getYUnit() + 1) * Constants.COLUMNS + character.getXUnit() + i);
                     if (tileToCheck.hitBox.getBoundsInParent().intersects(character.hitBox.getBoundsInParent())
                             && !(tileToCheck instanceof Item)) {
@@ -84,6 +95,11 @@ public class CollisionChecker {
 
                 //Check collied with tile
                 for (int i = -1; i <= 1; i++) {
+
+                    if (character instanceof Ghost) {
+                        return false;
+                    }
+
                     Entity tileToCheck = level.tiles.get((character.getYUnit() + i) * Constants.COLUMNS + character.getXUnit() - 1);
                     if (tileToCheck.hitBox.getBoundsInParent().intersects(character.hitBox.getBoundsInParent())
                             && !(tileToCheck instanceof Item)) {
@@ -112,6 +128,12 @@ public class CollisionChecker {
 
                 //Check collied with tile
                 for (int i = -1; i <= 1; i++) {
+
+
+                    if (character instanceof Ghost) {
+                        return false;
+                    }
+
                     Entity tileToCheck = level.tiles.get((character.getYUnit() + i) * Constants.COLUMNS + character.getXUnit() + 1);
                     if (tileToCheck.hitBox.getBoundsInParent().intersects(character.hitBox.getBoundsInParent())
                             && !(tileToCheck instanceof Item)) {

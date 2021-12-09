@@ -5,10 +5,7 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.control.Button;
 import javafx.scene.control.Label;
-import javafx.scene.layout.AnchorPane;
-import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 import uet.oop.bomberman.menu.GameOver;
 import uet.oop.bomberman.menu.Menu;
@@ -28,12 +25,15 @@ public class ScreenController {
     Level level;
 
     public Scene loadingScene;
-    public Scene gameOverScene;
     public Scene currentScene;
     public static int x = 0;
     public int levelIndex = -1;
 
+    private boolean firstTime = true;
+
     public ScreenController(Stage primaryStage) throws IOException, InterruptedException {
+
+        this.primaryStage = primaryStage;
 
         URL url = new File("src/uet/oop/bomberman/menu/submenu.fxml").toURI().toURL();
         Parent root = FXMLLoader.load(url);
@@ -44,10 +44,15 @@ public class ScreenController {
                 break;
         }
 
+        level = new Level(primaryStage, Constants.levelPath.get(levelIndex + 1), this);
+
+        Menu.level = level;
+        GameOver.level = level;
+        Submenu.level = level;
+
         url = new File("src/uet/oop/bomberman/menu/gameOver.fxml").toURI().toURL();
         root = FXMLLoader.load(url);
         root.getStylesheets().add("style.css");
-        gameOverScene =  new Scene(root);
 
         //Getting GameOver Label So We Can Change The Text Cause Javafx Suck And We Can't Do It Normally
         for (Node node : root.getChildrenUnmodifiable()) {
@@ -70,8 +75,6 @@ public class ScreenController {
         }
         loadingScene =  new Scene(root);
 
-        this.primaryStage = primaryStage;
-
         renderLoadingScene();
     }
 
@@ -85,14 +88,28 @@ public class ScreenController {
             levelIndex++;
         } else {
             gameOverLabel.setText("Game Completed!");
-            setCurrentScene(gameOverScene);
+
+            try {
+                GameOver.firstTime = true;
+                URL url = new File("src/uet/oop/bomberman/menu/gameOver.fxml").toURI().toURL();
+                Parent root = FXMLLoader.load(url);
+                root.getStylesheets().add("style.css");
+                setCurrentScene(new Scene(root));
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+
             return;
         }
 
-        level = new Level(primaryStage, Constants.levelPath.get(levelIndex), this);
-        Menu.level = level;
-        GameOver.level = level;
-        Submenu.level = level;
+        if (!firstTime) {
+            level.loadMap(Constants.levelPath.get(levelIndex));
+            level.createMap();
+        } else {
+            firstTime = false;
+        }
+
+        playThemeSong();
 
         loadingLabel.setText("Level " + (levelIndex + 1));
         setCurrentScene(loadingScene);
@@ -110,5 +127,11 @@ public class ScreenController {
         };
         sleeper.setOnSucceeded(event -> setCurrentScene(level.levelScene));
         new Thread(sleeper).start();
+    }
+
+    public void playThemeSong() {
+        level.soundTrack.setFile(Constants.soundTrack.get(levelIndex));
+        level.soundTrack.play();
+        level.soundTrack.loop();
     }
 }
