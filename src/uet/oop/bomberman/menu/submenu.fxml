@@ -12,7 +12,9 @@
             <Image url="@../../../../../res/menu_idle.png" />
          </image>
       </ImageView>
-      <Button fx:id="Resume" layoutX="431.0" layoutY="147.0" mnemonicParsing="false" onAction="#Continue" prefHeight="66.0" prefWidth="253.0" style="-fx-background-color: transparent;" styleClass="button4" text="Resume" textFill="WHITE" />
-      <Button fx:id="Exit" layoutX="394.0" layoutY="194.0" mnemonicParsing="false" onAction="#goToMainMenu" prefHeight="80.0" prefWidth="328.0" style="-fx-background-color: transparent;" styleClass="button4" text="Exit to main Menu" textFill="WHITE" />
+      <Button fx:id="Resume" layoutX="431.0" layoutY="105.0" mnemonicParsing="false" onAction="#Continue" prefHeight="66.0" prefWidth="253.0" style="-fx-background-color: transparent;" styleClass="button4" text="Resume" textFill="WHITE" />
+      <Button fx:id="Exit" layoutX="394.0" layoutY="270.0" mnemonicParsing="false" onAction="#goToMainMenu" prefHeight="80.0" prefWidth="328.0" style="-fx-background-color: transparent;" styleClass="button4" text="Exit to main Menu" textFill="WHITE" />
+      <Button fx:id="reset" layoutX="431.0" layoutY="158.0" mnemonicParsing="false" onAction="#Restart" prefHeight="66.0" prefWidth="253.0" style="-fx-background-color: transparent;" styleClass="button4" text="Restart" textFill="WHITE" />
+      <Button fx:id="Mute" layoutX="431.0" layoutY="215.0" mnemonicParsing="false" onAction="#Mute" prefHeight="66.0" prefWidth="253.0" style="-fx-background-color: transparent;" styleClass="button4" text="Mute" textFill="WHITE" />
    </children>
 </AnchorPane>

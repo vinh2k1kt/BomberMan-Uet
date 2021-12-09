@@ -106,6 +106,7 @@ public class Skelly extends Character {
     public void isKill() {
         if (alive) {
             level.numberOfEnemies--;
+            level.points += 100;
             this.delay = 10;
             this.alive = false;
             index = 0;

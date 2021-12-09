@@ -70,6 +70,7 @@ public class ScreenController {
     public void renderLoadingScene() throws IOException, InterruptedException {
         if (levelIndex < Constants.levelPath.size() - 1) {
             levelIndex++;
+            level.previousPoints = level.points;
         } else {
             level.goToNextLevel = false;
             level.finalLevel = true;
@@ -90,7 +91,7 @@ public class ScreenController {
                     }
                 }
 
-                gameOverLabel.setText("Game Completed!");
+                gameOverLabel.setText("Game Completed! \n Your Point: " + level.points);
                 level.finalLevel = false;
                 setCurrentScene(new Scene(root));
                 return;

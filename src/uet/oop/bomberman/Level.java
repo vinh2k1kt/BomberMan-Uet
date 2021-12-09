@@ -66,6 +66,10 @@ public class Level {
     public boolean goToNextLevel = false;
     public boolean isPause = false;
     public boolean finalLevel = false;
+    public boolean resetRequired = false;
+    public boolean isMute = false;
+    public int points = 0;
+    public int previousPoints = 0;
 
     public double lastNanoTime;
     public double deltaTime;
@@ -113,8 +117,19 @@ public class Level {
                     }
                     if (goToNextLevel) {
                         try {
+                            points += time * 10;
                             screenController.renderLoadingScene();
                             goToNextLevel = false;
+                        } catch (IOException | InterruptedException e) {
+                            e.printStackTrace();
+                        }
+                    }
+                    if (resetRequired) {
+                        try {
+                            resetRequired = false;
+                            points = previousPoints;
+                            screenController.levelIndex--;
+                            screenController.renderLoadingScene();
                         } catch (IOException | InterruptedException e) {
                             e.printStackTrace();
                         }
@@ -162,6 +177,7 @@ public class Level {
         goToNextLevel = false;
         isRunning = true;
         time = 202;
+        numberOfEnemies = 0;
 
         // Clear to load new map
         mapDataFile.clear();
@@ -397,7 +413,11 @@ public class Level {
         gc.setFill(Color.BLACK);
         gc.fillRect(0, Constants.SCREEN_HEIGHT - 50, Constants.SCREEN_WIDTH, 50);
         gc.setFill(Color.WHITE);
-        gc.fillText(String.valueOf(time), 10, Constants.SCREEN_HEIGHT - 20);
+        gc.fillText("Time: ", 10, Constants.SCREEN_HEIGHT - 20);
+        gc.fillText(String.valueOf(time), 80, Constants.SCREEN_HEIGHT - 20);
+
+        gc.fillText("Point: ", 150, Constants.SCREEN_HEIGHT - 20);
+        gc.fillText(String.valueOf(points), 230, Constants.SCREEN_HEIGHT - 20);
 
         gc.drawImage(SpriteContainer.flameItem.getFxImage(), Constants.TILES_SIZE * 21, Constants.SCREEN_HEIGHT - 42
                 , Constants.TILES_SIZE, Constants.TILES_SIZE);
@@ -420,7 +440,9 @@ public class Level {
      */
     public void pause() {
         if (isPause) {
-            soundTrack.play();
+            if (!isMute) {
+                soundTrack.play();
+            }
             isPause = false;
             timer.start();
             for (Node node : screenController.subMenuNodes) {
@@ -440,12 +462,21 @@ public class Level {
      * Game Over
      */
     public void gameOver() {
+        bombs.clear();
         isRunning = false;
         gameOver = true;
     }
 
     public void complete() {
+        bombs.clear();
         isRunning = false;
         goToNextLevel = true;
+    }
+
+    public void reset() {
+        bombs.clear();
+        pause();
+        isRunning = false;
+        resetRequired = true;
     }
 }
