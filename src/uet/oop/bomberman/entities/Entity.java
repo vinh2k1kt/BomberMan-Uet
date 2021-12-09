@@ -4,6 +4,7 @@ import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.image.Image;
 import javafx.scene.shape.Rectangle;
 import uet.oop.bomberman.Level;
+import uet.oop.bomberman.sound.Sound;
 import uet.oop.bomberman.util.Constants;
 
 public abstract class Entity {
@@ -17,11 +18,12 @@ public abstract class Entity {
 
     //Tọa độ Y tính từ góc trái trên trong Canvas
     public double y;
-
+    public Sound sound;
     public Image img;
 
     //Khởi tạo đối tượng, chuyển từ tọa độ đơn vị sang tọa độ trong canvas
     public Entity(double xUnit, double yUnit, Image img, Level level) {
+        this.sound = new Sound();
         this.x = xUnit * Constants.TILES_SIZE;
         this.y = yUnit * Constants.TILES_SIZE;
         this.img = img;

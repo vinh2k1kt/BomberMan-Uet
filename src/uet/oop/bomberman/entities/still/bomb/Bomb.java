@@ -92,8 +92,8 @@ public class Bomb extends Tile {
         level.tileMap[this.getYUnit()][this.getXUnit()] = " ";
         level.bats.forEach(Bat::setUpdateRequired);
 
-        level.soundTrack.setFile("BombExplode");
-        level.soundTrack.play();
+        sound.setFile("BombExplode");
+        sound.play();
 
         //Clear Bomb's HitBox
         this.hitBox.setWidth(0);

@@ -39,7 +39,6 @@
       </Button>
       <ImageView fitHeight="29.0" fitWidth="30.0" layoutX="26.0" layoutY="10.0" pickOnBounds="true" preserveRatio="true">
          <image>
-            <Image url="@../../../../../../../OneDrive/Desktop/tempimage/play.png" />
          </image>
       </ImageView>
       <Label layoutX="179.0" layoutY="75.0" style="-fx-font-size: 12;" styleClass="text2" text="W, A, S, D" textFill="RED" />

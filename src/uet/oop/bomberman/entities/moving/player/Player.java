@@ -4,6 +4,11 @@ import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.image.Image;
 import uet.oop.bomberman.Level;
 import uet.oop.bomberman.entities.moving.enemy.Bat;
+import uet.oop.bomberman.entities.moving.enemy.Ghost;
+import uet.oop.bomberman.entities.moving.enemy.Skelly;
+import uet.oop.bomberman.entities.still.Tile;
+import uet.oop.bomberman.entities.still.block.Layered;
+import uet.oop.bomberman.entities.still.block.undestroyable.Grass;
 import uet.oop.bomberman.entities.still.bomb.Bomb;
 import uet.oop.bomberman.graphics.Animation;
 import uet.oop.bomberman.entities.moving.Character;
@@ -22,8 +27,8 @@ public class Player extends Character {
 
     public final CollisionChecker collisionChecker;
 
-    public int bombNum = 3;
-    public int bombRange = 3;
+    public int bombNum = 1;
+    public int bombRange = 1;
 
     public Player(double x, double y, Image img, Level level) {
         super(x, y, img, level);
@@ -61,8 +66,8 @@ public class Player extends Character {
                         if (!(Math.round(bomb.x / Constants.TILES_SIZE) == lastX) ||
                                 !(Math.round(bomb.y / Constants.TILES_SIZE) == lastY)) {
 
-                            level.soundTrack.setFile("Placing");
-                            level.soundTrack.play();
+                            sound.setFile("Placing");
+                            sound.play();
 
                             // Update List for chasing
                             level.bombs.add(bomb);
@@ -79,12 +84,33 @@ public class Player extends Character {
                         isMoving = true;
                     }
                 }
-                case P -> {
+                case ESCAPE -> {
                     level.pause();
                 }
                 default -> {
                     isMoving = false;
                     currentDirection = Direction.NONE;
+                }
+                case SHIFT -> {
+                    for (Bat bat : level.bats) {
+                        bat.isKill();
+                    }
+
+                    for (Skelly bat : level.skellies) {
+                        bat.isKill();
+                    }
+
+                    for (Ghost ghost : level.ghosts) {
+                        ghost.isKill();
+                    }
+
+                    for (Tile tile : level.tiles) {
+                        if (tile instanceof Layered && ((Layered) tile).isTrap) {
+                            ((Layered) tile).isTrap = false;
+                            tile.img = SpriteContainer.grass.getFxImage();
+                            level.numberOfEnemies--;
+                        }
+                    }
                 }
             }
         });
@@ -132,11 +158,12 @@ public class Player extends Character {
 
     private void resetBombTracking() {
         if ((Math.round(this.x / Constants.TILES_SIZE) != lastX)
-        || (Math.round(this.y / Constants.TILES_SIZE) != lastY)) {
+                || (Math.round(this.y / Constants.TILES_SIZE) != lastY)) {
             lastX = -1;
             lastY = -1;
         }
     }
+
     @Override
     public void update() {
 
@@ -221,10 +248,11 @@ public class Player extends Character {
 
         if (count == delay) {
 
-//            level.soundTrack.setFile("Walking");
-//            level.soundTrack.play();
-
             index++;
+            if (index == 2) {
+                sound.setFile("Walking");
+                sound.play();
+            }
             count = 0;
         }
 

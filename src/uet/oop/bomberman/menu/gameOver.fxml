@@ -3,45 +3,34 @@
 <?import java.lang.String?>
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
-<?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
-<?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
 <AnchorPane fx:id="anchorPane" prefHeight="468.0" prefWidth="1116.0" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="uet.oop.bomberman.menu.GameOver">
    <children>
-      <ImageView fitHeight="468.0" fitWidth="1116.0">
+      <ImageView fx:id="imageView" fitHeight="468.0" fitWidth="1116.0">
          <image>
-            <Image url="@../../../../../../../OneDrive/Desktop/tempimage/gameComplete.jpg" />
          </image>
       </ImageView>
-      <AnchorPane layoutX="367.0" layoutY="55.0" prefHeight="223.0" prefWidth="340.0">
-         <children>
-            <Label alignment="CENTER" layoutX="4.0" layoutY="-2.0" prefHeight="78.0" prefWidth="403.0" style="-fx-font-size: 23;" styleClass="text2" text="Game Over" textFill="WHITE">
-               <font>
-                  <Font name="Times New Roman" size="27.0" />
-               </font>
-            </Label>
-            <VBox layoutX="41.0" layoutY="77.0" prefHeight="170.0" prefWidth="329.0" spacing="50.0" style="-fx-background-color: transparent;">
-               <children>
-                  <Button focusTraversable="false" mnemonicParsing="false" prefHeight="80.0" prefWidth="330.0" style="-fx-background-color: transparent; -fx-font-size: 14;" text="Play Again" textFill="WHITE">
-                     <styleClass>
-                        <String fx:value="button3" />
-                        <String fx:value="text2" />
-                        <String fx:value="button4" />
-                     </styleClass>
-                  </Button>
-                  <Button focusTraversable="false" mnemonicParsing="false" onAction="#exitButton" prefHeight="78.0" prefWidth="330.0" style="-fx-background-color: transparent; -fx-font-size: 14;" text=" Exit to Main Menu" textFill="WHITE">
-                     <styleClass>
-                        <String fx:value="button3" />
-                        <String fx:value="text2" />
-                        <String fx:value="button4" />
-                     </styleClass>
-                  </Button>
-               </children>
-            </VBox>
-         </children>
-      </AnchorPane>
+      <Button focusTraversable="false" layoutX="392.0" layoutY="167.0" mnemonicParsing="false" onAction="#Replay" prefHeight="80.0" prefWidth="330.0" style="-fx-background-color: transparent; -fx-font-size: 14;" text="Play Again" textFill="WHITE">
+         <styleClass>
+            <String fx:value="button3" />
+            <String fx:value="text2" />
+            <String fx:value="button4" />
+         </styleClass>
+      </Button>
+      <Button focusTraversable="false" layoutX="393.0" layoutY="245.0" mnemonicParsing="false" onAction="#exitButton" prefHeight="78.0" prefWidth="330.0" style="-fx-background-color: transparent; -fx-font-size: 14;" text=" Exit to Main Menu" textFill="WHITE">
+         <styleClass>
+            <String fx:value="button3" />
+            <String fx:value="text2" />
+            <String fx:value="button4" />
+         </styleClass>
+      </Button>
+      <Label alignment="CENTER" layoutX="356.0" layoutY="89.0" prefHeight="78.0" prefWidth="403.0" style="-fx-font-size: 23;" styleClass="text2" text="Game Over" textFill="WHITE">
+         <font>
+            <Font name="Times New Roman" size="27.0" />
+         </font>
+      </Label>
    </children>
 </AnchorPane>

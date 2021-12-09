@@ -1,5 +1,7 @@
 package uet.oop.bomberman.sound;
 
+import uet.oop.bomberman.util.Constants;
+
 import javax.sound.sampled.AudioInputStream;
 import javax.sound.sampled.AudioSystem;
 import javax.sound.sampled.Clip;
@@ -13,12 +15,20 @@ public class Sound {
     public Clip clip;
     public static Map<String, URL> soundCollection = new HashMap<>();
 
-    public Sound() throws MalformedURLException {
-//        soundCollection.put("Main", new File("res/sound/03_Stage Theme.wav").toURI().toURL());
-        soundCollection.put("Main", new File("res/sound/Titan Souls Soundtrack - Souls.wav").toURI().toURL());
+    public static void initSound() throws MalformedURLException {
+        soundCollection.put("Souls", new File("res/sound/Credit.wav").toURI().toURL());
         soundCollection.put("BombExplode", new File("res/sound/BombExplode.wav").toURI().toURL());
         soundCollection.put("Placing", new File("res/sound/BombPlacing.wav").toURI().toURL());
-        soundCollection.put("Walking", new File("res/sound/Walk.wav").toURI().toURL());
+        soundCollection.put("Walking", new File("res/sound/Footstep.wav").toURI().toURL());
+        soundCollection.put("Item", new File("res/sound/Item.wav").toURI().toURL());
+        soundCollection.put("Depths", new File("res/sound/Depths.wav").toURI().toURL());
+        soundCollection.put("Elhana", new File("res/sound/Elhana.wav").toURI().toURL());
+        soundCollection.put("Forest", new File("res/sound/Forest.wav").toURI().toURL());
+        soundCollection.put("Elder", new File("res/sound/Elder.wav").toURI().toURL());
+
+        Constants.soundTrack.put(0, "Depths");
+        Constants.soundTrack.put(1, "Elhana");
+        Constants.soundTrack.put(2, "Forest");
     }
 
     public void setFile(String title) {

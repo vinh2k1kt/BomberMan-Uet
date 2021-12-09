@@ -74,6 +74,11 @@ public class Animation {
             //Bat
             batLeftAni.add(SpriteSheet.spriteSheet.sprites.get(14 + i));
             batRightAni.add(SpriteSheet.spriteSheet.sprites.get(Constants.SPRITE_COL + 14 + i));
+
+            //Ghost
+            ghostRightAni.add(SpriteSheet.spriteSheet.sprites.get(Constants.SPRITE_COL * 2 + 5 + i));
+            ghostLeftAni.add(SpriteSheet.spriteSheet.sprites.get(Constants.SPRITE_COL * 3 + 5 + i));
+
             //Tile
             brick_explosion.add(SpriteSheet.spriteSheet.sprites.get(Constants.SPRITE_COL * 4 - 4 + i));
         }
@@ -84,7 +89,6 @@ public class Animation {
             bombAni.add(SpriteSheet.spriteSheet.sprites.get(Constants.SPRITE_COL * 3 + (10 + i)));
 
             explosion_center.add(SpriteSheet.spriteSheet.sprites.get(Constants.SPRITE_COL * 3 + (15 + i)));
-
 
             explosion_vertical_top.add(SpriteSheet.spriteSheet.sprites.get(17 + i));
             explosion_vertical_middle.add(SpriteSheet.spriteSheet.sprites.get(Constants.SPRITE_COL + 17 + i));
