@@ -4,6 +4,7 @@
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.VBox?>
 
 <AnchorPane prefHeight="468.0" prefWidth="1116.0" style="-fx-background-color: transparent;" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="uet.oop.bomberman.menu.Submenu">
    <children>
@@ -12,9 +13,13 @@
             <Image url="@../../../../../res/menu_idle.png" />
          </image>
       </ImageView>
-      <Button fx:id="Resume" layoutX="431.0" layoutY="105.0" mnemonicParsing="false" onAction="#Continue" prefHeight="66.0" prefWidth="253.0" style="-fx-background-color: transparent;" styleClass="button4" text="Resume" textFill="WHITE" />
-      <Button fx:id="Exit" layoutX="394.0" layoutY="270.0" mnemonicParsing="false" onAction="#goToMainMenu" prefHeight="80.0" prefWidth="328.0" style="-fx-background-color: transparent;" styleClass="button4" text="Exit to main Menu" textFill="WHITE" />
-      <Button fx:id="reset" layoutX="431.0" layoutY="158.0" mnemonicParsing="false" onAction="#Restart" prefHeight="66.0" prefWidth="253.0" style="-fx-background-color: transparent;" styleClass="button4" text="Restart" textFill="WHITE" />
-      <Button fx:id="Mute" layoutX="431.0" layoutY="215.0" mnemonicParsing="false" onAction="#Mute" prefHeight="66.0" prefWidth="253.0" style="-fx-background-color: transparent;" styleClass="button4" text="Mute" textFill="WHITE" />
+      <VBox layoutX="396.0" layoutY="134.0" prefHeight="200.0" prefWidth="324.0">
+         <children>
+            <Button fx:id="Resume" mnemonicParsing="false" onAction="#Continue" prefHeight="55.0" prefWidth="360.0" style="-fx-background-color: transparent;" styleClass="button4" text="Resume" textFill="WHITE" />
+            <Button fx:id="reset" layoutX="10.0" layoutY="10.0" mnemonicParsing="false" onAction="#Restart" prefHeight="55.0" prefWidth="360.0" style="-fx-background-color: transparent;" styleClass="button4" text="Restart" textFill="WHITE" />
+            <Button fx:id="Mute" mnemonicParsing="false" onAction="#Mute" prefHeight="55.0" prefWidth="360.0" style="-fx-background-color: transparent;" styleClass="button4" text="Mute" textFill="WHITE" />
+            <Button fx:id="Exit" mnemonicParsing="false" onAction="#goToMainMenu" prefHeight="55.0" prefWidth="360.0" style="-fx-background-color: transparent;" styleClass="button4" text="Exit to main Menu" textFill="WHITE" />
+         </children>
+      </VBox>
    </children>
 </AnchorPane>
