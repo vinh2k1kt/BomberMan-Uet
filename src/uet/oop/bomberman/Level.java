@@ -98,6 +98,7 @@ public class Level {
                 } else {
                     soundTrack.stop();
                     if (gameOver) {
+                        gameOver = false;
                         GameOver.isGameOver = true;
                         GameOver.firstTime = true;
 
@@ -109,8 +110,6 @@ public class Level {
                         } catch (IOException e) {
                             e.printStackTrace();
                         }
-
-                        gameOver = false;
                     }
                     if (goToNextLevel) {
                         try {
@@ -371,7 +370,9 @@ public class Level {
     //Render
     private void render() {
 
-        renderInfo();
+        if (!bombers.isEmpty()) {
+            renderInfo();
+        }
 
         tiles.forEach(e -> e.render(gc));
 

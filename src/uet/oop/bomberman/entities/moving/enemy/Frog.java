@@ -71,6 +71,7 @@ public class Frog extends Character {
                         bomber.bombRange--;
                     }
                     isKill();
+                    level.numberOfEnemies--;
                 }
             }
 

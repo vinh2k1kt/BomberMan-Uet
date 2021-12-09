@@ -46,7 +46,6 @@ public class ScreenController {
         GameOver.level = level;
         Submenu.level = level;
 
-
         url = new File("src/uet/oop/bomberman/menu/loading.fxml").toURI().toURL();
         root = FXMLLoader.load(url);
         root.getStylesheets().add("style.css");

@@ -108,6 +108,7 @@ public class Player extends Character {
                         if (tile instanceof Layered && ((Layered) tile).isTrap) {
                             ((Layered) tile).isTrap = false;
                             tile.img = SpriteContainer.grass.getFxImage();
+                            level.numberOfEnemies--;
                         }
                     }
                 }
