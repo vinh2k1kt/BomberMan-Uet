@@ -8,6 +8,7 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
+import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
@@ -110,6 +111,16 @@ public class Level {
                             URL url = new File("src/uet/oop/bomberman/menu/gameOver.fxml").toURI().toURL();
                             Parent root = FXMLLoader.load(url);
                             root.getStylesheets().add("style.css");
+
+                            ArrayList<Label> gameOverLabel = new ArrayList<>();
+                            for (Node node : root.getChildrenUnmodifiable()) {
+                                if (node instanceof Label) {
+                                    gameOverLabel.add((Label) node);
+                                }
+                            }
+                            gameOverLabel.get(1).setText("Game Over!");
+                            gameOverLabel.get(0).setText("Your Point: " + points);
+
                             screenController.setCurrentScene(new Scene(root));
                         } catch (IOException e) {
                             e.printStackTrace();
@@ -167,9 +178,17 @@ public class Level {
     }
 
     public void loadMap(String path) throws IOException {
+
+        if (screenController.levelIndex == 0) {
+            points = 0;
+            previousPoints = 0;
+        }
+
         //Clear Previous Level Data
         skellies.clear();
         bombers.clear();
+        bats.clear();
+        frogs.clear();
         tiles.clear();
 
         //Reset Boolen Variables

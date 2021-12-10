@@ -27,7 +27,12 @@
             <String fx:value="button4" />
          </styleClass>
       </Button>
-      <Label alignment="CENTER" layoutX="356.0" layoutY="89.0" prefHeight="78.0" prefWidth="403.0" style="-fx-font-size: 23;" styleClass="text2" text="Game Over" textFill="WHITE">
+      <Label alignment="CENTER" contentDisplay="CENTER" layoutX="355.0" layoutY="95.0" prefHeight="78.0" prefWidth="403.0" style="-fx-font-size: 23;" styleClass="text2" text="Game Over" textAlignment="CENTER" textFill="WHITE">
+         <font>
+            <Font name="Times New Roman" size="27.0" />
+         </font>
+      </Label>
+      <Label alignment="CENTER" contentDisplay="CENTER" layoutX="355.0" layoutY="37.0" prefHeight="78.0" prefWidth="403.0" style="-fx-font-size: 23;" styleClass="text2" text="Game Over" textAlignment="CENTER" textFill="WHITE">
          <font>
             <Font name="Times New Roman" size="27.0" />
          </font>

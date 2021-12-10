@@ -33,14 +33,12 @@ public class GameOver implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         sound = new Sound();
-        level.points = 0;
-        level.previousPoints = 0;
         if (firstTime) {
             if (isGameOver) {
                 imageView.setImage(new Image("image/gameOver.png"));
                 sound.setFile("Elder");
             } else {
-                imageView.setImage(new Image("image/menu_bgLS.jpg"));
+                imageView.setImage(new Image("image/complete.png"));
                 sound.setFile("Souls");
             }
             isGameOver = false;

@@ -27,9 +27,10 @@ w - Wall
 x - Portal
 
 Character:
-p - Bomber
-1 - Balloon
-2 - Oneal
+S - Skelly
+G - Ghost
+F - Frog
+B - Bat
 
 Items:
 b - Bomb Item

@@ -107,6 +107,8 @@ public class Player extends Character {
                     for (Tile tile : level.tiles) {
                         if (tile instanceof Layered && ((Layered) tile).isTrap) {
                             ((Layered) tile).isTrap = false;
+                            tile.hitBox.setHeight(0);
+                            tile.hitBox.setWidth(0);
                             tile.img = SpriteContainer.grass.getFxImage();
                             level.numberOfEnemies--;
                         }
