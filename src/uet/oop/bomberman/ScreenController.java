@@ -2,6 +2,7 @@ package uet.oop.bomberman;
 
 import javafx.concurrent.Task;
 import javafx.fxml.FXMLLoader;
+import javafx.geometry.Pos;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
@@ -18,7 +19,7 @@ import java.util.ArrayList;
 
 public class ScreenController {
     Label loadingLabel;
-    Label gameOverLabel;
+    ArrayList<Label> gameOverLabel = new ArrayList<>();
 
     public ArrayList<Node> subMenuNodes = new ArrayList<>();
     Stage primaryStage;
@@ -68,7 +69,7 @@ public class ScreenController {
     }
 
     public void renderLoadingScene() throws IOException, InterruptedException {
-        if (levelIndex < Constants.levelPath.size() - 1) {
+        if (levelIndex < Constants.levelPath.size() - 2) {
             levelIndex++;
             level.previousPoints = level.points;
         } else {
@@ -86,12 +87,12 @@ public class ScreenController {
                 //Getting GameOver Label So We Can Change The Text Cause Javafx Suck And We Can't Do It Normally
                 for (Node node : root.getChildrenUnmodifiable()) {
                     if (node instanceof Label) {
-                        gameOverLabel = (Label) node;
-                        break;
+                        gameOverLabel.add((Label) node);
                     }
                 }
 
-                gameOverLabel.setText("Game Completed! \n Your Point: " + level.points);
+                gameOverLabel.get(1).setText("Game Completed!");
+                gameOverLabel.get(0).setText("Your Point: " + level.points);
                 level.finalLevel = false;
                 setCurrentScene(new Scene(root));
                 return;

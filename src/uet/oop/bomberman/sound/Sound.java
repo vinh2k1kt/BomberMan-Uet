@@ -1,7 +1,5 @@
 package uet.oop.bomberman.sound;
 
-import uet.oop.bomberman.util.Constants;
-
 import javax.sound.sampled.AudioInputStream;
 import javax.sound.sampled.AudioSystem;
 import javax.sound.sampled.Clip;
@@ -10,6 +8,7 @@ import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.HashMap;
 import java.util.Map;
+import uet.oop.bomberman.util.Constants;
 
 public class Sound {
     public Clip clip;
