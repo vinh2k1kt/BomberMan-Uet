@@ -112,6 +112,7 @@ public class Ghost extends Character {
 
     public void isKill() {
         if (alive) {
+            level.points += 100;
             level.numberOfEnemies--;
             this.delay = 10;
             this.alive = false;

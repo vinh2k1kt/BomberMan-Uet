@@ -39,6 +39,7 @@ public class Menu implements Initializable {
     }
 
     public void howtoplayButton(ActionEvent event) throws IOException {
+        sound.stop();
         URL url = new File("src/uet/oop/bomberman/menu/howtoplay.fxml").toURI().toURL();
         Parent root = FXMLLoader.load(url);
         primaryStage = (Stage) ((Node) event.getSource()).getScene().getWindow();

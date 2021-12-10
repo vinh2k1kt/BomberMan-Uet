@@ -19,7 +19,7 @@
 }
 
 .htpbg {
-    -fx-background-image: url("image/htpbgpng.png");
+    -fx-background-image: url("image/htpbg.jpg");
 }
 
 .gameoverBG {
@@ -27,12 +27,14 @@
 }
 
 .loadingBG {
-    -fx-background-image: url("image/loadingwp.jpg");
+    -fx-background-image: url("image/loadingImg.png");
 }
+
+
 /* Button */
 .button2:focused {
     -fx-effect:  dropshadow(gaussian, #67676D, 12, 0.8, 0.0, 3);
-    -fx-background-image: url("image/temp2.png");
+
 }
 
 .button3:hover{
@@ -41,7 +43,6 @@
 
 .button4:focused {
     -fx-effect:  dropshadow(gaussian, grey, 12, 0.8, 0.0, 3);
-    -fx-background-image: url("image/temp2.png");
 }
 
 .borderPane {

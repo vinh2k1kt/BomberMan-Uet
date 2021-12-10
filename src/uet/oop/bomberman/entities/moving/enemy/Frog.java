@@ -71,6 +71,7 @@ public class Frog extends Character {
                         bomber.bombRange--;
                     }
                     isKill();
+                    level.numberOfEnemies--;
                 }
             }
 
@@ -204,6 +205,7 @@ public class Frog extends Character {
 
     public void isKill() {
         if (alive) {
+            level.points -= 100;
             level.numberOfEnemies--;
             this.delay = 10;
             this.alive = false;

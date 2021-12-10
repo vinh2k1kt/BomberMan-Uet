@@ -38,4 +38,14 @@ public class Submenu {
         root.getStylesheets().add("style.css");
     }
 
+    @FXML
+    void Restart(ActionEvent event) throws IOException {
+        level.reset();
+    }
+
+    @FXML
+    void Mute(ActionEvent event) {
+        level.isMute = !level.isMute;
+    }
+
 }
