@@ -16,7 +16,7 @@
             <Image url="@../../../../../res/image/character.gif" />
          </image>
       </ImageView>
-      <Label layoutX="95.0" layoutY="63.0" lineSpacing="30.0" prefHeight="79.0" prefWidth="212.0" style="-fx-font-size: 14;" styleClass="text2" text="Press          to move" textAlignment="CENTER" textFill="#ffea00" wrapText="true" />
+      <Label layoutX="95.0" layoutY="63.0" lineSpacing="30.0" prefHeight="79.0" prefWidth="212.0" style="-fx-font-size: 14;" styleClass="text2" text="Press          to move" textAlignment="CENTER" textFill="WHITE" wrapText="true" />
       <ImageView fitHeight="86.0" fitWidth="86.0" layoutX="12.0" layoutY="184.0" pickOnBounds="true" preserveRatio="true">
          <image>
             <Image url="@../../../../../res/image/unknown.png" />
@@ -27,7 +27,7 @@
             <Font size="13.0" />
          </font>
       </Label>
-      <Label layoutX="115.0" layoutY="183.0" lineSpacing="30.0" prefHeight="83.0" prefWidth="190.0" style="-fx-font-size: 14;" styleClass="text2" text="Press      to place bomb" textAlignment="CENTER" textFill="#ffea00" wrapText="true" />
+      <Label layoutX="115.0" layoutY="183.0" lineSpacing="30.0" prefHeight="83.0" prefWidth="190.0" style="-fx-font-size: 14;" styleClass="text2" text="Press      to place bomb" textAlignment="CENTER" textFill="WHITE" wrapText="true" />
       <Button alignment="CENTER" cache="true" contentDisplay="CENTER" focusTraversable="false" layoutX="33.0" layoutY="1.0" mnemonicParsing="false" onAction="#backFunc" prefHeight="46.0" prefWidth="135.0" style="-fx-background-color: transparent;" text="Back" textFill="WHITE">
          <font>
             <Font size="34.0" />
@@ -57,11 +57,11 @@
             <Image url="@../../../../../res/image/red.png" />
          </image>
       </ImageView>
-      <Label layoutX="54.0" layoutY="305.0" prefHeight="20.0" prefWidth="324.0" style="-fx-font-size: 14;" styleClass="text2" text="- increse bomb's length" textFill="#ffea00" />
-      <Label layoutX="54.0" layoutY="341.0" prefHeight="40.0" prefWidth="346.0" style="-fx-font-size: 14;" styleClass="text2" text="- increase the number of bombs" textAlignment="CENTER" textFill="#ffea00" wrapText="true" />
-      <Label layoutX="54.0" layoutY="382.0" prefHeight="20.0" prefWidth="158.0" style="-fx-font-size: 14;" styleClass="text2" text="- speed up" textFill="#ffea00" />
-      <Label layoutX="21.0" layoutY="276.0" prefHeight="20.0" prefWidth="293.0" text="Items and Portal" textFill="#ffea00" />
-      <Label layoutX="694.0" layoutY="15.0" prefHeight="20.0" prefWidth="398.0" text="Interacting with bombs" textFill="#ffea00" />
+      <Label layoutX="54.0" layoutY="305.0" prefHeight="20.0" prefWidth="324.0" style="-fx-font-size: 14;" styleClass="text2" text="- increse bomb's length" textFill="WHITE" />
+      <Label layoutX="54.0" layoutY="341.0" prefHeight="40.0" prefWidth="346.0" style="-fx-font-size: 14;" styleClass="text2" text="- increase the number of bombs" textAlignment="CENTER" textFill="WHITE" wrapText="true" />
+      <Label layoutX="54.0" layoutY="382.0" prefHeight="20.0" prefWidth="158.0" style="-fx-font-size: 14;" styleClass="text2" text="- speed up" textFill="WHITE" />
+      <Label layoutX="21.0" layoutY="276.0" prefHeight="20.0" prefWidth="293.0" text="Items and Portal" textFill="WHITE" />
+      <Label layoutX="694.0" layoutY="15.0" prefHeight="20.0" prefWidth="398.0" text="Interacting with bombs" textFill="WHITE" />
       <ImageView fitHeight="53.0" fitWidth="52.0" layoutX="622.0" layoutY="116.0" rotate="90.0">
          <image>
             <Image url="@../../../../../res/image/ar.png" />
@@ -72,9 +72,9 @@
             <Image url="@../../../../../res/image/ar.png" />
          </image>
       </ImageView>
-      <Label alignment="TOP_CENTER" layoutX="852.0" layoutY="54.0" lineSpacing="40.0" prefHeight="185.0" prefWidth="254.0" style="-fx-font-size: 14;" styleClass="text2" text="- Bomb exploding can destroy the brick, kill enemy and even bomber." textFill="#ffea00" wrapText="true" />
-      <Label alignment="TOP_CENTER" layoutX="852.0" layoutY="288.0" lineSpacing="40.0" prefHeight="146.0" prefWidth="232.0" style="-fx-font-size: 14;" styleClass="text2" text="- Bomb exploding cannot destroy the wall." textFill="#ffea00" wrapText="true" />
-      <Label layoutX="60.0" layoutY="427.0" prefHeight="22.0" prefWidth="324.0" style="-fx-font-size: 14;" styleClass="text2" text="- go to the next level" textFill="#ffea00" />
+      <Label alignment="TOP_CENTER" layoutX="852.0" layoutY="54.0" lineSpacing="40.0" prefHeight="185.0" prefWidth="254.0" style="-fx-font-size: 14;" styleClass="text2" text="- Bomb exploding can destroy the brick, kill enemy and even bomber." textFill="WHITE" wrapText="true" />
+      <Label alignment="TOP_CENTER" layoutX="852.0" layoutY="288.0" lineSpacing="40.0" prefHeight="146.0" prefWidth="232.0" style="-fx-font-size: 14;" styleClass="text2" text="- Bomb exploding cannot destroy the wall." textFill="WHITE" wrapText="true" />
+      <Label layoutX="60.0" layoutY="427.0" prefHeight="22.0" prefWidth="324.0" style="-fx-font-size: 14;" styleClass="text2" text="- go to the next level" textFill="WHITE" />
       <ImageView layoutX="7.0" layoutY="415.0">
          <image>
             <Image url="@../../../../../res/image/portal1.png" />
