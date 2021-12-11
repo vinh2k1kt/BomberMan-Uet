@@ -8,6 +8,8 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Label;
 import javafx.stage.Stage;
+import uet.oop.bomberman.graphics.Animation;
+import uet.oop.bomberman.graphics.SpriteContainer;
 import uet.oop.bomberman.menu.GameOver;
 import uet.oop.bomberman.menu.Menu;
 import uet.oop.bomberman.menu.Submenu;
@@ -33,6 +35,7 @@ public class ScreenController {
     private boolean firstTime = true;
 
     public ScreenController(Stage primaryStage) throws IOException, InterruptedException {
+        SpriteContainer.initDesertStage();
 
         this.primaryStage = primaryStage;
 
@@ -69,6 +72,7 @@ public class ScreenController {
     }
 
     public void renderLoadingScene() throws IOException, InterruptedException {
+        SpriteContainer.initDesertStage();
         if (levelIndex < Constants.levelPath.size() - 1) {
             levelIndex++;
             level.previousPoints = level.points;

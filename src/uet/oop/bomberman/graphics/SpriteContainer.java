@@ -18,20 +18,20 @@ public class SpriteContainer {
      * Blocks
      */
 
-    public static Sprite grass = SpriteSheet.spriteSheet.sprites.get(Constants.SPRITE_COL * 5 + 1);
-    public static Sprite grass1 = SpriteSheet.spriteSheet.sprites.get(Constants.SPRITE_COL * 5 + 2);
-    public static Sprite grass2 = SpriteSheet.spriteSheet.sprites.get(Constants.SPRITE_COL * 5 + 6);
-    public static Sprite brick = SpriteSheet.spriteSheet.sprites.get(Constants.SPRITE_COL * 3 + 13);
+    public static Sprite grass;
+    public static Sprite grass1;
+    public static Sprite grass2;
+    public static Sprite brick;
 
-    public static Sprite wall = SpriteSheet.spriteSheet.sprites.get(Constants.SPRITE_COL * 5 + 7);
-    public static Sprite wall_top_left_corner = SpriteSheet.spriteSheet.sprites.get(Constants.SPRITE_COL * 4);
-    public static Sprite wall_top_right_corner = SpriteSheet.spriteSheet.sprites.get(Constants.SPRITE_COL * 4 + 8);
-    public static Sprite wall_bottom_left_corner = SpriteSheet.spriteSheet.sprites.get(Constants.SPRITE_COL * 7);
-    public static Sprite wall_bottom_right_corner = SpriteSheet.spriteSheet.sprites.get(Constants.SPRITE_COL * 7 + 8);
-    public static Sprite wall_top_middle = SpriteSheet.spriteSheet.sprites.get(Constants.SPRITE_COL * 4 + 1);
-    public static Sprite wall_bottom_middle = SpriteSheet.spriteSheet.sprites.get(Constants.SPRITE_COL * 7 + 2);
-    public static Sprite wall_left_side = SpriteSheet.spriteSheet.sprites.get(Constants.SPRITE_COL * 5);
-    public static Sprite wall_right_side = SpriteSheet.spriteSheet.sprites.get(Constants.SPRITE_COL * 5 + 8);
+    public static Sprite wall;
+    public static Sprite wall_top_left_corner;
+    public static Sprite wall_top_right_corner;
+    public static Sprite wall_bottom_left_corner;
+    public static Sprite wall_bottom_right_corner;
+    public static Sprite wall_top_middle;
+    public static Sprite wall_bottom_middle;
+    public static Sprite wall_left_side;
+    public static Sprite wall_right_side;
 
     public static void initGrassStage() {
         grass = SpriteSheet.spriteSheet.sprites.get(Constants.SPRITE_COL * 5 + 1);
@@ -53,15 +53,16 @@ public class SpriteContainer {
     public static void initDesertStage() {
         grass = SpriteSheet.spriteSheet.sprites.get(Constants.SPRITE_COL * 10 + 1);
         grass1 = SpriteSheet.spriteSheet.sprites.get(Constants.SPRITE_COL * 10 + 2);
-        grass2 = SpriteSheet.spriteSheet.sprites.get(Constants.SPRITE_COL * 5 + 6);
+        grass2 = SpriteSheet.spriteSheet.sprites.get(Constants.SPRITE_COL * 10 + 3);
+        brick = SpriteSheet.spriteSheet.sprites.get(Constants.SPRITE_COL * 3 + 14);
 
         wall = SpriteSheet.spriteSheet.sprites.get(Constants.SPRITE_COL * 10 + 7);
         wall_top_left_corner = SpriteSheet.spriteSheet.sprites.get(Constants.SPRITE_COL * 9);
         wall_top_right_corner = SpriteSheet.spriteSheet.sprites.get(Constants.SPRITE_COL * 9 + 8);
-        wall_bottom_left_corner = SpriteSheet.spriteSheet.sprites.get(Constants.SPRITE_COL * 12);
-        wall_bottom_right_corner = SpriteSheet.spriteSheet.sprites.get(Constants.SPRITE_COL * 12 + 8);
+        wall_bottom_left_corner = SpriteSheet.spriteSheet.sprites.get(Constants.SPRITE_COL * 11 + 1);
+        wall_bottom_right_corner = SpriteSheet.spriteSheet.sprites.get(Constants.SPRITE_COL * 11 + 1);
         wall_top_middle = SpriteSheet.spriteSheet.sprites.get(Constants.SPRITE_COL * 9 + 1);
-        wall_bottom_middle = SpriteSheet.spriteSheet.sprites.get(Constants.SPRITE_COL * 12 + 2);
+        wall_bottom_middle = SpriteSheet.spriteSheet.sprites.get(Constants.SPRITE_COL * 11 + 1);
         wall_left_side = SpriteSheet.spriteSheet.sprites.get(Constants.SPRITE_COL * 10);
         wall_right_side = SpriteSheet.spriteSheet.sprites.get(Constants.SPRITE_COL * 10 + 8);
     }
