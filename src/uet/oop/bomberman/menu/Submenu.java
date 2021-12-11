@@ -25,6 +25,9 @@ public class Submenu {
     private Button Exit;
 
     @FXML
+    private Button Mute;
+
+    @FXML
     void Continue(ActionEvent event) {
         level.pause();
     }
@@ -39,12 +42,17 @@ public class Submenu {
     }
 
     @FXML
-    void Restart(ActionEvent event) throws IOException {
+    void Restart(ActionEvent event) {
         level.reset();
     }
 
     @FXML
     void Mute(ActionEvent event) {
+        if (level.isMute) {
+            Mute.setText("Unmute");
+        } else {
+            Mute.setText("Mute");
+        }
         level.isMute = !level.isMute;
     }
 

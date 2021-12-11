@@ -2,7 +2,7 @@
 1-----------------------------2
 |p         * B *   *  * * *   |
 |Fw w w*w w w*w*w w w w*w*w*w |
-|  x*     b**  *      *   * * |
+|  x*     b**  *          * * |
 | w w w w w*w w w*w*w w w w w*|
 |f     J   x **  *  *         |
 | w w w w w w w w w*w w*w w w |

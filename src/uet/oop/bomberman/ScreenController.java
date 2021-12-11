@@ -69,7 +69,7 @@ public class ScreenController {
     }
 
     public void renderLoadingScene() throws IOException, InterruptedException {
-        if (levelIndex < Constants.levelPath.size() - 2) {
+        if (levelIndex < Constants.levelPath.size() - 1) {
             levelIndex++;
             level.previousPoints = level.points;
         } else {
