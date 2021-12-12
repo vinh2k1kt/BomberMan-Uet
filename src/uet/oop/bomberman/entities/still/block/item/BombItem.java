@@ -3,6 +3,7 @@ package uet.oop.bomberman.entities.still.block.item;
 import javafx.scene.image.Image;
 import uet.oop.bomberman.Level;
 import uet.oop.bomberman.entities.moving.player.Player;
+import uet.oop.bomberman.util.Constants;
 
 public class BombItem extends Item{
 
@@ -16,7 +17,9 @@ public class BombItem extends Item{
 
     @Override
     public void updatePlayerBuff(Player bomber) {
-        bomber.bombNum++;
+        if (Constants.MAX_BOMB_NUM > bomber.bombNum) {
+            bomber.bombNum++;
+        }
     }
 
 }

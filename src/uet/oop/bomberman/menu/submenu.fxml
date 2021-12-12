@@ -17,7 +17,7 @@
          <children>
             <Button fx:id="Resume" alignment="CENTER" mnemonicParsing="false" onAction="#Continue" prefHeight="46.0" prefWidth="337.0" style="-fx-background-color: transparent;" styleClass="button4" text="  Resume" textFill="WHITE" />
             <Button fx:id="reset" alignment="CENTER" mnemonicParsing="false" onAction="#Restart" prefHeight="52.0" prefWidth="356.0" style="-fx-background-color: transparent;" styleClass="button4" text=" Restart" textFill="WHITE" />
-            <Button fx:id="Mute" alignment="CENTER" mnemonicParsing="false" onAction="#Mute" prefHeight="55.0" prefWidth="362.0" style="-fx-background-color: transparent;" styleClass="button4" text="Mute" textFill="WHITE" />
+            <Button fx:id="Mute" alignment="CENTER" mnemonicParsing="false" onAction="#Mute" prefHeight="55.0" prefWidth="362.0" style="-fx-background-color: transparent;" styleClass="button4" text="Unmute" textFill="WHITE" />
             <Button fx:id="Exit" alignment="CENTER" mnemonicParsing="false" onAction="#goToMainMenu" prefHeight="46.0" prefWidth="359.0" style="-fx-background-color: transparent;" styleClass="button4" text=" Exit to main Menu" textFill="WHITE" />
          </children>
       </VBox>

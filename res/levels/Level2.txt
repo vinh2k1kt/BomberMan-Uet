@@ -1,16 +1,14 @@
-2 13 31
+1 13 31
 1-----------------------------2
-|p x *      *   B** * *      *|
-|w w w w w*w w w*w w w w w w*w|
-|    * * *** **      *    **  |
-| w*w w w w w w wbw1w w w w w*|
-|          *     **      *  **|
-| w w*w w w w w w*w*w*w*w w w |
-|   *        *   * *x* *      |
-| w w w w*w w w w w w w*w w*w |
-|   ****         *            |
-| w w w w w w w w w*w w w w w*|
-|  ** *   *                   |
+|p    x    *   *   *  * * *   |
+|Fw w w*w w w*w*w w w w*w*w*w |
+|  **     ***  *     S    * * |
+| w w w w w*w w w*w*w w w w w*|
+|*     S   * **  *  *         |
+| w w w w w w w w w*w w*w w w |
+|*  *      *  *   S  *        |
+| w w w w*w w w w*w*w w w w w |
+|*    **  *       *           |
+| w*w w w w w w w*w w w w w w |
+|           *   *  *          |
 3-----------------------------4
-
-

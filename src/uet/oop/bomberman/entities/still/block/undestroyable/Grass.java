@@ -17,11 +17,4 @@ public class Grass extends Tile {
     public void update() {
 
     }
-
-    public void render(GraphicsContext gc) {
-        if (!(this.img == SpriteContainer.grass.getFxImage())) {
-            gc.drawImage(SpriteContainer.grass.getFxImage(), this.x, this.y, Constants.TILES_SIZE, Constants.TILES_SIZE);
-        }
-        super.render(gc);
-    }
 }

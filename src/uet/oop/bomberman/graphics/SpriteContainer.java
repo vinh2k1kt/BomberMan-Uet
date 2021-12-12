@@ -23,6 +23,7 @@ public class SpriteContainer {
     public static Sprite grass2;
     public static Sprite brick;
 
+    public static Sprite wall_2 = SpriteSheet.spriteSheet.sprites.get(Constants.SPRITE_COL * 5 + 3);
     public static Sprite wall;
     public static Sprite wall_top_left_corner;
     public static Sprite wall_top_right_corner;

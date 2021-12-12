@@ -1,0 +1,14 @@
+4 13 31
+1-----------------------------2
+|p          *   B** f *      *|
+|s wwwww  * ***wwwww    wwwww |
+|  w** * *** **w   w *   **Sw |
+|  w*            * 1  *     w*|
+|        wwww    **  wwww *  *|
+|  w *   w    **w*w* * *w   w |
+|  w*    w   *G w*w*x* *w   w |
+|     S  wwww    x   wwww  *  |
+|  w**b*         *      G   w |
+|  wS       *  w   w  *   BSw*|
+|  wwwww   *B* wwwww *B*wwwww |
+3-----------------------------4

@@ -13,6 +13,7 @@ import uet.oop.bomberman.graphics.SpriteContainer;
 import uet.oop.bomberman.menu.GameOver;
 import uet.oop.bomberman.menu.Menu;
 import uet.oop.bomberman.menu.Submenu;
+import uet.oop.bomberman.sound.Sound;
 import uet.oop.bomberman.util.Constants;
 import java.io.File;
 import java.io.IOException;
@@ -35,7 +36,6 @@ public class ScreenController {
     private boolean firstTime = true;
 
     public ScreenController(Stage primaryStage) throws IOException, InterruptedException {
-        SpriteContainer.initDesertStage();
 
         this.primaryStage = primaryStage;
 
@@ -80,6 +80,13 @@ public class ScreenController {
             level.goToNextLevel = false;
             level.finalLevel = true;
         }
+
+        if (levelIndex == 1) {
+            SpriteContainer.initDesertStage();
+        } else {
+            SpriteContainer.initGrassStage();
+        }
+
         if (level.finalLevel) {
             try {
                 GameOver.firstTime = true;
