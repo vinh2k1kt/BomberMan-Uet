@@ -3,15 +3,15 @@ package uet.oop.bomberman.entities.still.block.item;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.image.Image;
 import uet.oop.bomberman.Level;
-import uet.oop.bomberman.entities.moving.Character;
 import uet.oop.bomberman.entities.moving.player.Player;
 import uet.oop.bomberman.entities.still.block.undestroyable.Grass;
 import uet.oop.bomberman.entities.still.block.Layered;
 import uet.oop.bomberman.graphics.SpriteContainer;
-import uet.oop.bomberman.sound.Sound;
 import uet.oop.bomberman.util.Constants;
 
 public abstract class Item extends Layered {
+
+    private boolean firstTime = true;
 
     public Item(double xUnit, double yUnit, Image img, Level level) {
         super(xUnit, yUnit, img, level);
@@ -21,10 +21,16 @@ public abstract class Item extends Layered {
     public void update() {
         for (Player bomber : level.bombers)
             if (bomber.hitBox.getBoundsInParent().intersects(this.hitBox.getBoundsInParent())) {
-                sound.setFile("Item");
-                sound.play();
+
+                if (!level.isMute) {
+                    sound.setFile("Item");
+                    sound.play();
+                }
                 setCanRemove();
-                updatePlayerBuff(bomber);
+                if (firstTime) {
+                    updatePlayerBuff(bomber);
+                    firstTime = false;
+                }
             }
     }
 

@@ -69,6 +69,7 @@ public class Level {
     public boolean finalLevel = false;
     public boolean resetRequired = false;
     public boolean isMute = false;
+    public boolean showPath = false;
     public int points = 0;
     public int previousPoints = 0;
 
@@ -189,6 +190,7 @@ public class Level {
         bombers.clear();
         bats.clear();
         frogs.clear();
+        ghosts.clear();
         tiles.clear();
 
         //Reset Boolen Variables
@@ -232,16 +234,19 @@ public class Level {
                     case 's' -> {
                         tiles.add(new Brick(col, row, SpriteContainer.brick.getFxImage()
                                 , new SpeedItem(col, row, SpriteContainer.speedItem.getFxImage(), this), this));
+                        ((Layered) tiles.get(tiles.size() - 1)).canRemove = true;
                         tileMap[row][col] = "b";
                     }
                     case 'b' -> {
                         tiles.add(new Brick(col, row, SpriteContainer.brick.getFxImage()
                                 , new BombItem(col, row, SpriteContainer.bombItem.getFxImage(), this), this));
+                        ((Layered) tiles.get(tiles.size() - 1)).canRemove = true;
                         tileMap[row][col] = "b";
                     }
                     case 'f' -> {
                         tiles.add(new Brick(col, row, SpriteContainer.brick.getFxImage()
                                 , new FlameItem(col, row, SpriteContainer.flameItem.getFxImage(), this), this));
+                        ((Layered) tiles.get(tiles.size() - 1)).canRemove = true;
                         tileMap[row][col] = "b";
                     }
                     case 'x' -> {
@@ -286,11 +291,15 @@ public class Level {
                             tiles.add(new Wall(col, row, SpriteContainer.wall_bottom_middle.getFxImage(), this));
                         }
                     }
+                    case '~' -> {
+                        tiles.add(new Wall(col, row, SpriteContainer.wall_2.getFxImage(), this));
+                        tileMap[row][col] = "b";
+                    }
                     case 'w' -> {
                         tileMap[row][col] = "b";
                         tiles.add(new Wall(col, row, SpriteContainer.wall.getFxImage(), this));
                     }
-                    case 'J' -> {
+                    case 'S' -> {
                         tileMap[row][col] = " ";
                         tiles.add(new Grass(col, row, SpriteContainer.grass.getFxImage(), this));
                         skellies.add(new Skelly(col, row, Animation.skellyRightAni.get(0).getFxImage(), this));
@@ -312,9 +321,29 @@ public class Level {
                         numberOfEnemies++;
                     }
                     case '*' -> {
-                        tileMap[row][col] = "b";
-                        tiles.add(new Brick(col, row, SpriteContainer.brick.getFxImage(),
-                                new Grass(col, row, SpriteContainer.grass.getFxImage(), this), this));
+                        int Random = (int) (Math.random() * 12 + 1);
+                        switch (Random) {
+                            case 0, 1, 2 -> {
+                                tiles.add(new Brick(col, row, SpriteContainer.brick.getFxImage()
+                                        , new SpeedItem(col, row, SpriteContainer.speedItem.getFxImage(), this), this));
+                                tileMap[row][col] = "b";
+                            }
+                            case 3, 4, 5 -> {
+                                tiles.add(new Brick(col, row, SpriteContainer.brick.getFxImage()
+                                        , new FlameItem(col, row, SpriteContainer.flameItem.getFxImage(), this), this));
+                                tileMap[row][col] = "b";
+                            }
+                            case 6, 7, 8 -> {
+                                tiles.add(new Brick(col, row, SpriteContainer.brick.getFxImage()
+                                        , new BombItem(col, row, SpriteContainer.bombItem.getFxImage(), this), this));
+                                tileMap[row][col] = "b";
+                            }
+                            default -> {
+                                tiles.add(new Brick(col, row, SpriteContainer.brick.getFxImage()
+                                        , new Grass(col, row, SpriteContainer.grass.getFxImage(), this), this));
+                                tileMap[row][col] = "b";
+                            }
+                        }
                     }
                     default -> {
                         tileMap[row][col] = " ";
@@ -423,8 +452,10 @@ public class Level {
 
         bombers.forEach(bomber -> bomber.render(gc));
 
-        if (!bats.isEmpty() && !bombers.isEmpty()) {
-            bats.get(0).showPath(bats.get(0).getNode(), bombers.get(0).getNode());
+        if (!bats.isEmpty() && !bombers.isEmpty() && showPath) {
+            for (Bat bat : bats) {
+                bat.showPath(bat.getNode(), bombers.get(0).getNode());
+            }
         }
     }
 
@@ -449,7 +480,7 @@ public class Level {
         gc.drawImage(SpriteContainer.speedItem.getFxImage(), Constants.TILES_SIZE * 27
                 , Constants.SCREEN_HEIGHT - 42
                 , Constants.TILES_SIZE, Constants.TILES_SIZE);
-        gc.fillText(String.valueOf((int) (bombers.get(0).speed / Constants.SPEED))
+        gc.fillText(String.valueOf((int) (bombers.get(0).speed - Constants.SPEED))
                 , Constants.TILES_SIZE * 28, Constants.SCREEN_HEIGHT - 15);
 
     }

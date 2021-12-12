@@ -8,6 +8,9 @@ import uet.oop.bomberman.entities.moving.enemy.Ghost;
 import uet.oop.bomberman.entities.moving.enemy.Skelly;
 import uet.oop.bomberman.entities.still.Tile;
 import uet.oop.bomberman.entities.still.block.Layered;
+import uet.oop.bomberman.entities.still.block.destroyable.Brick;
+import uet.oop.bomberman.entities.still.block.item.Item;
+import uet.oop.bomberman.entities.still.block.item.Portal;
 import uet.oop.bomberman.entities.still.block.undestroyable.Grass;
 import uet.oop.bomberman.entities.still.bomb.Bomb;
 import uet.oop.bomberman.graphics.Animation;
@@ -42,10 +45,6 @@ public class Player extends Character {
                     left = true;
                     currentDirection = Direction.LEFT;
                 }
-                case Q -> {
-                    level.screenController.setCurrentScene(level.screenController.loadingScene);
-                    System.out.println("Pressed");
-                }
                 case D -> {
                     right = true;
                     currentDirection = Direction.RIGHT;
@@ -66,8 +65,10 @@ public class Player extends Character {
                         if (!(Math.round(bomb.x / Constants.TILES_SIZE) == lastX) ||
                                 !(Math.round(bomb.y / Constants.TILES_SIZE) == lastY)) {
 
-                            sound.setFile("Placing");
-                            sound.play();
+                            if (!level.isMute) {
+                                sound.setFile("Placing");
+                                sound.play();
+                            }
 
                             // Update List for chasing
                             level.bombs.add(bomb);
@@ -91,6 +92,9 @@ public class Player extends Character {
                     isMoving = false;
                     currentDirection = Direction.NONE;
                 }
+                case TAB -> {
+                    level.showPath = !level.showPath;
+                }
                 case SHIFT -> {
                     for (Bat bat : level.bats) {
                         bat.isKill();
@@ -112,6 +116,11 @@ public class Player extends Character {
                             tile.img = SpriteContainer.grass.getFxImage();
                             level.numberOfEnemies--;
                         }
+
+                       if (tile instanceof Brick && (((Brick) tile).getBufferedEntity() instanceof Item
+                       || ((Brick) tile).getBufferedEntity() instanceof Portal)) {
+                           ((Brick) tile).canRemove = true;
+                       }
                     }
                 }
             }
@@ -252,8 +261,10 @@ public class Player extends Character {
 
             index++;
             if (index == 2) {
-                sound.setFile("Walking");
-                sound.play();
+                if (!level.isMute) {
+                    sound.setFile("Walking");
+                    sound.play();
+                }
             }
             count = 0;
         }

@@ -1,16 +1,16 @@
 1 13 31
 1-----------------------------2
-|p         * B *   *  * * *   |
-|Fw w w*w w w*w*w w w w*w*w*w |
-|  x*     b**  *          * * |
-| w w w w w*w w w*w*w w w w w*|
-|f     J   x **  *  *         |
-| w w w w w w w w w*w w*w w w |
-|*  *      *  *      *        |
-| w w w w*w w w w*w*w w w w w |
-|*    **  *       *           |
-| w*w w w w w w w*w w w w w w |
-|           *   *  *          |
+|p     bfs bfs bfs            |
+|                             |
+|                             |
+|                             |
+|                             |
+|    w*w   w*w w*w   w*w      |
+|    wSw   wBw wGw   wFw      |
+|    www   www www   www      |
+|                             |
+|                             |
+|             x               |
 3-----------------------------4
 
 

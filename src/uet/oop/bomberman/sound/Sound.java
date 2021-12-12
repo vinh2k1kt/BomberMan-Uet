@@ -8,6 +8,8 @@ import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.HashMap;
 import java.util.Map;
+
+import uet.oop.bomberman.Level;
 import uet.oop.bomberman.util.Constants;
 
 public class Sound {
@@ -28,6 +30,8 @@ public class Sound {
         Constants.soundTrack.put(0, "Depths");
         Constants.soundTrack.put(1, "Elhana");
         Constants.soundTrack.put(2, "Forest");
+        Constants.soundTrack.put(3, "Depths");
+        Constants.soundTrack.put(4, "Forest");
     }
 
     public void setFile(String title) {

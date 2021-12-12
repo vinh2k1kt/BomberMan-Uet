@@ -8,7 +8,8 @@ import java.util.HashMap;
 
 public class Constants {
 
-    public static String[] levels = {"res/levels/Level1.txt", "res/levels/Level2.txt"};
+    public static String[] levels = {"res/levels/Level1.txt", "res/levels/Level2.txt", "res/levels/Level3.txt"
+            , "res/levels/Level4.txt", "res/levels/Level5.txt"};
     public static HashMap<Integer, String> soundTrack = new HashMap<>();
     public static ArrayList<String> levelPath = new ArrayList<>(Arrays.asList(levels));
 
@@ -51,4 +52,7 @@ public class Constants {
     public static final double HGAP = 8;
     public static final double SOLID_AREA_WIDTH = TILES_SIZE - HGAP * 3;
     public static final double SOLID_AREA_HEIGHT = TILES_SIZE - VGAP - 2;
+    public static final double MAX_BOMB_NUM = 5;
+    public static final double MAX_BOMB_RANGE = 5;
+    public static final double MAX_SPEED = 4;
 }

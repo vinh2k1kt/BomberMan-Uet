@@ -4,6 +4,7 @@ import javafx.scene.image.Image;
 import javafx.scene.shape.Rectangle;
 import uet.oop.bomberman.Level;
 import uet.oop.bomberman.entities.moving.enemy.Bat;
+import uet.oop.bomberman.entities.moving.enemy.Ghost;
 import uet.oop.bomberman.entities.moving.player.Player;
 import uet.oop.bomberman.entities.still.Tile;
 import uet.oop.bomberman.graphics.Animation;
@@ -112,6 +113,12 @@ public class FlameSegment extends Tile {
         for (Bat bats : level.bats) {
             if (this.hitBox.getBoundsInParent().intersects(bats.hitBox.getBoundsInParent())) {
                 bats.isKill();
+            }
+        }
+
+        for (Ghost ghost : level.ghosts) {
+            if (this.hitBox.getBoundsInParent().intersects(ghost.hitBox.getBoundsInParent())) {
+                ghost.isKill();
             }
         }
 

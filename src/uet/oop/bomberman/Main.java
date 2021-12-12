@@ -6,6 +6,7 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
 import uet.oop.bomberman.graphics.Animation;
+import uet.oop.bomberman.graphics.SpriteContainer;
 import uet.oop.bomberman.sound.Sound;
 
 import java.io.File;
@@ -17,6 +18,7 @@ public class Main extends Application {
     public void start(Stage primaryStage) throws Exception{
         Sound.initSound();
         Animation.initAnimation();
+        SpriteContainer.initGrassStage();
 
         primaryStage.setResizable(false);
 

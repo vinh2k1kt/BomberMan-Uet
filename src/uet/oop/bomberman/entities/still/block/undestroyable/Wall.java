@@ -23,11 +23,5 @@ public class Wall extends Tile {
 
     @Override
     public void update() {
-
-    }
-
-    public void render(GraphicsContext gc) {
-        gc.drawImage(SpriteContainer.grass.getFxImage(), this.x, this.y, Constants.TILES_SIZE, Constants.TILES_SIZE);
-        super.render(gc);
     }
 }
