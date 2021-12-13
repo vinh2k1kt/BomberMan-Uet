@@ -2,6 +2,7 @@ package uet.oop.bomberman.entities.moving.player;
 
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.image.Image;
+import javafx.scene.paint.Color;
 import uet.oop.bomberman.Level;
 import uet.oop.bomberman.entities.moving.enemy.Bat;
 import uet.oop.bomberman.entities.moving.enemy.Ghost;
@@ -95,7 +96,25 @@ public class Player extends Character {
                 case TAB -> {
                     level.showPath = !level.showPath;
                 }
-                case SHIFT -> {
+                case U -> {
+                    if (Constants.isHitBoxShow) {
+                        Constants.HITBOX_COLOR = Color.TRANSPARENT;
+                        Constants.isHitBoxShow = false;
+                    } else {
+                        Constants.HITBOX_COLOR = Color.CYAN;
+                        Constants.isHitBoxShow = true;
+                    }
+                }
+                case I -> {
+                    if (Constants.isTileHitBoxShow) {
+                        Constants.TILE_HITBOX_COLOR = Color.TRANSPARENT;
+                        Constants.isTileHitBoxShow = false;
+                    } else {
+                        Constants.TILE_HITBOX_COLOR = Color.LIGHTGRAY;
+                        Constants.isTileHitBoxShow = true;
+                    }
+                }
+                case Q -> {
                     for (Bat bat : level.bats) {
                         bat.isKill();
                     }

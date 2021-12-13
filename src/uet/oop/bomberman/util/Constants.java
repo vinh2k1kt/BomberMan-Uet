@@ -27,13 +27,11 @@ public class Constants {
     public static double SCREEN_WIDTH = TILES_SIZE * COLUMNS;
     public static double SCREEN_HEIGHT = TILES_SIZE * ROWS;
 
-    public static final Color HITBOX_COLOR = Color.TRANSPARENT;
-    public static final Color PREDICTING_HITBOX_COLOR = Color.TRANSPARENT;
-    public static final Color TILE_HITBOX_COLOR = Color.TRANSPARENT;
-
-//    public static final Color HITBOX_COLOR = Color.BLUE;
-//    public static final Color PREDICTING_HITBOX_COLOR = Color.TRANSPARENT;
-//    public static final Color TILE_HITBOX_COLOR = Color.BLACK;
+    public static boolean isHitBoxShow = false;
+    public static boolean isTileHitBoxShow = false;
+    public static Color HITBOX_COLOR = Color.TRANSPARENT;
+    public static Color PREDICTING_HITBOX_COLOR = Color.TRANSPARENT;
+    public static Color TILE_HITBOX_COLOR = Color.TRANSPARENT;
 
     /**
      * Sprite and animation

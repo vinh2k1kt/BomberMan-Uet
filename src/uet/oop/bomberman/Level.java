@@ -495,16 +495,12 @@ public class Level {
             }
             isPause = false;
             timer.start();
-            for (Node node : screenController.subMenuNodes) {
-                container.getChildren().remove(node);
-            }
+            container.getChildren().removeAll(screenController.subMenuNodes);
         } else {
             soundTrack.stop();
             isPause = true;
             timer.stop();
-            for (Node node : screenController.subMenuNodes) {
-                container.getChildren().add(node);
-            }
+            container.getChildren().addAll(screenController.subMenuNodes);
         }
     }
 

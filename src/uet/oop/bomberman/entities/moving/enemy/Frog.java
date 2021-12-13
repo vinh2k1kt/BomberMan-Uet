@@ -13,6 +13,7 @@ import uet.oop.bomberman.util.Direction;
 import java.util.List;
 
 public class Frog extends Character {
+    private boolean leaked = false;
     private int renderDeadImageTime = 10;
     private final CollisionChecker collisionChecker;
     private final double speed = 4;
@@ -63,15 +64,18 @@ public class Frog extends Character {
 
             for (Player bomber : level.bombers) {
                 if (this.hitBox.getBoundsInParent().intersects(bomber.hitBox.getBoundsInParent())) {
-                    if (bomber.speed > Constants.SPEED) {
-                        bomber.speed -= Constants.SPEED;
-                    } else if (bomber.bombNum > 1) {
-                        bomber.bombNum--;
-                    } else if (bomber.bombRange > 1) {
-                        bomber.bombRange--;
+                    if (!leaked) {
+                        if (bomber.speed > Constants.SPEED) {
+                            bomber.speed -= -1;
+                        } else if (bomber.bombNum > 1) {
+                            bomber.bombNum--;
+                        } else if (bomber.bombRange > 1) {
+                            bomber.bombRange--;
+                        }
+                        isKill();
+                        level.numberOfEnemies--;
+                        leaked = true;
                     }
-                    isKill();
-                    level.numberOfEnemies--;
                 }
             }
 
