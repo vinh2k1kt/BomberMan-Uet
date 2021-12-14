@@ -42,8 +42,9 @@
                   </Button>
                </children>
             </VBox>
-            <Label layoutX="481.0" layoutY="352.0" text="Tran Ngoc Vinh - 19020659" textFill="WHITE" />
-            <Label layoutX="481.0" layoutY="385.0" text="Nguyen Viet Quan - 1902596" textFill="WHITE" />
+            <Label layoutX="597.0" layoutY="356.0" text="Tran Ngoc Vinh - 19020659" textFill="WHITE" />
+            <Label layoutX="597.0" layoutY="388.0" text="Nguyen Viet Quan - 1902596" textFill="WHITE" />
+            <Label layoutX="597.0" layoutY="319.0" text="Nhom 5" textFill="WHITE" />
          </children>
       </AnchorPane>
    </children>
