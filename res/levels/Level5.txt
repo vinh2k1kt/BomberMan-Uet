@@ -3,7 +3,7 @@
 |p          *   B** f *      *|
 |s wwwww  * ***wwwww    wwwww |
 |  w** * *** **w   w *   **Sw |
-|  w*            * 1  *     w*|
+|  w*            *    *     w*|
 |        wwww    **  wwww *  *|
 |  w *   w    **w*w* * *w   w |
 |  w*    w   *G w*w*x* *w   w |

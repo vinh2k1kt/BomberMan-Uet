@@ -321,7 +321,7 @@ public class Level {
                         numberOfEnemies++;
                     }
                     case '*' -> {
-                        int Random = (int) (Math.random() * 12 + 1);
+                        int Random = (int) (Math.random() * 16   + 1);
                         switch (Random) {
                             case 0, 1, 2 -> {
                                 tiles.add(new Brick(col, row, SpriteContainer.brick.getFxImage()

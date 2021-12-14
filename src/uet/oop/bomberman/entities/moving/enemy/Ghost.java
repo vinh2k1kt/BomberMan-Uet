@@ -12,7 +12,7 @@ import uet.oop.bomberman.util.Direction;
 
 public class Ghost extends Character {
 
-    private int renderDeadImageTime  = 10;
+    private int renderDeadImageTime = 10;
     private final CollisionChecker collisionChecker;
     private final double speed = 2;
     private double dx, dy;
@@ -30,11 +30,11 @@ public class Ghost extends Character {
         if (alive) {
             if (!collisionChecker.isBlocked(this)) {
 
-                if (x < 0 || x > Constants.SCREEN_WIDTH) {
+                if (x < Constants.TILES_SIZE || x > Constants.SCREEN_WIDTH - Constants.TILES_SIZE) {
                     dx = -dx;
                 }
 
-                if (y < 0 || y > Constants.SCREEN_HEIGHT) {
+                if (y < Constants.TILES_SIZE || y > Constants.SCREEN_HEIGHT - Constants.TILES_SIZE - 50) {
                     dy = -dy;
                 }
 

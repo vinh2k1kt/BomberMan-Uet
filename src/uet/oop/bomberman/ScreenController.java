@@ -37,6 +37,8 @@ public class ScreenController {
 
     public ScreenController(Stage primaryStage) throws IOException, InterruptedException {
 
+        SpriteContainer.initGrassStage();
+
         this.primaryStage = primaryStage;
 
         URL url = new File("src/uet/oop/bomberman/menu/submenu.fxml").toURI().toURL();
