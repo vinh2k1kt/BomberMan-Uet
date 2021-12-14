@@ -5,6 +5,7 @@ import javafx.scene.image.Image;
 import javafx.scene.paint.Color;
 import uet.oop.bomberman.Level;
 import uet.oop.bomberman.entities.moving.enemy.Bat;
+import uet.oop.bomberman.entities.moving.enemy.Frog;
 import uet.oop.bomberman.entities.moving.enemy.Ghost;
 import uet.oop.bomberman.entities.moving.enemy.Skelly;
 import uet.oop.bomberman.entities.still.Tile;
@@ -75,6 +76,7 @@ public class Player extends Character {
                             level.bombs.add(bomb);
                             level.tileMap[bomb.getYUnit()][bomb.getXUnit()] = "b";
                             level.bats.forEach(Bat::setUpdateRequired);
+                            level.frogs.forEach(Frog::setUpdateRequired);
 
                             lastX = Math.round(this.x / Constants.TILES_SIZE);
                             lastY = Math.round(this.y / Constants.TILES_SIZE);
@@ -129,11 +131,7 @@ public class Player extends Character {
 
                     for (Tile tile : level.tiles) {
                         if (tile instanceof Layered && ((Layered) tile).isTrap) {
-                            ((Layered) tile).isTrap = false;
-                            tile.hitBox.setHeight(0);
-                            tile.hitBox.setWidth(0);
-                            tile.img = SpriteContainer.grass.getFxImage();
-                            level.numberOfEnemies--;
+                            ((Layered) tile).canRemove = true;
                         }
 
                        if (tile instanceof Brick && (((Brick) tile).getBufferedEntity() instanceof Item

@@ -63,7 +63,8 @@ public class Frog extends Character {
             updateHitBox();
 
             for (Player bomber : level.bombers) {
-                if (this.hitBox.getBoundsInParent().intersects(bomber.hitBox.getBoundsInParent())) {
+                if (this.hitBox.getBoundsInParent().intersects(bomber.hitBox.getBoundsInParent())
+                        || this.getNode() == level.bombers.get(0).getNode()) {
                     if (!leaked) {
                         if (bomber.speed > Constants.SPEED) {
                             bomber.speed -= -1;
@@ -73,7 +74,6 @@ public class Frog extends Character {
                             bomber.bombRange--;
                         }
                         isKill();
-                        level.numberOfEnemies--;
                         leaked = true;
                     }
                 }

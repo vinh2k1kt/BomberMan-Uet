@@ -5,6 +5,7 @@ import javafx.scene.image.Image;
 import javafx.scene.shape.Rectangle;
 import uet.oop.bomberman.Level;
 import uet.oop.bomberman.entities.moving.enemy.Bat;
+import uet.oop.bomberman.entities.moving.enemy.Frog;
 import uet.oop.bomberman.entities.still.Tile;
 import uet.oop.bomberman.graphics.Animation;
 import uet.oop.bomberman.entities.moving.player.Player;
@@ -91,6 +92,7 @@ public class Bomb extends Tile {
 
         level.tileMap[this.getYUnit()][this.getXUnit()] = " ";
         level.bats.forEach(Bat::setUpdateRequired);
+        level.frogs.forEach(Frog::setUpdateRequired);
 
         if (!level.isMute) {
             sound.setFile("BombExplode");

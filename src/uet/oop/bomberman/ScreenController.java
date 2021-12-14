@@ -141,8 +141,12 @@ public class ScreenController {
     }
 
     public void playThemeSong() {
-        level.soundTrack.setFile(Constants.soundTrack.get(levelIndex));
-        level.soundTrack.play();
-        level.soundTrack.loop();
+            level.soundTrack.setFile(Constants.soundTrack.get(levelIndex));
+            level.soundTrack.loop();
+            if (!level.isMute) {
+                level.soundTrack.play();
+            } else {
+                level.soundTrack.stop();
+            }
     }
 }

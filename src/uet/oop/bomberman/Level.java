@@ -386,6 +386,7 @@ public class Level {
 
                     tileMap[tile.getYUnit()][tile.getXUnit()] = " ";
                     bats.forEach(Bat::setUpdateRequired);
+                    frogs.forEach(Frog::setUpdateRequired);
                     if (((Layered) tile).isTrap) {
                         frogs.add(new Frog(tile.getXUnit(), tile.getYUnit()
                                 , Animation.frogRightAni.get(0).getFxImage(), this));
